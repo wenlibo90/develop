@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>庄园土地</title>
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="warp life faith">
+    <div class="header">
+        <ul class="nav">
+            <li class="hy"><img src="img/heyu.png"/></li>
+            <li><a href="index.html"><img src="img/bjzy.jpg" width="158" class="bjzy"/></a></li>
+            <li class="td on"><a href="land.html"><span>庄园土地</span><i>/ Land Of The Demesne</i></a></li>
+            <li class="xy"><a href="faith.html"><span>庄园信仰</span><i>/ Faith Of The Demesne</i></a></li>
+            <li class="ys"><a href="art.html"><span>庄园艺术</span><i>/ Demesne Art&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></a></li>
+            <li class="sh"><a href="life.html"><span>庄园生活</span><i>/ Life In The Demesne </i></a></li>
+            <span class="c"></span>
+        </ul>
+    </div>
+    <!--内容-->
+    <div class="banner"> </div>
+    <!--内容-->
+    <div class="cont cont1">
+        <p class="t1">Land of the demesne</p>
+        <p class="t2">庄&nbsp;园&nbsp;土&nbsp;地</p>
+        <p class="t3"><span class="dor"></span></p>
+        <p class="t4 t1">300年前皇家御道，300年后国之仪仗</p>
+        <p class="t5 t6 font10">回望北京别墅发展历程，京承高速如同一条贯穿古今的黄金脉络</p>
+        <p class="t5 t6 font10" style="width: 970px">向北串联起避暑山庄、古北水镇、密云水库、雁栖湖APEC会议中心；向南，驶经未来科技城、望京、三元桥……</p>
+        <p class="t5 t6 font10"> 如同检阅一条通向国门的涉外仪仗之路</p>
+        <p class="t5 t6 font10"> 北京庄园，毗邻京承高速11出口，据南石槽行宫旧址而建。3个红绿灯，直达中央别墅区近享成熟配套</p>
+        <p class="t5 t6 font10">回望北京别墅发展历程，京承高速如同一条贯穿古今的黄金脉络</p>
+        <p class="t5 font10"> 同时拥有私密纯粹的纯独墅居住环境，繁华、静谧，自如掌控</p>
+        <div class="picScroll1">
+            <div class="tempWrap">
+                <ul>
+                    <li><a href="javascript:void(0)"><img  src="img/slide21.jpg"></a></li>
+                    <li><a href="javascript:void(0)"><img  src="img/slide23.jpg"></a></li>
+                    <li><a href="javascript:void(0)"><img  src="img/slide22.jpg"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <p class="t4 t1" style="color: #e0e0e0;">BEIJING DEMESNE</p>
+        <ul class="msg-list">
+            <li>
+
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="footer cont1">
+        <div class="connect">
+            TEL.86-10-61987777 | ADD.京承高速第11出口向东1000米
+        </div>
+        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 360px;display: block"/>
+    </div>
+</div>
+</body>
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script>
+    /* 自动轮播*/
+    jQuery(".picScroll1").slide({
+        mainCell:"ul",
+        effect:"leftMarquee",
+        vis:3,
+//        autoPlay:true,
+        interTime:50,
+        switchLoad:"_src"
+    });
+    $('.next-arrow').click(function(){
+        var obj=$('.cont').eq(0);
+        var h=obj.offset().top;
+        $('body,html').animate({
+            scrollTop:h
+        },600)
+    })
+    /*视频*/
+    $('.paly').click(function(){
+        $(this).hide();
+        $('video').addClass('on')
+        $('.video').css('background','rgba(0,0,0,1)')
+    })
+    /*一个样式问题的调整*/
+    $('.picScroll1 .clone').css('margin-left','10px')
+</script>
+</html>

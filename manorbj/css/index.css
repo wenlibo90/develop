@@ -144,7 +144,7 @@ body{    min-width: 1082px;}
     background-color: #acacac;
 }
 /*北京庄园img*/
-.bjzy{    position: relative;    z-index: 1;}
+.bjzy{    width:158px;position: relative;    z-index: 1;}
 .next-arrow{
     width: 30px;
     margin-left: -15px;
@@ -216,6 +216,7 @@ video.on{    display: block;    position: absolute;    z-index: 10;}
     padding: 5px;
     border: 2px solid #4c4c4c;
     margin-left: 15px;
+    background: #fff
 }
 .tempWrap ul li img{
     width: 200px;
@@ -281,16 +282,7 @@ video.on{    display: block;    position: absolute;    z-index: 10;}
     height: 200px;
     text-decoration: none;
 }
-/*媒体查询*/
-@media screen and (max-width: 1360px) {
-    .f-box {
-        left: 140px;
-        top: 310px;
-    }
-    .nav li span{
-        font-size: 13px;
-    }
-}
+
 /*首页*/
 .life .t6{
     margin-bottom: 0;
@@ -370,6 +362,15 @@ video.on{    display: block;    position: absolute;    z-index: 10;}
     width: 290px;
     height: 290px;
 }
+.faith .ts{
+    width: 290px;
+    left: 5px;
+    line-height: 24px;
+    background: none;
+    height: 24px;
+    color: #6e6e6e;
+    font-family: TrajanPro3-Regular;
+}
 .msg-list{
     width: 970px;
     margin: 70px  auto;
@@ -377,10 +378,71 @@ video.on{    display: block;    position: absolute;    z-index: 10;}
 }
 .msg-list li{
     width: 300px;
-    height: 401px;
-    border: 1px solid red;
+    height: 400px;
+    overflow: hidden;
     float: left;
     margin: 10px;
+    text-align: left;
+    font-family: TrajanPro3-Regular;
+}
+.d1-box{
+    width: 302px;
+    height: 230px;
+    overflow: hidden;
+}
+.d1-box img{
+    width: 302px;
+    height: 230px;
+    transition: all .3s;
+    cursor: pointer;
+}
+.d1-box img:hover{
+    transform: scale(1.1);
+}
+.d1 .txt{
+    padding: 25px 30px 20px;
+    background: #fff;
+    height: 210px;
+    overflow: hidden;
+    margin: -35px 9px 0;
+    position: relative;
+    z-index: 1;
+    font-size: 12px;
+}
+.d1-detail{
+    margin-top: 15px;
+    line-height: 20px;
+}
+.msg-list .txt p{
+    font-size: 19px;
+    line-height: 25px;
+    font-family: SourceHanSerifCN-SemiBold;
+}
+.d2{
+    width: 243px;
+    height: 300px;
+    background: #fff;
+    padding: 100px 30px 0;
+    position: relative;
+}
+.d2 .d1-detail{margin-top: 30px;}
+.d2 .arrow{
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+}
+.d2 .txt{
+    font-size: 12px;
+}
+.d3{
+    width: 300px;
+    height: 400px;
+    transition: all .3s;
+}
+.d3:hover{
+    transform: scale(1.1);
 }
 .faith .footer{
     padding-top: 0;
@@ -395,4 +457,33 @@ video.on{    display: block;    position: absolute;    z-index: 10;}
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
             src='http://static.yuntongauto.com/bjzy/img/landbanner.jpg',
             sizingMethod='scale');
+}
+
+/*媒体查询 1366以下的分辨率*/
+@media screen and (max-width: 1360px) {
+    .nav li span{
+        font-size: 13px;
+    }
+}
+/*媒体查询*/
+@media screen and (max-width: 1920px) and (min-width: 1680px) {
+    .bjzy{
+        width: 190px;
+    }
+    .nav li {
+        height: 65px;
+        line-height: 65px;
+    }
+    .nav li span{
+        font-size: 18px;
+    }
+    .nav li i{
+        font-size: 14px;
+        margin-left: -10px;
+        line-height: 70px;
+    }
+    .nav li.hy img{
+        width: 88px;
+        margin: -5px 20px
+    }
 }
