@@ -1,0 +1,288 @@
+@charset "UTF-8";
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: none;
+}
+body{    min-width: 1082px;}
+@font-face {
+    font-family: 'SourceHanSerifCN-SemiBold';
+    src:url('SourceHanSerifCN-SemiBold.otf');
+}
+@font-face {
+    font-family: 'TrajanPro3-Regular';
+    src:url('TrajanPro3-Regular.otf');
+}
+/*公共类*/
+.l{    float: left;}
+.r{    float: right;}
+.c{    clear: both;display: block;}
+.l-h-30{    line-height: 30px;}
+.font10{    display: block;    font-size: 14px;}
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    min-width: 1082px
+}
+.nav li{
+    width: 16%;
+    height: 55px;
+    line-height: 55px;
+    float: left;
+    font-family: SourceHanSerifCN-SemiBold;
+    cursor: pointer;
+}
+.nav li a{    color: #a17c52;}
+.nav li.hy{    width: 14%;}
+.nav li.hy img{    width:60px;    margin:-3px 20px;}
+.nav li span{    float: left;    font-size: 15px;}
+.nav li i{
+    font-size: 9px;
+    display: block;
+    transform: scale(0.75);
+    -webkit-transform: scale(0.75);
+    -moz-transform: scale(0.75);
+    -o-transform: scale(0.75);
+    line-height: 60px;
+    float: left;
+    font-style: normal;
+}
+.nav{    background-color: #f5f5f5;}
+/*主题*/
+.banner{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    top: 55px;
+}
+.Scroll1{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-width: 1000px;
+    background: #000;
+}
+.Scroll1 .full li{
+    width: 100% !important;
+    background: url(../img/1.jpg) top center no-repeat;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+        src='http://static.yuntongauto.com/bjzy/img/1.jpg',
+        sizingMethod='scale');
+}
+/*兼容IE8*/
+.Scroll1 .full .n2{
+    background-image: url(../img/2.jpg);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+    src='http://static.yuntongauto.com/bjzy/img/2.jpg',
+    sizingMethod='scale');
+}
+.Scroll1 .full .n3{
+    background-image: url(../img/3.jpg);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+    src='http://static.yuntongauto.com/bjzy/img/3.jpg',
+    sizingMethod='scale');
+}
+.Scroll1 .full .n4{
+    background-image: url(../img/4.jpg);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+    src='http://static.yuntongauto.com/bjzy/img/4.jpg',
+    sizingMethod='scale');
+}
+.Scroll1 .full .n5{
+    background-image: url(../img/5.jpg);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='http://static.yuntongauto.com/bjzy/img/5.jpg',
+            sizingMethod='scale');
+}
+.btns{
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    margin-left: -47px;
+}
+.Scroll1 .btns li{
+    width: 10px;
+    height: 10px;
+    float: left;
+    background: none;
+    background-color: #fff;
+    border-radius: 50%;
+    margin-right: 10px;
+    opacity: .9;
+    cursor: pointer;
+}
+.btns li.on{
+    background-color: #acacac;
+}
+/*北京庄园img*/
+.bjzy{    position: relative;    z-index: 1;}
+.next-arrow{
+    width: 30px;
+    margin-left: -15px;
+    height: 18px;
+    background: url(../img/next-arrow.png) no-repeat center;
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    cursor: pointer;
+}
+/*第一个内容去*/
+.cont0{    text-align: center;    padding: 110px 0 125px;}
+.cont{    color: rgb(110, 110, 110);}
+.t1{    font-size: 20px;    font-family: TrajanPro3-Regular;}
+.t2{
+    font-size: 30px;
+    margin: 23px 0 28px;
+    font-family: SourceHanSerifCN-SemiBold;
+}
+.dor{display: inline-block;background:url(../img/img.png) 0 -71px  no-repeat;height:12px;width:12px;}
+.t4{ letter-spacing:8px; font-family: SourceHanSerifCN-SemiBold;margin: 28px 0}
+.t5{    width: 660px;margin: 0 auto  85px;    line-height: 30px;    font-family: TrajanPro3-Regular;}
+.video{
+    width: 910px;
+    height: 515px;
+    margin: 0 auto;
+    background: url(../img/video.jpg) no-repeat;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+            src='http://static.yuntongauto.com/bjzy/img/video.jpg',
+            sizingMethod='scale');
+    position: relative;
+}
+.video a{    display: block;    height: 515px;}
+.paly{
+    width: 70px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: rgba(0,0,0,.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -35px 0 0 -35px;
+    z-index: 1;
+}
+.paly:after{
+    content: '';
+    display: block;
+    border: 10px solid transparent;
+    position: absolute;
+    border-left-color: rgba(255,255,255,1);
+    left: 50%;
+    top: 50%;
+    margin: -10px 0 0 -5px;
+}
+video{    display: none;}
+video.on{    display: block;    position: absolute;    z-index: 10;}
+/*第二个内容去*/
+.cont1{
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 115px 0 70px;
+}
+/*轮播图*/
+.tempWrap{    margin: 0 auto;}
+.tempWrap ul li{
+    width: 200px;
+    height: 200px;
+    padding: 5px;
+    border: 2px solid #4c4c4c;
+    margin-left: 15px;
+}
+.tempWrap ul li img{
+    width: 200px;
+    height: 200px;
+}
+.picScroll{position: relative;width: 976px;margin: 0 auto;margin-bottom: 70px}
+.prev{
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    margin-top: -15px;
+    height: 30px;
+    width: 12px;
+    background: url(../img/img.png) 0 -83px no-repeat;
+}
+.next{
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -15px;
+    height: 30px;
+    width: 12px;
+    background: url(../img/img.png) 0 0 no-repeat;
+}
+.seeall{
+    display: block;
+    margin: 0 auto;
+    line-height: 45px;
+    height: 45px;
+    width: 170px;
+    text-align: center;
+    border: 2px solid #4c4c4c;
+    font-size: 14px;
+    font-family: TrajanPro3-Regular;
+    background-color: #fff;
+    color: rgb(110,110,110);
+    /*color: #4d4d4d;*/
+    text-decoration: none;
+}
+.picScroll1{    margin: 0 auto;margin-bottom: 70px}
+.picScroll1 .tempWrap ul li{
+    margin-left: 20px;
+    height: 351px;
+    width: 270px;
+    position: relative;
+}
+.picScroll1 ul li img{    height: 351px;    width: 270px;    opacity: .9;}
+.ts{
+    position: absolute;
+    bottom: 5px;
+    text-align: center;
+    width: 270px;
+    display: block;left: 5px;
+    line-height: 24px;
+    height: 24px;
+    background-color: rgba(0,0,0,0.5);
+    color: rgba(255, 2555, 255, .9);
+}
+.picScroll2 li a{
+    background-color:#c2ad94 ;
+    display: block;
+    height: 200px;
+    text-decoration: none;
+}
+/*尾部*/
+.connect{
+   /* min-width: 910px;
+    width: 67%;*/
+    width: 910px;
+    margin: 55px auto;
+    border: 1px solid #dedede;
+    border-left: none;
+    border-right: none;
+    font-family: TrajanPro3-Regular;
+    letter-spacing:5px;
+    overflow: hidden;
+    padding: 10px;
+    line-height: 20px;
+    font-size: 15px;
+    text-align: center;
+    color: #6e6e6e;
+}
+/*媒体查询*/
+@media screen and (max-width: 1360px) {
+    .f-box {
+        left: 140px;
+        top: 310px;
+    }
+}
+
