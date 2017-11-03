@@ -41,12 +41,14 @@
         <div class="video">
             <a href="javascript:void(0)">
                 <div class="paly"></div>
-                <video width="100%" height="515px" controls preload>
-                    <source src="1.mp4" type="video/mp4" codecs="avc1.42E01E,mp4a.40.2">
-                    <!–[if lt IE 8]>
-                       <embed src="1.mp4" width="100%" height="515px" autostart=false/>
-                    <![endif]–>
-                </video>
+                <div class="box">
+                    <video width="100%" height="515px" autoplay="autoplay" controls preload>
+                        <source src="http://k.youku.com/player/getFlvPath/sid/050969725733212ae7e45/st/mp4/fileid/03000A010059FC2364BD7D1638C1056888ACB4-23A7-4202-FAAF-B9930D58AD81?k=b4167a40405fb8e6282ccae2&amp;hd=0&amp;myp=0&amp;ts=172&amp;ctype=12&amp;ev=1&amp;token=0514&amp;oip=2088763118&amp;ep=cieUE0%2BEUcwF4iDcij8bNnnlIXMKXP4J9h%2BF8NJjALshQZ7Mmz3Xw%2B%2FESYtDEPoRASMGFe35o9iW%0AGTIQYfJA2G8Q20yoO%2FqWj4GV5d9azZMAEhw%2BA7nftVSeRjH1&amp;ccode=0502&amp;duration=172&amp;expire=18000&amp;psid=e167bbe61ee2c7a85e900c629be64d14&amp;ups_client_netip=124.127.254.238&amp;ups_ts=1509697257&amp;ups_userid=372818181&amp;utid=lhwcEgS5iSMCAd17o6IvBO34&amp;vid=XMzEzMTU1MDE1Ng%3D%3D&amp;vkey=Aecfdc8fdd9295bb7fa266c9989e00371" type="video/mp4" codecs="avc1.42E01E,mp4a.40.2">
+                        <!–[if lt IE 8]>
+                        <embed src="http://k.youku.com/player/getFlvPath/sid/050969725733212ae7e45/st/mp4/fileid/03000A010059FC2364BD7D1638C1056888ACB4-23A7-4202-FAAF-B9930D58AD81?k=b4167a40405fb8e6282ccae2&amp;hd=0&amp;myp=0&amp;ts=172&amp;ctype=12&amp;ev=1&amp;token=0514&amp;oip=2088763118&amp;ep=cieUE0%2BEUcwF4iDcij8bNnnlIXMKXP4J9h%2BF8NJjALshQZ7Mmz3Xw%2B%2FESYtDEPoRASMGFe35o9iW%0AGTIQYfJA2G8Q20yoO%2FqWj4GV5d9azZMAEhw%2BA7nftVSeRjH1&amp;ccode=0502&amp;duration=172&amp;expire=18000&amp;psid=e167bbe61ee2c7a85e900c629be64d14&amp;ups_client_netip=124.127.254.238&amp;ups_ts=1509697257&amp;ups_userid=372818181&amp;utid=lhwcEgS5iSMCAd17o6IvBO34&amp;vid=XMzEzMTU1MDE1Ng%3D%3D&amp;vkey=Aecfdc8fdd9295bb7fa266c9989e00371" width="100%" height="515px" autostart=false/>
+                        <![endif]–>
+                    </video>
+                </div>
             </a>
         </div>
     </div>
@@ -156,11 +158,10 @@
     /*视频*/
     $('.paly').click(function(){
         $(this).hide();
-        $('video').addClass('on')
+        $('video').addClass('on').attr("autoplay","autoplay");
         $('.video').css('background','rgba(0,0,0,1)')
     })
     /*一个样式问题的调整*/
     $('.picScroll1 .clone').css('margin-left','19px')
-
 </script>
 </html>
