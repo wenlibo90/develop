@@ -10,7 +10,7 @@
     <div class="header">
         <ul class="nav">
             <li class="hy"><img src="img/heyu.png"/></li>
-            <li><a href="index.html"><img src="img/bjzy.jpg" width="158" class="bjzy"/></a></li>
+            <li><a href="index.html"><img src="img/bjzy.jpg"  class="bjzy"/></a></li>
             <li class="td"><a href="land.html"><span>庄园土地</span><i>/ Land Of The Demesne</i></a></li>
             <li class="xy"><a href="faith.html"><span>庄园信仰</span><i>/ Faith Of The Demesne</i></a></li>
             <li class="ys"><a href="art.html"><span>庄园艺术</span><i>/ Demesne Art&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></a></li>
@@ -33,49 +33,14 @@
         <div class="pic">
             <img src="img/life1.jpg" alt=""/>
         </div>
+        <a href="index.html" class="seeall backindex"><img src="img/index.png" class="icon"/><span>返回首页</span></a>
     </div>
     <div class="footer cont1">
         <div class="connect">
                 TEL.86-10-61987777 | ADD.京承高速第11出口向东1000米
         </div>
-        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 360px;display: block"/>
+        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 500px;display: block"/>
     </div>
 </div>
 </body>
-<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
-<script>
-    /*轮播图*/
-    /*左右点击效果的*/
-    jQuery(".picScroll").slide({
-        mainCell:"ul",
-        effect:"leftLoop",
-        vis:4, scroll:2,
-        autoPage:true,
-        switchLoad:"_src" });
-    /* 自动轮播*/
-    jQuery(".picScroll1").slide({
-        mainCell:"ul",
-        effect:"leftMarquee",
-        vis:3,
-//        autoPlay:true,
-        interTime:50,
-        switchLoad:"_src"
-    });
-    $('.next-arrow').click(function(){
-        var obj=$('.cont').eq(0);
-        var h=obj.offset().top;
-        $('body,html').animate({
-            scrollTop:h
-        },600)
-    })
-    /*视频*/
-    $('.paly').click(function(){
-        $(this).hide();
-        $('video').addClass('on')
-        $('.video').css('background','rgba(0,0,0,1)')
-    })
-    /*一个样式问题的调整*/
-    $('.picScroll1 .clone').css('margin-left','19px')
-
-</script>
 </html>

@@ -3,13 +3,16 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>北京庄园</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
    <link href="css/index.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="warp">
     <div class="header">
         <ul class="nav">
-            <li class="hy"><img src="img/heyu.png"/></li>
+            <li class="hy"><img src="img/logo.png"/></li>
+            <!--<li class="hy"><img src="img/heyu.png"/></li>-->
             <li><a href="index.html"><img src="img/bjzy.jpg"  class="bjzy"/></a></li>
             <li class="td"><a href="land.html"><span>庄园土地</span><i>/ Land Of The Demesne</i></a></li>
             <li class="xy"><a href="faith.html"><span>庄园信仰</span><i>/ Faith Of The Demesne</i></a></li>
@@ -22,7 +25,14 @@
     <div class="banner">
       <div class="Scroll1">
             <div class="full">
-                <ul><li></li> <li class="n2"></li><li class="n3"></li> <li class="n4"></li><li class="n5"></li></ul>
+                <ul>
+                    <!--<li></li>-->
+                    <li><img src="img/1.jpg" class="myimg1"/></li>
+                    <li class="n2"><img src="img/2.jpg" class="myimg1"/></li>
+                    <li class="n3"><img src="img/3.jpg" class="myimg1"/></li>
+                    <li class="n4"><img src="img/4.jpg" class="myimg1"/></li>
+                    <li class="n5"><img src="img/5.jpg" class="myimg1"/></li>
+                </ul>
             </div>
             <div class="btns">
                 <ul><li></li> <li></li><li></li> <li></li><li></li></ul>
@@ -42,31 +52,25 @@
             <a href="javascript:void(0)">
                 <div class="paly"></div>
                 <div class="box">
-                    <video width="100%" height="515px" autoplay="autoplay" controls preload>
-                        <source src="http://k.youku.com/player/getFlvPath/sid/050969725733212ae7e45/st/mp4/fileid/03000A010059FC2364BD7D1638C1056888ACB4-23A7-4202-FAAF-B9930D58AD81?k=b4167a40405fb8e6282ccae2&amp;hd=0&amp;myp=0&amp;ts=172&amp;ctype=12&amp;ev=1&amp;token=0514&amp;oip=2088763118&amp;ep=cieUE0%2BEUcwF4iDcij8bNnnlIXMKXP4J9h%2BF8NJjALshQZ7Mmz3Xw%2B%2FESYtDEPoRASMGFe35o9iW%0AGTIQYfJA2G8Q20yoO%2FqWj4GV5d9azZMAEhw%2BA7nftVSeRjH1&amp;ccode=0502&amp;duration=172&amp;expire=18000&amp;psid=e167bbe61ee2c7a85e900c629be64d14&amp;ups_client_netip=124.127.254.238&amp;ups_ts=1509697257&amp;ups_userid=372818181&amp;utid=lhwcEgS5iSMCAd17o6IvBO34&amp;vid=XMzEzMTU1MDE1Ng%3D%3D&amp;vkey=Aecfdc8fdd9295bb7fa266c9989e00371" type="video/mp4" codecs="avc1.42E01E,mp4a.40.2">
-                        <!–[if lt IE 8]>
-                        <embed src="http://k.youku.com/player/getFlvPath/sid/050969725733212ae7e45/st/mp4/fileid/03000A010059FC2364BD7D1638C1056888ACB4-23A7-4202-FAAF-B9930D58AD81?k=b4167a40405fb8e6282ccae2&amp;hd=0&amp;myp=0&amp;ts=172&amp;ctype=12&amp;ev=1&amp;token=0514&amp;oip=2088763118&amp;ep=cieUE0%2BEUcwF4iDcij8bNnnlIXMKXP4J9h%2BF8NJjALshQZ7Mmz3Xw%2B%2FESYtDEPoRASMGFe35o9iW%0AGTIQYfJA2G8Q20yoO%2FqWj4GV5d9azZMAEhw%2BA7nftVSeRjH1&amp;ccode=0502&amp;duration=172&amp;expire=18000&amp;psid=e167bbe61ee2c7a85e900c629be64d14&amp;ups_client_netip=124.127.254.238&amp;ups_ts=1509697257&amp;ups_userid=372818181&amp;utid=lhwcEgS5iSMCAd17o6IvBO34&amp;vid=XMzEzMTU1MDE1Ng%3D%3D&amp;vkey=Aecfdc8fdd9295bb7fa266c9989e00371" width="100%" height="515px" autostart=false/>
-                        <![endif]–>
-                    </video>
+                  <iframe id="video" src='' frameBorder='0' allowfullscreen style="opacity: 0;height: 515px;width: 910px;"></iframe>
                 </div>
             </a>
         </div>
-    </div>
     <!--内容-->
     <div class="cont cont1">
         <p class="t1">A Rare Villa To Be Found</p>
         <p class="t2">珍&nbsp;稀&nbsp;墅&nbsp;种</p>
         <p class="t3"><span class="dor"></span></p>
         <p class="t4 t1">可能是北京最后的独墅</p>
-        <p class="t5 font10" style="width: 770px">北京庄园，以233栋纯独栋别墅，对珍贵土地致以无限敬意。以同等价格门槛，保证业主层次的纯粹性、社区环境的安全性
-            打造顶豪别墅专属社交圈层，加速提升社区口碑与升值速度</p>
+        <p class="t5 font10" style="margin-bottom: 0">北京庄园，以233栋纯独栋别墅，对珍贵土地致以无限敬意。以同等价格门槛，保证业主层次的纯粹性、社区环境的安全性</p>
+        <p class="t5 font10"> 打造顶豪别墅专属社交圈层，加速提升社区口碑与升值速度</p>
         <div class="picScroll">
             <div class="tempWrap">
                 <ul>
-                  <li><a href="javascript:void(0)"><img  src="img/slide1.jpg"></a></li>
-                  <li><a href="javascript:void(0)"><img  src="img/slide12.jpg"></a></li>
-                  <li><a href="javascript:void(0)"><img  src="img/slide13.jpg"></a></li>
-                  <li><a href="javascript:void(0)"><img  src="img/slide14.jpg"></a></li>
+                  <li><a href="more-pic.html"><img  src="img/slide1.jpg"></a></li>
+                  <li><a href="more-pic.html"><img  src="img/slide12.jpg"></a></li>
+                  <li><a href="more-pic.html"><img  src="img/slide13.jpg"></a></li>
+                  <li><a href="more-pic.html"><img  src="img/slide14.jpg"></a></li>
                 </ul>
             </div>
             <a class="prev" href="javascript:void(0)"></a>
@@ -104,10 +108,10 @@
         <div class="picScroll picScroll2">
             <div class="tempWrap">
                 <ul>
-                    <li><a href="javascript:void(0)"><img  src="img/slide31.jpg"></a></li>
-                    <li><a href="javascript:void(0)"><img  src="img/slide32.jpg"></a></li>
-                    <li><a href="javascript:void(0)"><img  src="img/slide33.jpg"></a></li>
-                    <li><a href="javascript:void(0)"><img  src="img/slide34.jpg"></a></li>
+                    <li><a href="more-brand.html"><img  src="img/slide31.png"></a></li>
+                    <li><a href="more-brand.html"><img  src="img/slide32.png"></a></li>
+                    <li><a href="more-brand.html"><img  src="img/slide33.jpg"></a></li>
+                    <li><a href="more-brand.html"><img  src="img/slide34.png"></a></li>
                 </ul>
             </div>
             <a class="prev" href="javascript:void(0)"></a>
@@ -115,18 +119,21 @@
         </div>
         <a href="more-brand.html" class="seeall">MORE BRAND</a>
     </div>
-    <div class="footer">
-        <div class="connect">
-                TEL.86-10-61987777 | ADD.京承高速第11出口向东1000米
-        </div>
-        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 360px;display: block"/>
-    </div>
 </div>
+    <div class="footer">
+        <div class="connect">TEL.86-10-61987777 | ADD.京承高速第11出口向东1000米</div>
+        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 500px;display: block"/>
+    </div>
+ </div>
 </body>
 <script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
 <script>
     $('.full li').css('height',$(window).height()-55);
     $('.banner').css('height',$(window).height()-55);
+    $('.myimg1').css({
+        "height":$(window).height()-55,
+        "width":"100%"
+    })
     if($('.full li').css('height')){
         /*banner*/
         jQuery(".Scroll1").slide({ titCell:".btns li" ,mainCell:".full ul", effect:"fold",  autoPlay:true, mouseOverStop:false});
@@ -158,8 +165,15 @@
     /*视频*/
     $('.paly').click(function(){
         $(this).hide();
-        $('video').addClass('on').attr("autoplay","autoplay");
-        $('.video').css('background','rgba(0,0,0,1)')
+        $('#video').attr('src','http://www.bfvyun.com/player/getplayer?playertype=0&servicetype=1&userid=5490003&fileid=9247C13ADE624B1EA0A11C2E32294927').css({
+            'height':"515px","width":"910px","opacity":" 1"
+        })
+      /*  $('#video').attr('src','1.mp4').css({
+            'height':"515px","width":"910px","opacity":" 1"
+        })*/
+        $('.video').css('background','#000');
+        var _theframe = document.getElementById("video");
+        _theframe.contentWindow.location.href = _theframe.src;
     })
     /*一个样式问题的调整*/
     $('.picScroll1 .clone').css('margin-left','19px')

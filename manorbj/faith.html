@@ -10,7 +10,7 @@
     <div class="header">
         <ul class="nav">
             <li class="hy"><img src="img/heyu.png"/></li>
-            <li><a href="index.html"><img src="img/bjzy.jpg" width="158" class="bjzy"/></a></li>
+            <li><a href="index.html"><img src="img/bjzy.jpg" class="bjzy"/></a></li>
             <li class="td"><a href="land.html"><span>庄园土地</span><i>/ Land Of The Demesne</i></a></li>
             <li class="xy on"><a href="faith.html"><span>庄园信仰</span><i>/ Faith Of The Demesne</i></a></li>
             <li class="ys"><a href="art.html"><span>庄园艺术</span><i>/ Demesne Art&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></a></li>
@@ -33,7 +33,7 @@
                 <ul>
                     <li><a href="javascript:void(0)"><img  src="img/faith1.jpg"><span class="font10 ts">分层布局法则：重塑垂直功能空间</span></a></li>
                     <li><a href="javascript:void(0)"><img  src="img/faith2.jpg"><span class="font10 ts">皿字平面法则：视采光为别墅居室的灵魂</span></a></li>
-                    <li><a href="javascript:void(0)"><img  src="img/faith3.jpg"></a></li>
+                    <li><a href="javascript:void(0)"><img  src="img/faith3.jpg"></a><span class="font10 ts">功能空间法则：尊重每一位家庭成员</span></li>
                 </ul>
             </div>
         </div>
@@ -42,7 +42,7 @@
             <li>
                 <div class="d1">
                     <div class="d1-box">
-                        <img src="img/1.jpg"/>
+                        <img src="img/fa1.jpg"/>
                     </div>
                     <div class="txt">
                            <p>全配置双入户系统</p>
@@ -58,13 +58,13 @@
                         <p>让地下庭院回归地上</p>
                         <div class="d1-detail"> 让庭院，与地上首层空间相连，成为从客厅延伸出去的一块规整集中的室外空间。把充沛采光和开阔视野还给首层，提高庭院使用率，同时方便养护。 </div>
                     </div>
-                    <img src="img/d2arrow.png" class="arrow"/>
+                    <img src="img/icon.jpg" class="arrow"/>
                 </div>
             </li>
             <li>
                 <div class="d1">
                     <div class="d1-box">
-                        <img src="img/1.jpg"/>
+                        <img src="img/fa2.jpg"/>
                     </div>
                     <div class="txt" >
                         <p>双主卧，南北通透的</p>
@@ -78,18 +78,18 @@
                     <div class="txt">
                         <p>按酒庄级专业酒窖建造需求</p>
                         <p> 打造家中的随享酒窖</p>
-                        <div class="d1-detail"> 将酒窖位置规划在地下首层西侧暗角位置。让珍藏红酒在家中即可得到妥善保存，随时享用。吧台也成为兼具装饰性、功能性的品酒空间。</div>
+                        <div class="d1-detail" style="letter-spacing: 0.5px;"> 将酒窖位置规划在地下首层西侧暗角位置。让珍藏红酒在家中即可得到妥善保存，随时享用。吧台也成为兼具装饰性、功能性的品酒空间。</div>
                     </div>
-                    <img src="img/d2arrow.png" class="arrow"/>
+                    <img src="img/icon.jpg" class="arrow"/>
                 </div>
             </li>
             <li>
-                <img src="img/1.jpg" class="d3"/>
+                <img src="img/fa3.jpg" class="d3"/>
             </li>
             <li>
                 <div class="d1">
                     <div class="d1-box">
-                        <img src="img/1.jpg"/>
+                        <img src="img/fa4.jpg"/>
                     </div>
                     <div class="txt">
                         <p>&nbsp;</p>
@@ -98,10 +98,10 @@
                     </div>
                 </div>
             </li>
-            <li>
+            <li class="no-m-b">
                 <div class="d1">
                     <div class="d1-box">
-                        <img src="img/1.jpg"/>
+                        <img src="img/fa6.jpg"/>
                     </div>
                     <div class="txt">
                         <p>&nbsp;</p>
@@ -110,10 +110,10 @@
                     </div>
                 </div>
             </li>
-            <li>
+            <li class="no-m-b">
                 <div class="d1">
                     <div class="d1-box">
-                        <img src="img/1.jpg"/>
+                        <img src="img/fa5.jpg"/>
                     </div>
                     <div class="txt">
                         <p> 4-8泊位</p>
@@ -122,16 +122,17 @@
                     </div>
                 </div>
             </li>
-            <li>
-                <img src="img/1.jpg" class="d3"/>
+            <li class="no-m-b">
+                <img src="img/fa7.jpg" class="d3"/>
             </li>
         </ul>
+        <a href="index.html" class="seeall backindex"><img src="img/index.png" class="icon"/><span>返回首页</span></a>
     </div>
     <div class="footer cont1">
         <div class="connect">
             TEL.86-10-61987777 | ADD.京承高速第11出口向东1000米
         </div>
-        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 360px;display: block"/>
+        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 500px;display: block"/>
     </div>
 </div>
 </body>
@@ -146,19 +147,6 @@
         interTime:50,
         switchLoad:"_src"
     });
-    $('.next-arrow').click(function(){
-        var obj=$('.cont').eq(0);
-        var h=obj.offset().top;
-        $('body,html').animate({
-            scrollTop:h
-        },600)
-    })
-    /*视频*/
-    $('.paly').click(function(){
-        $(this).hide();
-        $('video').addClass('on')
-        $('.video').css('background','rgba(0,0,0,1)')
-    })
     /*一个样式问题的调整*/
     $('.picScroll1 .clone').css('margin-left','10px')
 

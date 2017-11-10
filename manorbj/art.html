@@ -10,7 +10,7 @@
     <div class="header">
         <ul class="nav">
             <li class="hy"><img src="img/heyu.png"/></li>
-            <li><a href="index.html"><img src="img/bjzy.jpg" width="158" class="bjzy"/></a></li>
+            <li><a href="index.html"><img src="img/bjzy.jpg"  class="bjzy"/></a></li>
             <li class="td"><a href="land.html"><span>庄园土地</span><i>/ Land Of The Demesne</i></a></li>
             <li class="xy"><a href="faith.html"><span>庄园信仰</span><i>/ Faith Of The Demesne</i></a></li>
             <li class="ys on"><a href="art.html"><span>庄园艺术</span><i>/ Demesne Art&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></a></li>
@@ -36,14 +36,14 @@
         <p class="t5 t6 font10">   如今，意大利Carrara的鱼肚白石矿，已被列入限量开采名单</p>
         <p class="t5 t6 font10">北京庄园，对岁月洗练赋予的珍稀与贵重报以无限敬畏，大量采购，用于室内装饰，成为国内首个大规模使用鱼肚白的顶豪私人不动产</p>
         <p class="t5 t6 font10">此外，历经数十亿年地壳运动的德国米黄、梵蒂冈大教堂御用锡耶纳金，与意大利米兰大教堂广场同矿开采的小料石等多种珍贵石材</p>
-        <p class="t5">分别自原产地跋涉而来，汇聚于庄园，成为233席别墅共同的庄严表情</p>
-        <div class="picScroll1">
+        <p class="t5 font10">分别自原产地跋涉而来，汇聚于庄园，成为233席别墅共同的庄严表情</p>
+        <div class="picScroll1" style="margin-bottom: 125px">
             <div class="tempWrap">
                 <ul>
-                    <li><a href="javascript:void(0)"><img  src="img/slide21.jpg"><span class="font10 ts">高端生活辐射圈</span></a></li>
-                    <li><a href="javascript:void(0)"><img  src="img/slide23.jpg"><span class="font10 ts">稀缺生态休闲圈</span></a></li>
-                    <li><a href="javascript:void(0)"><img  src="img/slide22.jpg"><span class="font10 ts">顶级社交生意圈</span></a></li>
-                    <li><a href="javascript:void(0)"><img  src="img/slide22.jpg"><span class="font10 ts">顶级社交生意圈</span></a></li>
+                    <li><a href="javascript:void(0)"><img  src="img/art2-0.jpg"><span class="font10 ts">鱼肚白</span></a></li>
+                    <li><a href="javascript:void(0)"><img  src="img/art2-1.jpg"><span class="font10 ts">德国米黄</span></a></li>
+                    <li><a href="javascript:void(0)"><img  src="img/art2-2.jpg"><span class="font10 ts">锡耶纳金</span></a></li>
+                    <li><a href="javascript:void(0)"><img  src="img/art2-3.jpg"><span class="font10 ts">小料石</span></a></li>
                 </ul>
             </div>
         </div>
@@ -62,12 +62,13 @@
         <p class="t5 t6 t7 font10">北京庄园，尤其注重佣人生活区、机电间、储藏间等支持空间的尺度</p>
         <p class="t5 t6 t7 font10">将佣人房扩展为佣人生活区，为各个机电系统规划各自独立的装载空间，同时预留空间，便于日后设备的升级和增加，百分百释放功能</p>
         <p class="t5 t6 t7 font10">庞大的庄园系统得以健康有序地运转</p>
+        <a href="index.html" class="seeall backindex"><img src="img/index.png" class="icon"/><span>返回首页</span></a>
     </div>
     <div class="footer cont1">
         <div class="connect">
             TEL.86-10-61987777 | ADD.京承高速第11出口向东1000米
         </div>
-        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 360px;display: block"/>
+        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 500px;display: block"/>
     </div>
 </div>
 </body>
@@ -82,21 +83,7 @@
         interTime:50,
         switchLoad:"_src"
     });
-    $('.next-arrow').click(function(){
-        var obj=$('.cont').eq(0);
-        var h=obj.offset().top;
-        $('body,html').animate({
-            scrollTop:h
-        },600)
-    })
-    /*视频*/
-    $('.paly').click(function(){
-        $(this).hide();
-        $('video').addClass('on')
-        $('.video').css('background','rgba(0,0,0,1)')
-    })
     /*一个样式问题的调整*/
     $('.picScroll1 .clone').css('margin-left','10px')
-
 </script>
 </html>
