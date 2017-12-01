@@ -11,8 +11,7 @@
 <div class="warp">
     <div class="header">
         <ul class="nav">
-            <li class="hy"><img src="img/logo.png"/></li>
-            <!--<li class="hy"><img src="img/heyu.png"/></li>-->
+            <li class="hy"><img src="img/heyu.png"/></li>
             <li><a href="index.html"><img src="img/bjzy.jpg"  class="bjzy"/></a></li>
             <li class="td"><a href="land.html"><span>庄园土地</span><i>/ Land Of The Demesne</i></a></li>
             <li class="xy"><a href="faith.html"><span>庄园信仰</span><i>/ Faith Of The Demesne</i></a></li>
@@ -26,7 +25,6 @@
       <div class="Scroll1">
             <div class="full">
                 <ul>
-                    <!--<li></li>-->
                     <li><img src="img/1.jpg" class="myimg1"/></li>
                     <li class="n2"><img src="img/2.jpg" class="myimg1"/></li>
                     <li class="n3"><img src="img/3.jpg" class="myimg1"/></li>
@@ -46,13 +44,13 @@
         <p class="t2">造&nbsp;墅&nbsp;信&nbsp;仰</p>
         <p class="t3"><span class="dor"></span></p>
         <p class="t4 t1">20余载别墅居住经验，奠基北京庄园</p>
-        <p class="t5 font10">北京庄园，基于总设计师20余年别墅居住经验而生。拒绝复制和标配，亲自探求每个细节的极致完美 <br/>
+        <p class="t5 font10">北京庄园，基于总设计师20余载别墅居住经验而生。拒绝复制和标配，亲自探求每个细节的极致完美 <br/>
             这是北京庄园的造墅信仰，亦是中国别墅发展的生命力法则</p>
         <div class="video">
             <a href="javascript:void(0)">
                 <div class="paly"></div>
                 <div class="box">
-                  <iframe id="video" src='' frameBorder='0' allowfullscreen style="opacity: 0;height: 515px;width: 910px;"></iframe>
+                  <iframe id="video" src='' frameBorder='0' allowfullscreen style="height: 515px;width: 910px;"></iframe>
                 </div>
             </a>
         </div>
@@ -102,9 +100,9 @@
         <p class="t2">匠&nbsp;心&nbsp;筑&nbsp;墅</p>
         <p class="t3"><span class="dor"></span></p>
         <p class="t4 t1">每个伟大的建筑作品的背后，总有巨匠为之贡献智慧</p>
-        <p class="t5 font10" style="margin-bottom: 0">“C'est incroyable！“”E 'fantastica!“</p>
+        <p class="t5 font10" style="margin-bottom: 0;letter-spacing: 2px">“C'est incroyable！”“E 'fantastica!”</p>
         <p class="t5 font10" style="margin-bottom: 0"> 5年间，我们带着北京庄园的理想，走遍世界，诸多顶级品牌为之倾倒 </p>
-        <p class="t5 font10"> 传承百年的大师智慧，跨越时空，成就一座兼具有文化、历史价值的的别墅艺术博物馆   </p>
+        <p class="t5 font10"> 传承百年的大师智慧，跨越时空，成就一座兼具文化、历史价值的别墅装饰艺术博物馆   </p>
         <div class="picScroll picScroll2">
             <div class="tempWrap">
                 <ul>
@@ -130,15 +128,19 @@
 <script>
     $('.full li').css('height',$(window).height()-55);
     $('.banner').css('height',$(window).height()-55);
-    $('.myimg1').css({
-        "height":$(window).height()-55,
-        "width":"100%"
+    /*全屏轮播效果*/    $('.myimg1').css({        "height":$(window).height()-55,        "width":"100%"    })
+    /*全屏轮播点击下滑至内容区*/ $('.next-arrow').click(function(){
+        var obj=$('.cont').eq(0);
+        var h=obj.offset().top;
+        $('body,html').animate({
+            scrollTop:h
+        },600)
     })
+    /*轮播图*/
     if($('.full li').css('height')){
         /*banner*/
         jQuery(".Scroll1").slide({ titCell:".btns li" ,mainCell:".full ul", effect:"fold",  autoPlay:true, mouseOverStop:false});
     }
-    /*轮播图*/
     /*左右点击效果的*/
     jQuery(".picScroll").slide({
         mainCell:"ul",
@@ -155,25 +157,16 @@
         interTime:50,
         switchLoad:"_src"
     });
-    $('.next-arrow').click(function(){
-        var obj=$('.cont').eq(0);
-        var h=obj.offset().top;
-        $('body,html').animate({
-            scrollTop:h
-        },600)
-    })
     /*视频*/
     $('.paly').click(function(){
+        $('.video .box').css({
+            'background':"#000",
+            'height':"515px","width":"910px"
+        });
         $(this).hide();
         $('#video').attr('src','http://www.bfvyun.com/player/getplayer?playertype=0&servicetype=1&userid=5490003&fileid=9247C13ADE624B1EA0A11C2E32294927').css({
-            'height':"515px","width":"910px","opacity":" 1"
+            'height':"515px","width":"910px"
         })
-      /*  $('#video').attr('src','1.mp4').css({
-            'height':"515px","width":"910px","opacity":" 1"
-        })*/
-        $('.video').css('background','#000');
-        var _theframe = document.getElementById("video");
-        _theframe.contentWindow.location.href = _theframe.src;
     })
     /*一个样式问题的调整*/
     $('.picScroll1 .clone').css('margin-left','19px')
