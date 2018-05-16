@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>晟邦物业-招聘详情</title>
+    <meta name="description" content="晟邦物业，北京晟邦物业管理，物业管理"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <!--这个为了IE8支持H5属性-->
+    <script src="http://haiqiancun.com/file/demo/custom.modernizr.js"></script>
+</head>
+<body>
+<header></header>
+<div class="c content rDetail">
+    <div class="warp">
+        <div class="top">
+            <img src="img/page.png" alt="" class="l">
+            <span>当前位置：诚聘英才</span>
+        </div>
+        <div class="r-details">
+            <p>客服管家</p>
+            <span><i class="pnum"></i>招聘5人</span>
+            <span><i class="pp"></i>物业管理专员／助理</span>
+            <span><i class="pmoney"></i>2000元 - 4000元</span>
+        </div>
+        <ul class="rDetail-list">
+            <li class="duties">
+                <div class="rd-l-tit"><i class="zhize"></i><span>岗位职责</span></div>
+              <!--  <p> <em>1</em>按照年度计划，催收物业管理费，编织收费进度表，最终实现收费目标</p>
+                <p> <em>2</em>按照年度计划，催收物业管理费，编织收费进度表，最终实现收费目标</p>
+                <p> <em>3</em>按照年度计划，催收物业管理费，编织收费进度表，最终实现收费目标</p>-->
+            </li>
+            <li class="place">
+                <div class="rd-l-tit"><i class="didian"></i><span>工作地点</span></div>
+               <!-- <p> <em>1</em>按照年度计划，催收物业管理费，编织收费进度表，最终实现收费目标</p>
+                <p> <em>2</em>按照年度计划，催收物业管理费，编织收费进度表，最终实现收费目标</p>-->
+            </li>
+            <li>
+                <div class="rd-l-tit"><i class="buchong"></i><span>投递须知</span></div>
+                <!--<p> <em>1</em>按照年度计划，催收物业管理费，编织收费进度表，最终实现收费目标</p>-->
+                <p>
+                    <em>1</em>请通过一下方式投递求职简历
+                    <div class="rd-txt">
+                        <div class="cir l"></div>
+                        <div class="l">
+                            <span>拨打电话了解职位信息或以电子邮件的方式发送简历</span>
+                            <span>Email：<font class="blue">sunbow_hr@shengbangwuye.com</font></span>
+                            <span>Tel：010-67902846</span>
+                        </div>
+                    </div>
+                    <div class="rd-txt">
+                        <div class="cir l"></div>
+                        <div class="l">
+                            <span>登录北京晟邦物业管理公司官网，进入诚聘英才，录入自己的应聘信息并上传</span>
+                        </div>
+                    </div>
+                    <div class="rd-txt">
+                        <div class="cir l"></div>
+                        <div class="l">
+                            <span>您所投递的简历将由人力行政中心进行赛选，如果匹配，我们会联系您进行面试</span>
+                        </div>
+                    </div>
+                    <div class="rd-txt">
+                        <div class="cir l"></div>
+                        <div class="l">
+                            <span>人力行政中心将对您的能力和经历进行访谈式考察，如果通过考察，将会进入专业面试环节</span>
+                        </div>
+                    </div>
+                    <div class="rd-txt">
+                        <div class="cir l"></div>
+                        <div class="l">
+                            <span>复试将由专业部门对您的工作能力和经理进行相关考察和评定，如果专业能力符合，人力部
+门负责人将与您详细沟通岗位的工作内容，薪资待遇，发展机会等全方面内容</span>
+                        </div>
+                    </div>
+                    <div class="rd-txt">
+                        <div class="cir l"></div>
+                        <div class="l">
+                            <span>最终面试合格，人力行政中心会通知您办理相关手续</span>
+                        </div>
+                    </div>
+                </p>
+                <p>
+                    <em>2</em>公司招聘区域分布
+                <div class="rd-txt">
+                    <div class="cir l"></div>
+                    <div class="l">
+                        <span>北京经济技术开发区：林肯公园A/B/C区，林肯公寓，君安国际，宾士国际</span>
+                    </div>
+                </div>
+                <div class="rd-txt">
+                    <div class="cir l"></div>
+                    <div class="l">
+                        <span>北京市通州区：星悦国际</span>
+                    </div>
+                </div>
+                <div class="rd-txt">
+                    <div class="cir l"></div>
+                    <div class="l">
+                        <span>北京市大兴区：君悦国际，产业管理公司</span>
+                    </div>
+                </div>
+                <div class="rd-txt">
+                    <div class="cir l"></div>
+                    <div class="l">
+                        <span>北京市顺义区：尚峰壹号，瑞景圆／锦绣园，别墅项目售楼处</span>
+                    </div>
+                </div>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+<footer></footer>
+</body>
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/data.js"></script>
+<script>
+    function init(){
+        var id=(document.location.href).split("=")[1];
+        var data=window.recruit[id];
+        $('.r-details').html('<p>'+data.pos+'</p> ' +
+            '<span><i class="pnum"></i>招聘'+data.pnum+'人</span> ' +
+            '<span><i class="pp"></i>'+data.pname+'</span> ' +
+            '<span><i class="pmoney"></i>'+data.pmoney+'</span>')
+        for(var i=0;i<=data.duties.length-1;i++){
+            $('.duties').append('<p> <em>'+(i+1)+'</em>'+data.duties[i]+'</p>')
+        }
+        for(var j=0;j<=data.place.length-1;j++){
+
+            $('.place').append('<p> <em>'+(j+1)+'</em>'+data.place[j]+'</p>')
+        }
+    }
+    init();
+</script>
+</html>

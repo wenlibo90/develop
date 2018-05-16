@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>晟邦物业-新闻详情</title>
+    <meta name="description" content="晟邦物业，北京晟邦物业管理，物业管理"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <!--这个为了IE8支持H5属性-->
+    <script src="http://haiqiancun.com/file/demo/custom.modernizr.js"></script>
+</head>
+<body>
+<header></header>
+<div class="c content newsDetail">
+    <div class="warp">
+        <div class="top">
+            <img src="img/page.png" alt="" class="l">
+            <span>当前位置：行业动态</span>
+        </div>
+        <div class="warp1">
+            <div class="n-tit">
+                <div class="l">
+                    <span>2017</span>
+                    <span>11-07</span>
+                </div>
+                <p class="l">开发区第二十二届119消防宣传周启动仪式记实</p>
+            </div>
+            <div class="n-cont"></div>
+        </div>
+    </div>
+</div>
+<footer></footer>
+</body>
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/data.js"></script>
+<script>
+    function init(){
+        var id=(document.location.href).split("=")[1];
+        var data=window.dynamics[id];
+        $('.n-tit').html('<div class="l"> <span>'+data.year+'</span> <span>'+data.ndate+'</span></div> <p class="l">'+data.tit+'</p>')
+        $('.n-cont').html(data.txt)
+    }
+    init();
+</script>
+</html>

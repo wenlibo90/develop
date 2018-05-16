@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>晟邦物业-新闻栏目</title>
+    <meta name="description" content="晟邦物业，北京晟邦物业管理，物业管理"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <!--这个为了IE8支持H5属性-->
+    <script src="http://haiqiancun.com/file/demo/custom.modernizr.js"></script>
+</head>
+<body>
+<header></header>
+<div class="c content newsDetail news">
+    <div class="warp">
+        <div class="top">
+            <img src="img/page.png" alt="" class="l">
+            <span>当前位置：新闻栏目</span>
+        </div>
+    </div>
+    <div class="nodata">没有更多内容了</div>
+</div>
+<footer></footer>
+
+</body>
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/data.js"></script>
+<script>
+    function initNew(){
+        var data=window.news;
+        var arr=Object.keys(data)
+        for(var i=0;i<=arr.length-1;i++){
+            $('.warp').append('<a class="new-item" href="newDetails.html?newid='+arr[i]+'"> ' +
+                '<div class="l new-w"> ' +
+                '<div class="n-tit">' +
+                '<div class="l"> <span>'+data[i].year+'</span> <span>'+data[i].ndate+'</span> </div> ' +
+                '<p class="l">'+data[i].tit+'</p> </div> ' +
+                '<div class="n-cont"> <div class="n-txt-cont">'+data[i].txtTop+'</div> ' +
+                '<p class="t-more r"><span class="l kown">了解详情</span><span class="l leftarrow"></span></p> </div> </div> ' +
+                '<img src="'+data[i].img+'" class="new-item-img r"/> </a>')
+        }
+    }
+    $(function(){
+        initNew();
+        $(window).scroll(function(event){
+            var element = $('.new-item:last-child');
+            var win = $(window);
+            var bottom_=0;
+            var item=$('.new-item');
+            win.scroll(function() {
+                bottom_=element.height()+win.scrollTop();
+                if (element.offset().top  > bottom_) {
+                    if($('.nodata').css('display')=='block'){
+                        return null;
+                    }else{
+                        $('.nodata').slideDown()
+                    }
+                }
+                for(var i=0;i<=item.length-1;i++){
+
+                }
+            })
+        });
+    })
+</script>
+</html>
