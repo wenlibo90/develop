@@ -101,6 +101,9 @@
         img.eq(0).animate({"margin-top":"30px"});
         txt.eq(0).animate({'bottom': '20px'});
         cont.eq(0).fadeIn(100)
+
+
+
         $(window).scroll(function(event){
             var top = $(window).scrollTop();
             if(top>80){
@@ -114,10 +117,17 @@
                 cont.eq(2).fadeIn()
             }
         });
+
     }
     $(function(){
-        init();
-        /*关于晟邦的页面为纯静态页面  内容不会经常性变动*/
+        if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+            $('.box-img img').css({"margin-top":"40px"})
+            $('.box-txt').css({"display":"block"})
+        }else{
+            init();
+        }
+
+
     })
 </script>
 </html>

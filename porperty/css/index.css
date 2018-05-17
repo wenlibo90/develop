@@ -211,9 +211,9 @@ footer{padding:38px 0 20px;width:100%;background:#323232;}
 .delop .btns li{float:left;margin-top:2px;margin-right:8px;width:20px;height:2px;min-height:2px;background-color:#323232;-webkit-transition:all .5s;-moz-transition:all .5s;-o-transition:all .5s;transition:all .5s;}
 .delop .btns li.on{margin-top:0;height:5px;min-height:5px;background-color:#323232;}
 .delop .del-Scroll1 li .line{position:absolute;top:50%;z-index:0;width:100%;height:1px;background-color:#323232;}
-.item-del{position:absolute;top:35px;left:20%;margin-left:-19%;padding:8px;max-width:20%;min-height:70px;background-color:#323232;color:#fff;cursor:pointer;}
-.item-del:hover{background-color:#ac3338;}
-.item-del:hover .cir span{background-color:#ac3338;}
+.item-del{position:absolute;top:35px;left:20%;margin-left:-19%;padding:8px;max-width:20%;min-height:70px;background-color:#c82f35;color:#fff;cursor:pointer;}
+.item-del:hover{background-color:#e82b32;}
+.item-del:hover .cir span{background-color:#e82b32;}
 .item-del:nth-child(2n+1){top:181px;}
 .item-del.del1{left:40%;}
 .item-del.del2{left:60%;}
@@ -223,8 +223,8 @@ footer{padding:38px 0 20px;width:100%;background:#323232;}
 .item-del .cir{position:absolute;bottom:-40px;left:50%;box-sizing:border-box;margin-left:-12px;padding:5px;width:20px;height:20px;border:1px solid #323232;border-radius:50%;background-color:#fff;}
 .item-del .cir span{display:block;width:8px;height:8px;border-radius:50%;background-color:#323232;}
 .item-del:nth-child(2n+1) .cir{top:-40px;}
-.item-del:nth-child(2n+1) .sanjiao{position:absolute;top:-12px;right:50%;margin-left:-6px;height:0;border-color:transparent transparent #323232 transparent;border-style:solid;border-width:6px;}
-.item-del .sanjiao{position:absolute;bottom:-12px;left:50%;margin-left:-6px;border-color:#323232 transparent transparent transparent;border-style:solid;border-width:6px;}
+.item-del:nth-child(2n+1) .sanjiao{position:absolute;top:-12px;right:50%;margin-left:-6px;height:0;border-color:transparent transparent #c82f35 transparent;border-style:solid;border-width:6px;}
+.item-del .sanjiao{position:absolute;bottom:-12px;left:50%;margin-left:-6px;border-color:#c82f35 transparent transparent transparent;border-style:solid;border-width:6px;}
 .item-del .tit .r{position:absolute;top:4px;right:-4px;border-color:transparent transparent transparent #fff;border-style:solid;border-width:5px;}
 .item-del .txt{font-size:12px;line-height: 25px;}
 .delop .m-txt{float:right;overflow:hidden;width:526px;}
