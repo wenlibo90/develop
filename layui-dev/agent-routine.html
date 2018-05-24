@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body class="layui-field-box" style="background:#fff">
+    
+    <div class="layui-field-box">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>信息类型</th>
+                    <th>操作人</th>
+                    <th>操作人电话</th>
+                    <th>操作时间</th>
+                    <th>备注</th>
+                    <th>附件类型</th>
+                    <th width="320">附件</th>
+                </tr>
+            </thead>
+            <tbody id="agent_bd">
+               
+                <tr>
+                    <td colspan="7" style="text-align:center;height:200px">没有手续信息！</td>
+                 </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/common/common_sup.js"></script>
+<script type="text/javascript" src="js/validator.js"></script>
+<script>
+	$(function(){
+		var id = window.location.search.slice(1).split('=')[1];
+		init(id);
+	});
+		function init(id){
+			/*当存在ID时进行显示*/
+			var data={
+				"transferId":id
+			};
+			var uri='/boss/transferLog/getTransferList';
+			var result = sup_ajax(uri,data,false);
+			if(result==null){
+				layer.msg("未知的网络错误！");
+				return;
+			}
+		    if(result.resultCode!=100){
+		    	layer.msg(result.resultMsg);
+		    	return;
+		    }
+		    var map = ["statusName","userName","userPhone","time","remark","fileType","fileUrl"];
+		    var html="";
+		    for(var i=0;i<result.data.length;i++){
+		    	html+='<tr>';
+		    	var flag=false;
+		    	for(var j=0;j<map.length;j++){
+		    		
+		    		html+='<td>';
+		    		var html_temp = eval('result.data[i].'+map[j]); 
+		    		if(html_temp!=null){
+		    			if(map[j]=="time"){
+		    			html_temp=timeFormat(html_temp); 
+		    		}
+		    			else if(map[j]=="fileType"){
+		    				if(html_temp=='1'){
+		    					flag=true;
+		    					html_temp='图片';
+		    				}
+		    				else{
+		    					html_temp='文件';
+		    				}
+		    			}
+		    			else if(map[j]=='fileUrl'){
+		    				if(flag){
+		    					var ft=	html_temp.split(",");
+		    					html_temp='';
+		    					for(var m=0;m<ft.length;m++){
+		    						html_temp+='<img style="max-width:155px;height:85px" src="'+ft[m]+'">'; 
+		    						html_temp+='&nbsp;&nbsp'; 
+		    					}
+		    				}
+		    				else{
+		    					var ft=	html_temp.split(",");
+		    					html_temp='';
+		    					for(var m=0;m<ft.length;m++){
+		    						html_temp+='<a  target="_blank" class="layui-btn layui-btn-warm layui-btn-xs"  href="'+ft[m]+'">'; 
+		    						html_temp+='点击查看文件</a>';
+		    						html_temp+='&nbsp;&nbsp'; 
+		    					}
+		    				}
+		    			}
+		    			html+=html_temp;
+		    		}
+		    		html+='</td>';
+		    	}
+		    	html+='</tr>';
+		    }
+		   
+		   	$("#agent_bd").html(html);
+		}
+</script>
+</html>

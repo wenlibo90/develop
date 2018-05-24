@@ -1,0 +1,658 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+		<style>
+			.group-list tr:hover {
+				cursor: pointer
+			}
+			
+			.group-list tr.on {
+				background: #f2f2f2
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="layui-side layui-field-box" style="padding-top:16px;background:#fff">
+			<div class="layui-btn layui-btn-sm" id="add-group"><i class="layui-icon">&#xe608;</i>&nbsp;新建分组</div>
+			<div class="layui-btn layui-btn-sm js-groupdel"><i class="layui-icon">&#xe640;</i>&nbsp;删除分组</div>
+			<table class="layui-table" lay-skin="nob" style="margin-top:20px">
+				<thead>
+
+				</thead>
+				<tbody class="group-list" id="vip_group_id">
+
+				</tbody>
+			</table>
+		</div>
+		<div class="layui-form" style="position:absolute;left:215px;padding:20px 15px 0;height:38px">
+			<div class="layui-input-inline"><input id="vip_find_input" placeholder="输入姓名/手机号" class="layui-input" type="text"></div>
+			<div class="layui-input-inline" id="status_select">
+			</div>
+			<div class="layui-input-inline" id="shop_select">
+				<select class="layui-input" id="shop_list" lay-filter="pop-form">
+
+				</select>
+			</div>
+			<div class="layui-btn" id="vip_list_find"><i class="layui-icon">&#xe615;</i>搜索</div>
+			<!--<div class="layui-btn" id="add_member"><i class="layui-icon">&#xe608;</i>&nbsp;新增会员</div>
+			<div class="layui-btn"><i class="fa fa-edit"></i>&nbsp;资料补全</div>-->
+			<div class="layui-btn" id="change_level"><i class="fa fa-refresh"></i>&nbsp;调整级别</div>
+			<div class="layui-btn" id="change_group"><i class="fa fa-sitemap"></i>&nbsp;调整分组</div>
+			<!-- <div class="layui-btn"><i class="fa fa-arrow-circle-o-down"></i>&nbsp;导入</div>
+            <div class="layui-btn"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;导出</div>-->
+		</div>
+
+		<div class="layui-field-box" style="position:absolute;left:215px;top:60px;width:81%">
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>选择</th>
+						<th>会员编号</th>
+						<th>车商号</th>
+						<th>拍牌号</th>
+						<th>姓名</th>
+						<th>注册手机号</th>
+						<th>所属店铺</th>
+						<th>是否共享</th>
+						<th>会员级别</th>
+						<th>会员分组</th>
+						<th>创建时间</th>
+						<th>会员状态</th>
+						<th style="width:84px">操作</th>
+					</tr>
+				</thead>
+
+				<tbody id="vip_list">
+
+				</tbody>
+			</table>
+			<div id="page"></div>
+		</div>
+
+	</body>
+
+	<!--退会弹层-->
+	<div id="member-th" lay-filter="pop-form" style="padding:30px 40px 0 0;display:none">
+		<div class="layui-form-item layui-form">
+			<label class="layui-form-label">是否退会</label>
+			<div class="layui-input-block">
+				<input name="sex" value="是" title="是" checked="" type="radio">
+				<input name="sex" value="否" title="否" type="radio">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">退会原因</label>
+			<div class="layui-input-block" style="width:200px"><textarea class="layui-textarea" id="vip_go_out"></textarea></div>
+		</div>
+		<div>
+			<label class="layui-form-label">上传附件</label>
+			<div class="layui-upload"><button type="button" class="layui-btn layui-btn-normal" id="upload"><i class="layui-icon">&#xe67c;</i>上传图片</button></div>
+		</div>
+	</div>
+
+	<!--调整用户级别或分组-->
+	<div id="level_group" class="layui-field-box layui-form" style="padding:30px 40px 0 0;display:none">
+	</div>
+
+	<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+	<script type="text/javascript" src="js/common/common_sup.js"></script>
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script>
+		/*基础配置数据*/
+		var uri_shop_list = "/boss/carStore/selectAllStore"; //商铺列表
+		var uri_vip_list = "/boss/user/getCustomerList"; //vip信息
+		var uri_vip_group = "/boss/group/getGroupAndNum"; //用户分组信息
+		var uri_group_del = "/boss/group/deleteGroupById";
+		var uri_vip_out = "/boss/user/userSignOut";
+		var uri_group_up = "/boss/group/saveGroup";
+		var vip_list_name = ["id", "userNum", "auctionPlateNum", "name", "mobile", "userStoreName",
+			"isShare", "levelName", "groupName", "registTime", "statusName"
+		];
+		var uri_status_od = '/boss/user/selectAllUserStatus';
+		var pre_list_exagg;
+		var aft_list_exagg;
+		var interval_list_exagg;
+		var page = 1;
+		var limit = 10;
+		/*页面初始化*/
+		$(function() {
+			init_group();
+			init_tab();
+			init_lab();
+		});
+		/*初始化标签*/
+		function init_lab() {
+			var result_shop_list = sup_ajax(uri_shop_list, {}, true);
+			var result_status_list = sup_ajax(uri_status_od, {}, true);
+			if(result_shop_list == null || result_shop_list == "" || result_shop_list.resultCode != 100) {
+				return
+			}
+			if(result_status_list == null || result_status_list == "" || result_status_list.resultCode != 100) {
+				return
+			}
+
+			layui.use('form', function() {
+				form = layui.form;
+				var status_h5 = '<select class="layui-input" id="vip_status_list">';
+
+				var html = '<select class="layui-input" id="shop_list" lay-filter="pop-form">';
+				html += '<option value="0">所属店铺</option>';
+				for(var i = 0; i < result_shop_list.data.length; i++) {
+					var str = "<option value=\"" + result_shop_list.data[i].id + "\">" + result_shop_list.data[i].name + "</option>";
+					html += str;
+				}
+				status_h5 += '<option value="0">会员状态</option>';
+				for(var i = 0; i < result_status_list.data.length; i++) {
+					status_h5 += "<option value=\"" + result_status_list.data[i].status + "\">" + result_status_list.data[i].statusName + "</option>";
+				}
+				html += '</select>';
+				status_h5 += '</select>';
+				$("#shop_select").html(html);
+				$("#status_select").html(status_h5);
+				form.render();
+			});
+
+		}
+		/*初始化菜单栏*/
+		function init_group() {
+			//初始化左侧菜单栏
+			var html = "";
+			var result_group_list = sup_ajax(uri_vip_group, {}, false);
+			html += '<input type="text" hidden="hiddeen" id="vip_group_itxt" value="' + result_group_list.data[0].id + '"/>';
+			for(var i = 0; i < result_group_list.data.length; i++) {
+				html += '<tr id="' + result_group_list.data[i].id + '">';
+				html += '<td onclick="vip_group_checked(' + result_group_list.data[i].id + ')">' +
+					result_group_list.data[i].groupName +
+					'(' + result_group_list.data[i].userNum + ')' + '</td>';
+				html += '</tr>';
+			}
+			$("#vip_group_id").html(html);
+			$(".group-list tr:nth-child(2)").addClass("on")
+		}
+
+		/*初始化表格*/
+		function init_tab(search_name, status, group_id, store_id) {
+			layui.use('laypage', function() {
+				var laypage = layui.laypage;
+				var vip_list_data = {
+					"page": page,
+					"limit": limit,
+					"storeId": store_id,
+					"groupId": group_id,
+					"status": status,
+					"searchName": search_name
+				};
+				var result_vip_list = sup_ajax(uri_vip_list, vip_list_data, false);
+				laypage.render({
+					elem: 'page',
+					limit: limit,
+					count: result_vip_list.data.count,
+
+					//跳转
+					jump: function(obj) {
+						var vip_list_data = {
+							"page": obj.curr,
+							"limit": limit,
+							"storeId": store_id,
+							"groupId": group_id,
+							"status": status,
+							"searchName": search_name
+						};
+						var html = "";
+						var result_vip_list = sup_ajax(uri_vip_list, vip_list_data, false);
+						//请求不成功或成功以后无返回数据
+						if(result_vip_list == null || result_vip_list == "" || result_vip_list.resultCode != 100 || result_vip_list.success == false) {
+							var vip_list_body = $("#vip_list");
+							vip_list_body.html('<td colspan="12" style="text-align:center;height:200px">没有会员信息！</td>');
+							return;
+						}
+						for(var i = 0; i < result_vip_list.data.list.length; i++) {
+							html += "<tr>"
+							html += '<td><input type="checkbox" title="选择" name="vip_checkbox" value="' + result_vip_list.data.list[i].id + '"/></td>'
+							for(var j = 0; j < vip_list_name.length; j++) {
+								html += '<td>'
+								var cmd_temp = "result_vip_list.data.list[i]." + vip_list_name[j];
+								var tmp_html = eval(cmd_temp);
+								if(vip_list_name[j] == 'auctionPlateNum') {
+									if(tmp_html == null || tmp_html == "") {
+										tmp_html = '暂无';
+									}
+									html += '<a href=\"javascript:;\"  onclick="up_ptn(' + result_vip_list.data.list[i].id + ')" class=\"layui-btn layui-btn-primary layui-btn-xs\" id=\"sequence\">' + tmp_html + '</a>';
+									continue;
+								}
+								if(tmp_html != null && tmp_html != "") {
+									if(vip_list_name[j] == 'isShare') {
+										switch(tmp_html) {
+											case 1:
+												tmp_html = '<a href=\"javascript:;\" class=\"layui-btn layui-btn-primary layui-btn-xs\" id=\"sequence\">是</a>';
+												break;
+											default:
+												tmp_html = '<a href="javascript:;" class="layui-btn layui-btn-disabled layui-btn-xs" id="sequence">否</a>';
+										}
+									} else if(vip_list_name[j] == 'registTime') {
+										tmp_html = timeFormat(tmp_html);
+									}
+
+									html += tmp_html;
+
+								}
+
+								html += '</td>'
+							}
+							html += '<td>';
+							html += ' <a href="javascript:;" class="layui-btn layui-btn-warm layui-btn-xs" onclick="vip_single_content(' + result_vip_list.data.list[i].id + ')">详情</a>';
+							if(result_vip_list.data.list[i].status == 7||result_vip_list.data.list[i].status == '7')
+								html += ' <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="vip_single_delete(' + result_vip_list.data.list[i].id + ')">退会</a>';
+							html += '</td>'
+							html += "</tr>"
+						}
+						var vip_list_body = $("#vip_list");
+						vip_list_body.html(html);
+					}
+				})
+			});
+		}
+
+		function up_ptn(id) {
+			var uri_ptn = "/boss/user/editUserAuctionPlateNum";
+
+			layer.open({
+				title: '修改排序',
+				type: 1,
+				btn: ['确定', '取消'],
+				shade: 0,
+				yes: function(index, layero) {
+					var txt_ptn = $("#text_ptn").val();
+					if(txt_ptn == null || txt_ptn.trim() == "") {
+						layer.msg("输入拍牌号为空，操作失败！");
+						return;
+					}
+					var data_ptn = {
+						"userId": id,
+						"auctionPlateNum": txt_ptn
+					}
+					var result_ptn = sup_ajax(uri_ptn, data_ptn, false);
+					if(result_ptn.resultCode != 100) {
+						layer.msg(result_ptn.resultMsg);
+						return;
+					} else {
+						layer.msg("修改成功");
+						init_tab();
+						layer.close(index);
+					}
+				},
+				content: '<p style="padding:30px 40px 20px 0"><span class="layui-form-label">拍牌号：</span><span class="layui-input-inline"><input class="layui-input sequence" placeholder="请输入拍牌号" type="text" id="text_ptn"></span></p>'
+
+			});
+		}
+	</script>
+	<script>
+		layui.use('table', function() {
+			var table = layui.table,
+				upload = layui.upload,
+				form = layui.form,
+				$ = layui.jquery;
+
+			//新增会员
+			$("#add_member").on('click', function() {
+				layer.msg("暂时不能添加会员！");
+			});
+
+			/*新建分组*/
+			$("#add-group").on('click', function() {
+				parent.layer.open({
+					title: '新建分组',
+					type: 1,
+					content: '<p style="padding:25px 35px 10px 0"><span class="layui-form-label">分组名称：</span><span class="layui-input-inline"><input id="vip_group_up" class="layui-input" type="text" placeholder="请输入分组名称"></span></p>',
+					btn: ['确定', '取消'],
+					cancel: function(index) {
+						layer.close(index);
+					},
+					yes: function(index, layero) {
+						//调用接口 成功以后关闭弹层并且插入 失败/已存在分组则提示
+						var temp_up_input = layero.find('#vip_group_up').val();
+						if(temp_up_input == null || temp_up_input == "") {
+							return;
+						}
+						var result_group_up = sup_ajax(uri_group_up, {
+							"groupName": temp_up_input
+						}, false);
+						if(result_group_up != null && result_group_up != "" && result_group_up.resultCode == 100) {
+							init_group();
+						} else {
+							layer.msg("添加失败");
+						}
+						parent.layer.close(index);
+					}
+				});
+			});
+
+			/*删除分组*/
+			$('.js-groupdel').on('click', function() {
+				var con = $('.group-list tr.on');
+				if($('.group-list tr').hasClass('on')) {
+					parent.layer.confirm('确认删除？', function(index) {
+						parent.layer.close(index);
+						var vip_group_itxt = $("#vip_group_itxt").val();
+
+						if(vip_group_itxt != null && vip_group_itxt != "") {
+							var result_del_group = sup_ajax(uri_group_del, {
+								"groupId": vip_group_itxt
+							}, false);
+							if(result_del_group.resultCode == 100) {
+								con.remove();
+								layer.msg("删除成功");
+								init_tab();
+								init_group();
+							}
+						} else {
+							layer.msg("不可删除此节点");
+						}
+					});
+				} else {
+					layer.msg("没有选中分组")
+				}
+			});
+
+			/*调整级别*/
+			$('#change_level').on('click', function() {
+				var box_checked = $("input[name='vip_checkbox']:checked");
+				var id_str = "";
+				box_checked.each(function() {
+
+					id_str += $(this).attr('value') + ",";
+				})
+				if(id_str != null && id_str != "") {
+
+					id_str = id_str.substring(0, id_str.length - 1);
+				} else {
+					layer.msg("请选择需要调整的会员！");
+					return;
+				}
+				//查询会员级别列表
+				var uri_vip_all_level = "/boss/level/getAllLevel";
+				var result_level = sup_ajax(uri_vip_all_level, {}, true);
+				var level_group = $("#level_group"); //会员级别div对象
+				if(result_level == null || result_level == "" || result_level.resultCode != 100) {
+					layer.msg("当前并未设置任何会员级别，请联系客服代表");
+					return;
+
+				}
+				var html = '<p class="layui-form-item"><span class="layui-form-label">调整为：</span><span id="group_select" class="layui-input-inline"><select class="layui-input" id="myTemp">';
+				for(var i = 0; i < result_level.data.length; i++) {
+					html += '<option value="' + result_level.data[i].id + '">' + result_level.data[i].levelName + '</option>';
+				}
+				html += '</select></span></p>';
+				html += '<p class="layui-form-item"><span class="layui-form-label">调整原因：</span><span class="layui-input-inline"><input id="solo_text" class="layui-input" placeholder="请输入调整原因或备注" type="text"></span></p>';
+				layui.use('form', function() {
+					level_group.html(html);
+
+					form.render();
+				});
+
+				layer.open({
+					title: '调整用户级别',
+					type: 1,
+					btn: ['确定', '取消'],
+					shade: 0,
+					area: ['380px', '240px'],
+					content: $("#level_group"),
+					success: function() {
+						form.render(null, 'pop-form');
+					},
+					cancel: function(index) {
+						$("#level_group").hide();
+						layer.close(index);
+					},
+					yes: function(index) {
+						var solo_text = $("#solo_text").val().trim();
+						if(solo_text == "" || solo_text == null) {
+							layer.msg("请填写调整原因");
+							return;
+						}
+						var sel_val = $("#myTemp").val();
+
+						var data_levl = {
+							"userIds": id_str,
+							"userLevelId": sel_val,
+							"msg": solo_text
+						};
+						var uri_levl = "/boss/user/editUserLevel";
+						var result_levl = sup_ajax(uri_levl, data_levl, false);
+						if(result_levl == null || result_levl == "" || result_levl.resultCode != 100) {
+							layer.msg("服务器错误！级别修改失败");
+							return;
+						}
+						layer.msg("级别修改成功");
+						init_tab();
+						$("#level_group").hide();
+						layer.close(index);
+					},
+					btn2: function(index) {
+						$("#level_group").hide();
+						layer.close(index);
+					}
+				});
+			})
+
+			/*调整分组*/
+			$('#change_group').on('click', function() {
+				var box_checked = $("input[name='vip_checkbox']:checked");
+				var id_str = "";
+				var ans = 0;
+				box_checked.each(function() {
+					ans++;
+					id_str += $(this).attr('value') + ",";
+				})
+
+				if(id_str != null && id_str != "") {
+
+					id_str = id_str.substring(0, id_str.length - 1);
+					if(ans != 1) {
+						layer.msg("仅支持单用户调整分组！");
+						return;
+					}
+				} else {
+
+					layer.msg("请选择需要调整的会员！");
+					return;
+				}
+				var result_gp_vip = sup_ajax('/boss/group/getGroupForSelect', {}, false);
+				if(result_gp_vip == null || result_gp_vip == "" || result_gp_vip.resultCode != 100) {
+					layer.msg("拉取会员分组失败！");
+					return;
+				}
+				var level_group = $("#level_group"); //会员分组div对象
+				var html = '<p class="layui-form-item"><span class="layui-form-label">调整为：</span><span id="group_select" class="layui-input-inline">';
+				for(var i = 0; i < result_gp_vip.data.length; i++) {
+					html += "<input value=\"" + result_gp_vip.data[i].id + "\" title=\"" + result_gp_vip.data[i].groupName + "\"lay-skin=\"primary\" type=\"checkbox\" name=\"mycheck\"/>";
+				}
+				html += '</select></span></p>';
+				html += '<p class="layui-form-item"><span class="layui-form-label">调整原因：</span><span class="layui-input-inline"><input id="solo_text" class="layui-input" placeholder="请输入调整原因或备注" type="text"></span></p>';
+				layui.use('form', function() {
+					level_group.html(html); //重载并渲染
+					form.render();
+				});
+
+				layer.open({
+					title: '调整用户分组',
+					type: 1,
+					btn: ['确定', '取消'],
+					shade: 0,
+					area: ['380px', '240px'],
+					content: $("#level_group"),
+					success: function() {
+						form.render(null, 'pop-form');
+					},
+					cancel: function(index) {
+						$("#level_group").hide();
+						layer.close(index);
+					},
+					yes: function(index) {
+						var solo_text = $("#solo_text").val().trim();
+						if(solo_text == "" || solo_text == null) {
+							layer.msg("请填写调整原因");
+							return;
+						}
+						var box_checked = $("input[name='mycheck']:checked");
+						var str = "";
+						box_checked.each(function() {
+
+							str += $(this).attr('value') + ",";
+						})
+						if(str != null && str != "") {
+							str = str.substring(0, str.length - 1);
+						} else {
+
+							layer.msg("请勾选需要审核的内容！");
+							return;
+						}
+						var uri_gp_vp = "/boss/user/editUserGroup";
+						var data_gp_vp = {
+							"userId": id_str,
+							"groupIds": str,
+							"msg": solo_text
+						};
+						var result_gp_vp = sup_ajax(uri_gp_vp, data_gp_vp, false);
+						if(result_gp_vp == null || result_gp_vp == "" || result_gp_vp.resultCode != 100) {
+							layer.msg("调整分组失败，快联系管理员进行修复");
+							return;
+						}
+						layer.msg("调整分组成功");
+						init_tab();
+						init_group();
+						$("#level_group").hide();
+						layer.close(index);
+					},
+					btn2: function(index) {
+						$("#level_group").hide();
+						layer.close(index);
+
+					}
+				});
+			})
+
+			/*搜索*/
+			$('#vip_list_find').on('click', function() {
+				var search_name = $("#vip_find_input").val();
+
+				var status = $("#vip_status_list").val() == 0 ? null : Number($("#vip_status_list").val());
+
+				var group_id = $("#vip_group_itxt").val() == null ? null : Number($("#vip_group_itxt").val());
+
+				var store_id = $("#shop_list").val() == 0 ? null : Number($("#shop_list").val());
+
+				init_tab(search_name, status, group_id, store_id);
+
+			});
+		});
+
+		function vip_group_checked(id) { //拉取右侧栏数据
+			$("#vip_group_itxt").val(id);
+			$("#" + id).addClass("on").siblings().removeClass("on");
+			init_tab(null, null, id, null);
+		}
+
+		function vip_single_delete(id) {
+			layui.use('table', function() {
+				var on_uri;
+				var table = layui.table,
+					upload = layui.upload,
+					form = layui.form,
+					$ = layui.jquery;
+				upload.render({
+					elem: '#upload',
+					url: base_url + '/boss/localeAuction/uploadImage',
+
+					before: function(obj) {
+						layer.load();
+					},
+					done: function(res) {
+						if(res.resultCode != 100) {
+							alert("图片上传失败请重试");
+
+							return;
+						}
+						on_uri = res.data.url;
+						layer.msg("图片加载成功！");
+						layer.closeAll('loading');
+					},
+					error: function(res) {
+						alert(JSON.stringify(res));
+						layer.closeAll('loading');
+					}
+				});
+				layer.open({
+					title: '会员退会',
+					type: 1,
+					content: $('#member-th'),
+					btn: ['确定', '取消'],
+					shade: false,
+					area: ['400px', '340px'],
+					cancel: function(index) {
+						$("#member-th").hide();
+						layer.close(index);
+					},
+					success: function() {
+						form.render(null, 'pop-form');
+					},
+					btn2: function(index) {
+						$("#member-th").hide();
+						layer.close(index);
+					},
+					yes: function(index) {
+						//确定以后回调函数
+						var reason_go_out = $("#vip_go_out").val();
+						var gt_reason_data = {
+							"userId": id,
+							"msg": reason_go_out,
+							"file": on_uri
+						};
+						if(reason_go_out.trim() != "" && reason_go_out != null) {
+							if(on_uri == null) {
+								var flag = confirm("当前图片尚未加载您确认要继续吗？");
+								if(!flag) {
+									return;
+								}
+							}
+							var result_go_out = sup_ajax(uri_vip_out, gt_reason_data, false);
+							if(result_go_out == null || result_go_out == "" || result_go_out.resultCode != 100) {
+								layer.msg("操作失败");
+							} else {
+								layer.msg("操作成功");
+							}
+
+							$("#member-th").hide();
+							layer.close(index);
+						} else {
+							layer.msg("必须填写理由");
+						}
+
+					}
+
+				});
+			});
+		};
+
+		function vip_single_content(id) {
+			Setcookie("vip_details_id", id);
+			if(getCookie('vip_details_id') == null || getCookie('vip_details_id') == "") {
+				layer.msg("查看详情失败");
+				return;
+			}
+			layer.full(layer.open({
+				title: '会员详细信息',
+				type: 2,
+				shade: 0, //不显示遮罩
+				content: 'member-detail.html'
+			}))
+		}
+	</script>
+
+</html>

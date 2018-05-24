@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+    <style>
+    #bargain_box{display:none;padding-bottom:0}
+    .bargain_box_d{margin:12px auto 10px;border:1px dashed #ddd;padding:10px 0}
+    .bargain_box_d p{line-height:28px}
+    .bargain_box_d p span{ width:140px;text-align:right;display:inline-block;padding-right:20px}
+    </style>
+</head>
+
+<body class="layui-field-box layui-form">
+      <div class="layui-field-box">
+          <div class="layui-input-inline" style="width:300px;position:relative">
+              <div class="layui-input-inline" style="width:100px">
+                  <select class="layui-input">
+                      <option value="0">车辆编号</option>
+                      <option value="1">车辆标题</option>
+                      <option value="2">车牌号</option>
+                      <option value="3">车辆提交人</option>
+                      <option value="3">VIN码</option>
+                  </select>
+              </div>
+              <input style="position:absolute;width:200px;right:6px;top:0" placeholder="请输入" class="layui-input" type="text">
+          </div>
+          <div class="layui-input-inline">
+              <select class="layui-input">
+                  <option value="0">所属店铺</option>
+                  <option value="1">运通二手车总公司</option>
+              </select>
+          </div>
+          <div class="layui-input-inline"><input name="id" placeholder="输入买家姓名/电话" class="layui-input" id="member-input" type="text"></div>
+          <div class="layui-btn"><i class="fa fa-search"></i>查询</div>
+      </div>
+      <div class="layui-field-box">
+          <table class="layui-table">
+              <thead>
+                  <tr>
+                      <th style="width:300px">车辆信息</th>
+                      <th>所属店铺</th>
+                      <th>车主信息</th>
+                      <th>买家信息</th>
+                      <th>价格信息</th>
+                      <th>竞拍信息</th>
+                      <th>操作</th>
+                  </tr>
+              </thead>
+              <tbody id="t_body">
+
+              </tbody>
+          </table>
+      </div>
+      
+<!--议价确认弹层-->
+<div id="bargain_box" class="layui-field-box layui-form">
+      <div class="bargain_box_d"><p><span>保留价：</span><b>18000</b>&nbsp;元</p><p><span>最高出价：</span><b>19000</b>&nbsp;元</p><p><span>买家姓名：</span><b>文栎波</b></p><p><span>买家电话：</span><b>18910437712</b></p><p><span>车商号：</span><b>3666</b></p></div>
+      <p class="layui-form-item"><span class="layui-form-label">议价结果：</span><span class="layui-input-inline"><input value="1" title="成交" lay-skin="primary" type="checkbox"><input value="2" title="流拍" lay-skin="primary" type="checkbox"></span></p>
+      <p class="layui-form-item"><span class="layui-form-label">备注：</span><span class="layui-input-inline"><input class="layui-input" placeholder="请输入备注" type="text"></span></p>
+</div>
+
+</body>
+
+<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+<script type="text/javascript" src="js/common/common_sup.js"></script>
+<script>
+layui.use('table', function(){
+	
+	var laydate = layui.laydate,$ = layui.jquery;
+	
+	$(function(){
+		tbody_render();
+	})
+  
+  	//查询
+	function tbody_render(){
+		var url = "/boss/carAuto/getBargainCarAutoList";
+		var data = {
+			"page": 1,
+			"limit": 10
+		};
+		var result_tab = sup_ajax(url, data, false);
+		var list = result_tab.data.list;
+		if(result_tab == null || result_tab.success == false || result_tab.data.count==0){
+			$('#t_body').html('<td colspan="7" style="text-align:center;height:200px">返回数据为空，没有议价待处理车辆！</td>');
+			return;
+		}
+		$('#t_body').html('');
+		$.each(list,function(i,r){
+		  $('#t_body').append('<tr>' +
+				'<td><a class="car-list" href=""><img src="images/u1627.png" alt="图片一" height="78px" style="float:left"/><span>2012款 宝马1系 116i 都市型<br/>车牌号：京B12345 | 0次上拍<br/>北京市 2010年 5.2万公里<br/>VIN：WBA1A1105VK121234</span></a></td>' +
+				'<td>'+r.carStoreNme+'</td>' +
+				'<td>'+r.ownerName+'<br/>'+r.ownerMobile+'</td>' +
+				'<td>'+r.name+'<br/>'+r.mobile+'</td>' +
+				'<td>起拍价：'+r.startingPrice+'<br/>保留价：'+r.reservePrice+'</td>' +
+				'<td>最高价：'+r.maxBidFee+'<br/>竞拍类型：线上竞拍<br/>开拍时间：'+timeFormat(r.bidTime)+'</td>' +
+				'<td><a href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs" id="bargain_confirm">议价确认</a></td>')
+		})
+	 }
+	 
+	  /*议价确认*/
+	  $('#bargain_confirm').on('click', function(){	
+		  layer.open({
+			  title: '议价确认',
+			  type: 1,
+			  btn: ['确定', '取消'],
+			  shade: 0,
+			  area: ['380px', '410px'],
+			  content: $("#bargain_box")
+		  });
+	  })
+});
+</script>
+
+</html>

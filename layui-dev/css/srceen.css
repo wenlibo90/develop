@@ -1,0 +1,252 @@
+@charset "UTF-8";*{list-style:none;text-decoration:none;font-family:Microsoft YaHei}
+*,blockquote,body,button,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,iframe,input,legend,li,ol,p,pre,td,textarea,th,ul{margin:0;padding:0}
+h1,h2,h3,h4,h5,h6{font-size:100%}
+.l{float:left}
+.r{float:right}
+body,html{min-width:1082px}
+.s-top,body,html{background-color:#fafafa}
+.s-top{padding:.15rem .3rem .5rem;color:#555}
+.s-btom,.s-top{font-size:.21rem}
+.s-btom{position:fixed;right:0;bottom:0;left:0;box-sizing:border-box;padding:.3rem .6rem;width:100%;height:.85rem;background-color:#676877;color:#fff}
+.s-btom,.s-head{overflow:hidden}
+.s-head div.r{padding:.1rem 0;    height: 65px;
+    box-sizing: border-box}
+.s-head img.logo{width:1.65rem;height:.55rem}
+.s-head img.close.r{width:.3rem}
+.s-head span{float:left;margin-top:.02rem;margin-right:.25rem}
+.slide img{width:4.95rem;height: 2.61rem}
+.s-c-top{margin-top:.3rem;color:#323232;font-weight:600;font-size:.51rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;}
+.s-c-top i{color:#555;font-weight:600;font-style:normal;font-size:.6rem;line-height:.7rem}
+.s-c-top i.on{display:inline-block;width:1.4rem;height:.7rem;border-radius:.15rem;background-color:#fed400;color:#71411f;text-align:center}
+.s-btom .btns{overflow:hidden}
+.s-btom .btn{float:left;margin-top:.02rem;margin-left:.4rem;width:30px;height:25px;background:url(../images/btns.png) 0 -50px no-repeat;cursor:pointer}
+.s-btom .btn.on{background-position:0 -25px}
+.s-btom .btn.next{background-position:0 -75pt}
+.s-btom .btn.next.on{background-position:0 -75px}
+.s-btom .btn.parse{background-position:0 0;}
+/*.s-btom .btn.parse{background-position:0 0;display: none;}*/
+.s-btom .btn.begin-btn{background:url(../images/begin.png) 0 0;}
+.s-btom .btn.parse.on{background-position:0 -125px}
+.s-c-btom{overflow:hidden;margin-top:.2rem}
+.car-msg{overflow:hidden;border-radius:.3rem}
+.car-show{position:relative;overflow:hidden;margin-bottom:-.05rem;max-height:2.6rem}
+.car-txt{position:absolute;bottom:0;left:0;overflow:hidden;box-sizing:border-box;padding:0 .18rem .15rem .35rem;width:100%;color:#f8f8f8;font-size:.19rem}
+.focusBox li{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.car-txt-show{height:1.85rem;box-sizing:border-box;padding:.3rem 0 .22rem .15rem;width:4.95rem;border:1px solid #c9c9c9;border-top:none;border-radius:0 0 .3rem .3rem;background-color:#fff;color:#777;font-size:.22rem}
+.car-txt-show span{display:inline-block;margin-right:.2rem;min-width:.88rem;text-align:justify;line-height:0;text-align-last:justify}
+.car-txt-show .t-cont{color:#333;text-align:left;text-align-last:left}
+.car-txt-show .t-cont:last-child{margin-right:0}
+.t-cont:nth-child(2){margin-right:.2rem;min-width:1.18rem}
+.car-txt-show p{margin-bottom:.2rem;    overflow: hidden;
+    white-space: nowrap;width: 98%;}
+.car-txt-show p:last-child{margin-bottom: 0;}
+.cost-top{white-space:nowrap;overflow:hidden;box-sizing:border-box;padding:.15rem .2rem .3rem .20rem;height:2.6rem;border-radius:30px;background-color:#fed400}
+.cost-top p{color:#71411f;font-size:.35rem}
+.cost-top p.bor-right{white-space:nowrap;overflow:hidden;box-sizing:border-box;margin-right:.3rem;width:3.35rem;border-right:1px solid #c6931c}
+.cost-top p span{color:#965c33;font-size:.35rem}
+.cost-top p>b{font-size:.25rem;line-height:.25rem}
+.cost-top p em{font-style:normal;font-size:1.13rem}
+.cost-top p.cost-txt em{color:#71411f;font-weight:600;font-size:1.13rem}
+.cost-top p.cost-txt .wait em{font-size:0.85rem}
+.cost-top p.cost-txt .wait{
+    position: relative;
+    padding-bottom: 1.2rem;
+}
+.wait_ i{
+    display: block;
+    float: left;
+    height: 0.15rem;
+    width: 0.15rem;
+    background-color: #71411f;
+    border-radius: 50%;
+    margin-right: 0.2rem;
+}
+@-webkit-keyframes waitAn{
+    0%{ background-color: #71411f;}
+    45%{background-color: #bf9610;}
+    80%{background-color: #bf9610;}
+}
+
+.wait_ i:first-child{
+    animation: waitAn .75s -.24s infinite cubic-bezier(.2,.68,.18,1.08);
+}
+.wait_ i:nth-child(2){
+    animation: waitAn .75s -.12s infinite cubic-bezier(.2,.68,.18,1.08);
+}
+.wait_ i:last-child{
+    animation: waitAn .75s 0s infinite cubic-bezier(.2,.68,.18,1.08);
+}
+
+.wait_ i:last-child{
+    margin-right: 0;
+}
+.cost-top p.cost-txt .wait .wait_{position: absolute;
+    top: 1.2rem;
+    overflow: hidden;
+    left: 50%;
+    transform: translateX(-50%);
+    }
+
+.cost-stuts{display:block;margin-top:-.25rem;color:#71411f;text-indent:.1rem;font-size:.45rem}
+.cost-top p:last-child{margin-top:.15rem}
+p.cost-txt span.r{margin-top:.4rem}
+.cost-txt{overflow:hidden;padding-bottom:.15rem;white-space:nowrap;}
+.cost-btom{box-sizing:border-box;margin-top:.15rem;padding:.18rem .3rem;height:1.64rem;border:.01rem solid #c9c9c9;border-radius:.3rem;background-color:#fff;color:#777;font-size:.22rem}
+.cost{width:59.8%}
+.cost-btom p{margin-bottom:.15rem}
+.cost-btom p:last-child{margin-bottom: 0}
+.cost-btom p .mspan{color:#333}
+.cost-btom p span:first-child{margin-right:.25rem}
+.cost-btom p:last-child{margin-bottom:0}
+.big{font-size:.25rem}
+.small{font-size:.18rem}
+.parse-bg{position:fixed;top:0;right:0;bottom:0;left:0;z-index:10;display:none;width:100%;height:100%;background-color:rgba(75,75,95,.8);text-align:center}
+.parsebox{position:absolute;top:35%;left:50%;color:#f9f9f9;font-size:.19rem;transform:translatex(-50%)}
+.parsebox p{margin-top:.2rem;text-indent:.15rem}
+.slide-hide{position:absolute;top:0;left:0;display:none;width:100%;height:100%;background-color:rgba(75,75,95,.8)}
+.s-c-btom.on .slide-hide{display:block}
+.s-c-btom.on .cost-top{opacity:.7}
+.slide-hide img{display:block;margin:.7rem auto 0}
+.cost-btom p.t-c .mspan{margin-right:.35rem}
+.cost-btom p.t-c .m-r{margin-right:.5rem}
+.leftBox{
+    width: 3.35rem;
+}
+.rightBox{
+    width: 3.75rem;
+}
+.wait{
+    display: block;
+}
+.begin{
+    display: none;
+}
+#autoInfoName{
+    margin-left: 0.15rem;
+}
+#servicePrice{
+    color: #777;
+}
+/*2018 03 30*/
+.sateShow {
+    color: #323232;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    text-align: center;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: #fff url("../images/bigScreen.jpg") no-repeat;
+    background-size: cover;
+}
+.next {
+    display: none;
+}
+.startBtn{
+    background: url('../images/stratbtn.png') no-repeat top center;
+    width: 85px;
+    padding-top: 75px;
+    font-size: 20px;
+    color: #a5a5a5;
+    display: block;
+    position: fixed;
+   left: 50%;
+    transform: translateX(-50%);
+    bottom: 0.35rem;
+    cursor: pointer;
+    z-index: 10;
+}
+.sateShow img.logo {
+    width: 1.65rem;
+    height: .55rem;
+    position: fixed;
+    top: 0.2rem;
+    left: 0.4rem;
+    z-index: 10;
+}
+.sateShow .sateMsgTest{
+    font-size: .21rem;
+    position: fixed;
+    top: 0.4rem;
+    right: 0.3rem;
+    color: #555;
+}
+.beginText{
+    top: 2.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    position: fixed;
+    z-index: 10;
+}
+.sateName{
+    font-size: 0.43rem;
+    position: fixed;
+    top:4.3rem ;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.timeAndcarnum{
+    font-size: 0.285rem;
+    color: #606060;
+    position: fixed;
+    top:5.1rem ;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.sateStartTime{
+    margin-right: 0.75rem;
+}
+.s-head img.close.r{
+    width: 0.45rem;
+}
+.s-head span{
+    float: left;
+    margin-top: .09rem;
+    margin-right: .04rem;
+    font-size: 0.21rem;
+}
+.parseBtn{
+    width: 0.46rem;
+    height: 0.46rem;
+}
+
+.closeNowCar{
+    height: 0.5rem;
+    width:2.15rem ;
+    border-radius: 0.3rem;
+    border: 1px solid #70717f;
+    font-size: 0.21rem;
+    overflow: hidden;
+    cursor: pointer;
+    display: none;
+    color: #70717f;box-sizing: border-box;
+}
+.closeNowCar.on{
+    display: block;
+}
+.closeNowCar span{
+    margin-top: 0.1rem;
+    color: #c2c2c7;
+
+}
+.closeNowCarImg{
+    width: 0.25rem;
+    margin: 0.11rem 0.15rem 0 0.2rem;
+}
+.nextCarImg{
+    width: 0.35rem;
+    margin: 0.12rem 0.06rem 0 0.57rem;
+}
+.s-btom .btns{
+    margin-top: -0.1rem;
+}
+.screenBox{
+    display: none;
+}

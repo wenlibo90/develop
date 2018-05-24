@@ -1,0 +1,314 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+		<style>
+			.tree {
+				width: 600px;
+				float: left;
+				padding: 12px 0 12px 16px;
+				padding-bottom: 20px;
+				display: none
+			}
+			
+			.tree.on {
+				display: block
+			}
+			
+			.layui-icon.icon {
+				padding-right: 8px;
+				vertical-align: bottom
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="layui-field-box layui-form" id="role-set" style="padding:20px 10px 0 20px">
+			<!--<div class="layui-form-item">
+				<label class="layui-form-label">角色编码：</label>
+				<div class="layui-input-inline"><input class="layui-input" value="4566" disabled type="text"></div>
+			</div>
+            <div class="layui-form-item">
+				<label class="layui-form-label">角色类型：</label>
+				<div class="layui-input-inline">
+					<select class="layui-input">
+						<option value="1">店铺</option>
+						<option value="2">中心</option>
+					</select>
+				</div>
+			</div>-->
+            <div class="layui-form-item">
+				<label class="layui-form-label">角色类型：</label>
+				<div class="layui-input-inline"><input class="layui-input" id="roleType" value="" disabled type="text"></div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">角色名称：</label>
+				<div class="layui-input-inline"><input class="layui-input" id="roleName" value="" disabled type="text"></div>
+			</div>
+			<!--<div class="layui-form-item">
+				<label class="layui-form-label">备注：</label>
+				<div class="layui-input-inline" style="width:300px"><input class="layui-input" placeholder="请输入备注内容" type="text"></div>
+			</div>-->
+			<div class="layui-form-item">
+				<label class="layui-form-label">权限：</label>
+				<div class="layui-input-inline" id="main_tb">
+					服务异常，没有数据！
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="save" id="save">保存</button>
+					<button class="layui-btn layui-btn-primary">取消</button>
+				</div>
+			</div>
+
+		</div>
+
+		<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/common/common_sup.js"></script>
+		
+		<script>
+			var pt_map = null;
+			var html = '';
+			$(function() {
+				var id = window.location.search.slice(1).split('=')[1];
+				init_role(id);
+				init(id);
+				$("#save").on('click',function(){
+					role_update(id);
+				});
+				
+				var role = sup_ajax('/boss/managerRole/selectRoleById ',{"roleId":id},false);
+				$('#roleType').val(role.data.typeName);
+				$('#roleName').val(role.data.roleName);
+			})
+			/*建立索引*/
+			function init(roleId) {
+				var boot = 0; //设置开始根节点ID
+				var result = getNode(roleId, boot); //拉取一级目录
+				if(result == null || pt_map == null) {
+					return;
+				}
+
+				for(var i = 0; i < result.data.length; i++) {
+
+					html += '<div>';
+					if(isParent(result.data[i].id)){//父节点
+						html+='<a class="down"><i class="layui-icon icon">&#xe623;</i><i class="layui-icon icon">&#xe622;</i></a>';
+					}
+					else{
+						html+='<i class="layui-icon icon">&#xe621;</i>';
+					}
+					html += '<input name="role_bx" lay-skin="primary" title="' + result.data[i].name + '" type="checkbox" value="' + result.data[i].id;
+					if(result.data[i].checked == 'true' || result.data[i].checked) {
+						html += '" checked="checked">';
+					} else {
+						html += '">';
+					}
+					html += '</div>';
+					if(isParent(result.data[i].id)) { //父节点
+						html += '<ul class="tree">';
+						html += '<li>';
+
+						create_byPId(roleId, result.data[i].id); //迭代
+						html += '</li>';
+						html += '</ul>';
+					}
+
+				}
+				$("#main_tb").html(html);
+				layui.use('form', function() {
+					form = layui.form;
+					form.render();
+				});
+			}
+
+			function create_byPId(roleId, pId) {
+				var result = getNode(roleId, pId); //拉取一级目录
+				if(result == null || pt_map == null) {
+					return;
+				}
+				for(var i = 0; i < result.data.length; i++) {
+
+					html += '<div>';
+					if(isParent(result.data[i].id)){//父节点
+						html+='<a class="down"><i class="layui-icon icon">&#xe623;</i><i class="layui-icon icon">&#xe622;</i></a>';
+					}
+					else{
+						html+='<i class="layui-icon icon">&#xe621;</i>';
+					}
+					html += '<input name="role_bx" lay-skin="primary" title="' + result.data[i].name + '" type="checkbox" value="' + result.data[i].id;
+					if(result.data[i].checked == 'true' || result.data[i].checked) {
+						html += '" checked="checked">';
+					} else {
+						html += '">';
+					}
+					html += '</div>';
+					if(isParent(result.data[i].id)) { //父节点
+						html += '<ul class="tree">';
+						html += '<li>';
+						create_byPId(roleId, result.data[i].id); //迭代
+						html += '</li>';
+						html += '</ul>';
+					}
+
+				}
+			}
+
+			function isParent(id) { //查看是否还有孩子节点
+				for(var i = 0; i < pt_map.length; i++) {
+					if(id == pt_map[i]) {
+
+						return true;
+					}
+				}
+				return false;
+			}
+
+			function getNode(roleId, parentId) { //设置节点
+				var uri_role_single = '/boss/managerPage/getPageTreeByPId';
+				var static_data = sup_ajax(uri_role_single, {
+					"roleId": roleId,
+					"parentId": parentId
+				}, false);
+				if(static_data == null || static_data == "") {
+					layer.msg("权限不足");
+					return null;
+				}
+				if(static_data.resultCode != 100) {
+					layer.msg(static_data.resultMsg);
+					return "";
+				}
+				return static_data;
+			}
+
+			function init_role(id) {
+
+				var uri_role_single = '/boss/managerPage/getPageTreeList';
+				var static_data = sup_ajax(uri_role_single, {
+					"roleId": id
+				}, false);
+				if(static_data == null || static_data == "") {
+					layer.msg("权限不足");
+					return;
+				}
+				if(static_data.resultCode != 100) {
+					layer.msg(static_data.resultMsg);
+					return;
+				}
+				/*DIY 低效率Ztree*/
+				var parent_tree_map = [];
+
+				for(var i = 0; i < static_data.data.length; i++) { //搜索父节点并记录
+					if(isInsert(static_data.data[i].pId, parent_tree_map)) {
+						parent_tree_map.unshift(static_data.data[i].pId); //查重
+					}
+				}
+				parent_tree_map = ShellSort(parent_tree_map); //希尔排序
+				pt_map = parent_tree_map;
+
+				if(!isParent(0, parent_tree_map)) {
+					layer.msg("数据不存在根节点，数据无效");
+					return;
+				}
+			}
+
+			function isInsert(pId, parent_tree) {
+
+				for(var i = 0; i < parent_tree.length; i++) {
+					if(pId == parent_tree[i]) {
+
+						return false;
+					}
+				}
+				return true;
+			}
+
+			function ShellSort(array) { //希尔排序
+				var length = array.length;
+				var gap = Math.round(length / 2);
+				while(gap > 0) {
+					for(var i = gap; i < length; i++) {
+						var insert = array[i];
+						var index = i;
+						for(var j = i; j >= 0; j -= gap) {
+							if(insert < array[j]) {
+								array[j + gap] = array[j];
+								index = j;
+							}
+						}
+						array[index] = insert;
+					}
+
+					gap = Math.round(gap / 2 - 0.1);
+				}
+				return array;
+			}
+			/*layui复选框事件*/
+			layui.use(['element', 'table'], function() {
+
+				var $ = layui.jquery,
+					element = layui.element;
+
+				$(function() {
+
+					$(".down").on('click', function() {
+						$(this).parent().next(".tree").find("")
+						$(this).toggleClass("on").parent().next(".tree").toggleClass("on");
+						if($(this).hasClass("on")) {
+							$(this).html('<i class="layui-icon icon">&#xe625;</i><i class="layui-icon icon">&#xe624;</i>')
+						} else {
+							$(this).html('<i class="layui-icon icon">&#xe623;</i><i class="layui-icon icon">&#xe622;</i>')
+						}
+					})
+					
+					$(".layui-form-checkbox").on('click', function() {
+						var checked = $(this).hasClass("layui-form-checked");
+						var nth = $(this).parent().next(".tree").find(".layui-form-checkbox")
+						if(checked){
+							nth.addClass("layui-form-checked");
+							$(this).prev("input").attr("checked","checked");
+						}else{
+							nth.removeClass("layui-form-checked");
+							$(this).prev("input").removeAttr("checked");
+						}
+					})
+
+				})
+			});
+			function role_update(roleId){//修改用户权限
+				var input_checked = $('.layui-form-checked').prev("input");
+				if(input_checked){
+					input_checked.attr("checked","checked")
+				}
+				var box_checked = $("input[name='role_bx']:checked");
+				var id_str = "";
+				box_checked.each(function() {
+
+					id_str += $(this).attr('value') + ",";
+				})
+				if(id_str != null && id_str != "") {
+
+					id_str = id_str.substring(0, id_str.length - 1);
+				} 
+				
+				var result = sup_ajax("/boss/managerPage/editRolePage",{"roleId":roleId,"pageIds":id_str},false);
+				if(result==null||result==""){
+					layer.msg("网络异常，操作失败");
+					return;
+				}
+				if(result.resultCode!=100){
+					layer.msg(result.resultMsg);
+					return;
+				}
+				layer.msg("操作成功");
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+        <style>
+            .myimg{
+                width: 300px;
+                height: 200px;
+                margin-right: 20px;
+            }
+            img[src=""],img:not([src]){
+              display: none;
+            }
+        </style>
+	</head>
+	<body style="background:#fff">
+        <div class="layui-form" style="margin-top:20px">
+   <!-- <div class="layui-form-item">
+        <label class="layui-form-label">场次编号：</label>
+        <div class="layui-input-inline"><input placeholder="2123" disabled class="layui-input" type="text" id="sateId" name="sateId"></div>
+        <div class="layui-form-mid layui-word-aux">系统自动生成</div>
+    </div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">场次主题：</label>
+        <div class="layui-input-inline"><input id="title" lay-verify="required|title" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></div>
+        <div class="layui-form-mid layui-word-aux">不超过20个字</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">可见范围：</label>
+        <div class="layui-input-block" id="selectGroup">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">封面图片：</label>
+        <div class="layui-upload">
+            <img src="" alt="" class="myimg">
+            <button type="button" class="layui-btn" id="poster">
+                <input type="hidden" id="posterImg">
+                <i class="layui-icon">&#xe67c;</i>添加图片</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开拍时间：</label>
+        <div class="layui-input-inline"><input placeholder="请选择时间，精确到秒" id="startTime" lay-verify="required" lay-verType="tips" class="layui-input" type="text" name="startTime"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">代办公司：</label>
+        <div class="layui-input-inline">
+        	<select class="layui-input" lay-verify="required" id="corporateAgent" lay-filter="agentSelect" name="corporateAgent"></select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">拍卖城市：</label>
+        <div class="layui-input-block">
+        	<div class="layui-input-inline">
+              <select id="cityId" name="cityId" lay-verify="required"></select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">详细地址：</label>
+        <div class="layui-input-inline" style="width:400px"><input placeholder="亦庄经济技术开发区北环东路19号" class="layui-input" type="text" id="address" lay-verify="required"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系人：</label>
+        <div class="layui-input-inline"><input placeholder="请输入看车联系人" class="layui-input" type="text" id="seeCarMan" lay-verify="required"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话：</label>
+        <div class="layui-input-inline"><input placeholder="请输入联系电话" class="layui-input" type="text" id="seeCarPhone" lay-verify="required|phone" maxlength="11"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">看车时间：</label>
+        <div class="layui-input-inline" style="width:240px"><input placeholder="2018年03月30日9点" class="layui-input" type="text" id="seeCarTime" ></div>
+        <div class="layui-form-mid layui-word-aux">选填，默认随时可以看车</div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn save" lay-submit lay-filter="*" >保存</button>
+        <button class="layui-btn layui-btn-primary cancel">取消</button>
+      </div>
+    </div>
+</div>
+	</body>
+    <script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+    <script src="js/sate/sate.js"></script>
+    <script src="js/sate/cookie_help.js"></script>
+    <script src="js/sate/saleAddList.js"></script>
+</html>

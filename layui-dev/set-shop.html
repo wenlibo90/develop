@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+
+<div class="layui-field-box">
+    <div class="layui-tab-content" style="height:560px">
+        <div class="layui-tab-item layui-show">
+            <!--<div class="layui-field-box">
+                <div class="layui-input-inline" style="width:220px"><input placeholder="输入店铺名称搜索" class="layui-input" type="text"></div>
+                <div class="layui-btn"><i class="fa fa-search"></i>查询</div>
+                <div class="layui-btn" id="add-shop"><i class="layui-icon">&#xe608;</i>&nbsp;新增</div>
+            </div>-->
+            <div class="layui-field-box layui-form">
+                <table class="layui-table">
+                    <thead>
+                        <tr>
+                            <th>店铺照片</th>
+                            <th>店铺名称</th>
+                            <th>店铺简称</th>
+                            <th>店铺代码</th>
+                            <th>店铺地址</th>
+                            <th>联系电话</th>
+                            <!--<th>所属地区</th>-->
+                            <th>是否启用</th>
+                            <th>备注</th>
+                            <!--<th width="100">操作</th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="shop_list">
+    
+                    </tbody>
+                </table>
+                <div id="page"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+<script type="text/javascript" src="js/common/common_sup.js"></script>
+<script>
+layui.use(['element','table'], function(){
+	
+	var $ = layui.jquery ,element = layui.element,laypage = layui.laypage;
+	
+	$(function(){
+		//初始化
+		shop_set();
+		
+		//删除
+		$(".del").on('click', function(){
+				var url = "/boss/carCenter/deleteCarStore";
+				var data = {
+					id:$(this).attr("data")
+				};
+				parent.layer.confirm('是否删除？',{shade:0}, function(index){
+					parent.layer.close(index);
+					var result = sup_ajax(url, data, false);
+					layer.msg(result.resultMsg);
+					//重新加载
+					shop_set();
+				});
+		})
+		
+		//新增
+		$("#add-shop").on('click', function(){
+			
+		})
+	})
+	
+	//店铺设置
+	function shop_set() {
+			var url = "/boss/carStore/selectStoreList";
+			var data = sup_ajax(url, {"page": 1,"limit": 10}, false);
+			if(data == null || data.success == false || data.data.count==0){
+				$('#shop_list').html('<tr><td colspan="10" style="text-align:center;height:200px">没有查询到店铺信息！</td></tr>');
+				return;
+			}
+			laypage.render({
+			  elem: 'page',
+			  count: data.data.count,
+			  limit:10,
+			  jump: function(obj){
+				  var data = sup_ajax(url, {"page": obj.curr,"limit": 10}, false);
+				  var list = data.data.list;
+				  $('#shop_list').html('');
+				  $.each(list,function(i,r){
+					var ison_mark;
+					if(r.status==1){
+						   ison_mark='是';
+					}else{
+						ison_mark='否';
+					}
+					$('#shop_list').append('<tr>' +
+						'<td><img src="'+r.storePhoto+'" height="98" alt="'+r.name+'"/></td>' +
+						'<td>'+r.name+'</td> ' +
+						'<td>'+r.simpleName+'</td> ' +
+						'<td>'+r.code+'</td> ' +
+						'<td>'+r.address+'</td> ' +
+						'<td>'+r.serviceTel+'</td> ' +
+						'<td><a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-xs">'+ison_mark+'</a></td> ' +
+						'<td>'+r.remark+'</td>')
+						//'<td><a href="javascript:;" class="layui-btn layui-btn-xs">修改</a><a href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs del" data="'+r.id+'" type="shop">删除</a></td></tr>')
+				  })
+			  }
+			})
+
+	 }
+  
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>场次管理</title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+	</head>
+	<body class="layui-field-box layui-form">
+          <div class="layui-field-box">
+              <div class="layui-input-inline">
+                  <select class="layui-input stutas">
+                      <option value="">全部</option>
+                      <option value="1">未上拍</option>
+                      <option value="2">等待开拍</option>
+                      <option value="3">正在竞拍</option>
+                      <option value="4">竞拍结束</option>
+                  </select>
+              </div>
+              <div class="layui-input-inline"><input placeholder="场次主题" class="layui-input theme" type="text"></div>
+              <div class="layui-input-inline"><input placeholder="开拍时间" class="layui-input" type="text" id="date"></div>
+              <div class="layui-btn" id="search" style="background-color: #ffac38;" ><i class="fa fa-search"></i>查询</div>
+              <div class="layui-btn layui-bg-orange" id="sale-addlist"><i class="layui-icon">&#xe61f;</i>&nbsp新增拍卖场次</div>
+              <div class="layui-btn" id="sale-adduser" style="background-color: #fdd230;" ><i class="layui-icon">&#xe61f;</i>&nbsp车商报到</div>
+          </div>
+          <div class="layui-field-box">
+              <table class="layui-table" id="sate" lay-filter="sate">
+                      <thead>
+                      <tr>
+                          <th>场次编号</th>
+                          <th>场次主题</th>
+                          <th>拍卖地点</th>
+                          <th>开拍时间</th>
+                          <th>看车信息</th>
+                          <th>参拍台次</th>
+                          <th>创建信息</th>
+                          <th>状态</th>
+                          <th>操作</th>
+                      </tr>
+                      </thead>
+                  <tbody></tbody>
+              </table>
+              <div id="page"></div>
+          </div>
+	</body>
+    <script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+    <script src="js/sate/cookie_help.js"></script>
+    <script src="js/sate/sate.js"></script>
+    <script src="js/sate/sateList.js"></script>
+</html>

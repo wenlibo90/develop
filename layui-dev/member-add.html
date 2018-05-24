@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+	</head>
+
+	<body style="background:#fff">
+
+
+<div class="layui-form" style="margin-top:20px">
+	<table class="layui-table" lay-skin="nob">
+            <tbody>
+                 <tr>
+                    <td>
+                    	<label class="layui-form-label">会员编号</label>
+                        <div class="layui-input-inline"><input placeholder="2123" disabled class="layui-input" type="text">系统自动生成</div>
+                    </td>
+                    <td>
+                    	<label class="layui-form-label">车商号</label>
+                        <div class="layui-input-inline"><input lay-verify="required" placeholder="" lay-verType="tips" class="layui-input" type="text"></div>
+                    </td>
+                 </tr>
+                 <tr>
+                    <td><label class="layui-form-label">用户名</label>
+                        <div class="layui-input-inline"><input lay-verify="required" placeholder="" lay-verType="tips" class="layui-input" type="text"></div></td>
+                    <td><div class="layui-form-item">
+                        <label class="layui-form-label">真实姓名</label>
+                        <div class="layui-input-inline"><input lay-verify="required" placeholder="" lay-verType="tips" class="layui-input" type="text"></div>
+                    </div></td>
+                 </tr>
+                 <tr>
+                    <td>身份证号<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                    <td>是否共享<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                 </tr>
+                 <tr>
+                    <td>注册手机号<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                    <td>备用电话<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                 </tr>
+                 <tr>
+                    <td>会员级别<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                    <td>会员分组<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                 </tr>
+                 <tr>
+                    <td>会员状态<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                    <td>所属店铺<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                 </tr>
+                 <tr>
+                    <td>省份城市<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                 </tr>
+                 <tr>
+                    <td>详细地<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text">址</td>
+                 </tr>
+                 <tr>
+                    <td>附件：</td>
+                 </tr>
+                 <tr>
+                    <td>备注<input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></td>
+                 </tr>
+                 
+            </tbody>
+        </table>
+    <div class="layui-form-item">
+        <label class="layui-form-label">场次编号：</label>
+        <div class="layui-input-inline"><input placeholder="2123" disabled class="layui-input" type="text"></div>
+        <div class="layui-form-mid layui-word-aux">系统自动生成</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">场次主题：</label>
+        <div class="layui-input-inline"><input lay-verify="required" placeholder="请输入场次主题" lay-verType="tips" class="layui-input" type="text"></div>
+        <div class="layui-form-mid layui-word-aux">不超过10个字</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">可见范围：</label>
+        <div class="layui-input-block"><input title="不限" checked type="checkbox"><input title="高级用户组" type="checkbox"><input title="运通员工组" type="checkbox"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">封面图片：</label>
+        <div class="layui-upload"><button type="button" class="layui-btn" id="upload"><i class="layui-icon">&#xe67c;</i>上传图片</button></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开拍时间：</label>
+        <div class="layui-input-inline"><input placeholder="请选择时间，精确到秒" id="date" lay-verify="required" lay-verType="tips" class="layui-input" type="text"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">代办公司：</label>
+        <div class="layui-input-inline">
+        	<select class="layui-input" id="send-status">
+                <option value="0">选择代办公司</option>
+                <option value="1">中国企邦</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">拍卖地址：</label>
+        <div class="layui-input-block">
+        	<div class="layui-input-inline">
+              <select name="quiz1">
+                <option value="0">请选择省</option>
+                <option value="1">浙江省</option>
+                <option value="2">江西省</option>
+                <option value="3">福建省</option>
+              </select>
+            </div>
+            <div class="layui-input-inline">
+              <select name="quiz2">
+                <option value="0">请选择市</option>
+                <option value="1">杭州</option>
+                <option value="2">宁波</option>
+                <option value="3">温州</option>
+                <option value="4">台州</option>
+                <option value="5">绍兴</option>
+              </select>
+            </div>
+            <div class="layui-input-inline">
+              <select name="quiz3">
+                <option value="0">请选择县/区</option>
+                <option value="1">西湖区</option>
+                <option value="2">余杭区</option>
+                <option value="3">临安市</option>
+              </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">详细地址：</label>
+        <div class="layui-input-inline" style="width:400px"><input placeholder="亦庄经济技术开发区北环东路19号" class="layui-input" type="text"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系人：</label>
+        <div class="layui-input-inline"><input placeholder="请输入看车联系人" class="layui-input" type="text"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话：</label>
+        <div class="layui-input-inline"><input placeholder="请输入联系电话" class="layui-input" type="text"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">看车时间：</label>
+        <div class="layui-input-inline" style="width:240px"><input placeholder="2018年3月15日8:00-12:00" class="layui-input" type="text"></div>
+        <div class="layui-form-mid layui-word-aux">选填，默认随时可以看车</div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit="" lay-filter="save">保存</button>
+        <button class="layui-btn layui-btn-primary">取消</button>
+      </div>
+    </div>
+</div>
+          
+
+	</body>
+    
+    <script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+    <script>
+	layui.use('table', function(){
+	  var form = layui.form,laydate = layui.laydate;
+	  
+	  laydate.render({
+		elem: '#date',
+		type: 'datetime'
+	  });
+	  
+	  //提示
+	  //layer.msg('编辑完场次信息，请在竞拍详情添加车辆',{offset:'t',anim:5,time:3000});
+	 
+	  //自定义验证规则
+	  /*form.verify({
+		title: function(value){
+		  if(value.length < 5){
+			return '场次主题至少5个字符';
+		  }
+		}
+	  });*/
+	  
+	  //监听提交
+	  form.on('submit(save)', function(data){
+		console.log(JSON.stringify(data.field));
+	  });
+	  
+	  //取消
+	  
+	});
+	</script>
+
+</html>

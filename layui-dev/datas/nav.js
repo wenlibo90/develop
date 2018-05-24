@@ -1,0 +1,204 @@
+var navs = [{
+	"title": "会员管理",
+	"icon": "fa-users",
+	"spread": false,
+	"children": [{
+		"title": "会员级别设置",
+		"icon": "&#xe641;",
+		"href": "member-level.html"
+	}, {
+		"title": "会员信息",
+		"icon": "&#xe63c;",
+		"href": "member-list.html"
+	}, {
+		"title": "认证审核",
+		"icon": "fa-edit",
+		"href": "member-verify.html"
+	}, {
+		"title": "签约审核",
+		"icon": "fa-magnet",
+		"href": "member-contract.html"
+	}, {
+		"title": "加价器",
+		"icon": "fa-compass",
+		"href": "member-device.html"
+	}]
+}, {
+	"title": "车辆管理",
+	"icon": "fa-cogs",
+	"spread": false,
+	"children": [{
+		"title": "车辆列表",
+		"icon": "fa-table",
+		"href": "car-list.html"
+	}, {
+		"title": "草稿",
+		"icon": "fa-copy",
+		"href": "car-draft.html"
+	}, {
+		"title": "待审核车辆",
+		"icon": "fa-magnet",
+		"href": "car-review.html"
+	}, {
+		"title": "议价待处理",
+		"icon": "fa-lock",
+		"href": "car-bargain.html"
+	}, {
+		"title": "流拍车辆",
+		"icon": "&#xe62a;",
+		"href": "car-unsold.html"
+	}, {
+		"title": "交易关闭车辆",
+		"icon": "fa-compass",
+		"href": "car-close.html"
+	}]
+},{
+	"title": "现场竞拍管理",
+	"icon": "&#x1002;",
+	"spread": false,
+	"children": [{
+		"title": "场次管理",
+		"icon": "fa-check-square-o",
+		"href": "sale-list.html"
+	}, {
+		"title": "大屏显示",
+		"icon": "fa-th",
+		"href": "sale-scene.html"
+	}, {
+		"title": "现场出价记录",
+		"icon": "fa-navicon",
+		"href": "sale-bid.html"
+	}, {
+		"title": "参拍车辆查询",
+		"icon": "&#xe62a;",
+		"href": "sale-car.html"
+	}]
+}, {
+	"title": "订单管理",
+	"icon": "fa-address-book",
+	"spread": false,
+	"children": [{
+		"title": "订单列表",
+		"icon": "fa-th",
+		"href": "order-list.html"
+	}, {
+		"title": "订单结算",
+		"icon": "fa-copy",
+		"href": "order-balance.html"
+	}, {
+		"title": "争议待审核",
+		"icon": "fa-magnet",
+		"href": "order-review.html"
+	}, {
+		"title": "违约金支付确认",
+		"icon": "fa-lock",
+		"href": "order-penalty.html"
+	}, {
+		"title": "手续回传确认",
+		"icon": "&#xe62a;",
+		"href": "order-return.html"
+	}]
+}, {
+	"title": "代办管理",
+	"icon": "fa-stop-circle",
+	"spread": false,
+	"children": [{
+		"title": "代办列表",
+		"icon": "fa-table",
+		"href": "agent-list.html"
+	}, {
+		"title": "待处理列表",
+		"icon": "fa-copy",
+		"href": "agent-deal.html"
+	}, {
+		"title": "违约处理",
+		"icon": "&#xe62a;",
+		"href": "agent-review.html"
+	}]
+}
+, {
+	"title": "系统设置",
+	"icon": "fa-gears",
+	"spread": false,
+	"children": [{
+		"title": "系统用户设置",
+		"icon": "fa-th",
+		"href": "set-user.html"
+	}, {
+		"title": "角色设置",
+		"icon": "fa-address-book",
+		"href": "set-role.html"
+	}, {
+		"title": "店铺设置",
+		"icon": "&#xe62a;",
+		"href": "set-shop.html"
+	}, {
+		"title": "中心设置",
+		"icon": "fa-copy",
+		"href": "set-center.html"
+	}, {
+		"title": "代办公司设置",
+		"icon": "fa-magnet",
+		"href": "set-agent.html"
+	}, {
+		"title": "拍卖设置",
+		"icon": "fa-lock",
+		"href": "set-auction.html"
+	}, {
+		"title": "APP设置",
+		"icon": "fa-compass",
+		"href": "set-app.html"
+	}/*, {
+		"title": "常见问题",
+		"icon": "fa-lock",
+		"href": "503.html"
+	}*/]
+}
+/*, {
+	"title": "柠檬资讯",
+	"icon": "fa-qq",
+	"href": "#",
+	"spread": false,
+	"children": [{
+		"title": ""
+	}]
+}*/
+, {
+	"title": "操作记录",
+	"icon": "&#xe609;",
+	"spread": false,
+	"children": [{
+		"title": "短信发送记录",
+		"icon": "fa-th",
+		"href": "record-sms.html"
+	}, {
+		"title": "出价记录",
+		"icon": "fa-magnet",
+		"href": "record-bid.html"
+	}, {
+		"title": "保证金",
+		"icon": "fa-lock",
+		"href": "record-bail.html"
+	}, {
+		"title": "委托价记录",
+		"icon": "&#xe62a;",
+		"href": "record-entrust.html"
+	}, {
+		"title": "退会记录",
+		"icon": "fa-copy",
+		"href": "record-quit.html"
+	}, {
+		"title": "加价器绑定记录",
+		"icon": "fa-check-square-o",
+		"href": "record-device.html"
+	}]
+}
+/*, {
+	"title": "报表管理",
+	"icon": "fa-weibo",
+	"href": "#",
+	"spread": false,
+	"children": [{
+		"title": ""
+	}]
+}*/];

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>柠檬二手车-领先的二手车经销商集团</title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="css/login.css" />
+		<script type="text/javascript">
+			document.documentElement.style.fontSize = document.documentElement.clientWidth * 100 / 1336 + "px";
+			window.addEventListener("resize", function() {
+				document.documentElement.style.fontSize = document.documentElement.clientWidth * 100 / 1336 + "px";
+			}, false)
+		</script>
+	</head>
+
+	<body>
+		<div class="loginWarp">
+			<div class="l indexbox">
+				<img src="images/login-bg.jpg" alt="" class="indeximg">
+				<!--<img src="images/car-index.png" class="indexTit">-->
+			</div>
+			<div class="r loginmsg">
+				<div class="logoBox layui-form">
+					<img src="images/login-ico.png" alt="" class="logo">
+					<!--<img src="images/logo-1.jpg" alt="" class="logo">-->
+
+					<div class="layui-form-item">
+						<input id="userName" type="text" lay-verify="required" lay-verType="tips" placeholder="请输入用户名" class="layui-input">
+					</div>
+					<div class="layui-form-item">
+						<input id="passWord" type="password" lay-verify="required" lay-verType="tips" placeholder="请输入密码" class="layui-input">
+					</div>
+					<a href="404.html" class="r forget">忘记密码?</a>
+					<div class="layui-form-item">
+						<div class="beg-pull-right">
+							<button class="r layui-btn layui-btn-primary login-btn" lay-submit lay-filter="login" id="login">登录</button>
+						</div>
+						<div class="beg-clear"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/md5.js"></script>
+	<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="js/common/common_sup.js"></script>
+	<script type="text/javascript" src="js/login.js"></script>
+	<script>
+		layui.use('table', function() {
+			var form = layui.form;   
+			$("#login").click(function() {
+				if($("#userName").val() == "" || $("#passWord").val() == "") {
+					return;
+				}
+				var msg = loginHelper();
+				if(JSON.stringify(msg.code) == "\"00\"") {
+					window.location.href = "index.html"; //跳转首页
+				} else {
+					var text = JSON.stringify(msg.msg); //发送响应
+					layer.msg(text.substring(1, text.length - 1));
+				}
+			});
+		});
+	</script>
+
+</html>

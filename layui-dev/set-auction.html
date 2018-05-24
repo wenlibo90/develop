@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+
+<div class="layui-field-box">
+    <blockquote class="layui-elem-quote title">现场拍卖设置</blockquote>
+    <table class="layui-table" style="width:400px">
+        <tbody>
+             <tr>
+                <td rowspan="2">服务费：</td>
+                <td>成交价 ≤ 30000元，收取&nbsp;<span class="layui-btn layui-btn-primary layui-btn-xs">500</span>&nbsp;元服务费</td>
+             </tr>
+             <tr>
+                <td>成交价 > 30000元，收取&nbsp;<span class="layui-btn layui-btn-primary layui-btn-xs">1000</span>&nbsp;元服务费</td>
+             </tr>
+             <tr>
+                <td>代办费：</td>
+                <td><span class="layui-btn layui-btn-primary layui-btn-xs">1000</span>&nbsp;元</td>
+             </tr>
+        </tbody>
+    </table>
+    <button class="layui-btn layui-btn-disabled">暂停修改</button>
+    
+    <blockquote class="layui-elem-quote title" style="margin-top:20px">线上拍卖设置</blockquote>
+    <table class="layui-table" style="width:400px">
+        <tbody>
+             <tr>
+                <td>线上拍卖结束前：</td>
+                <td><span class="layui-btn layui-btn-primary layui-btn-xs">2</span>&nbsp;秒加价自动延时</td>
+             </tr>
+             <tr>
+                <td>加价延时：</td>
+                <td><span class="layui-btn layui-btn-primary layui-btn-xs">10</span>&nbsp;秒</td>
+             </tr>
+             <tr>
+                <td>服务费：</td>
+                <td><span class="layui-btn layui-btn-primary layui-btn-xs">500</span>&nbsp;元</td>
+             </tr>
+             <tr>
+                <td>代办费：</td>
+                <td><span class="layui-btn layui-btn-primary layui-btn-xs">1000</span>&nbsp;元</td>
+             </tr>
+        </tbody>
+    </table>
+    <button class="layui-btn layui-btn-disabled">暂停修改</button>
+    
+    <blockquote class="layui-elem-quote title" style="margin-top:20px">车款支付违约设置</blockquote>
+    <table class="layui-table" style="width:400px">
+        <tbody>
+             <tr>
+                <td>截止竞拍成交起&nbsp;<span class="layui-btn layui-btn-primary layui-btn-xs">第三天12:00:00</span>&nbsp;未支付车款记为违约</td>
+             </tr>
+        </tbody>
+    </table>
+    <button class="layui-btn layui-btn-disabled">暂停修改</button>
+    
+    <blockquote class="layui-elem-quote title" style="margin-top:20px">过户违约设置</blockquote>
+    <table class="layui-table" style="width:400px">
+        <tbody>
+             <tr>
+                <td>截止手续交接确认起&nbsp;<span class="layui-btn layui-btn-primary layui-btn-xs">第三天12:00:00</span>&nbsp;未完成过户记为违约</td>
+             </tr>
+        </tbody>
+    </table>
+    <button class="layui-btn layui-btn-disabled">暂停修改</button>
+    
+    <div style="height:20px"></div>
+</div>
+
+<script type="text/javascript" src="plugins/layui/layui.js"></script>
+<script>
+layui.use('element', function(){
+  var element = layui.element;
+});
+</script>
+
+</body>
+</html>

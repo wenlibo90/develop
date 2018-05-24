@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邀请好友</title>
+    <meta name="viewport" content="width=750px, user-scalable=no"/>
+    <link rel="stylesheet" href="../css/lemon.css">
+</head>
+<body>
+<div style="margin: 0 auto;height: 0;padding: 0;overflow: hidden">
+    <img src="" alt="" id="shareImg">
+</div>
+<div class="lemon friend">
+    <img src="image/fr-top.png" class="frTop">
+
+    <div class="invit">
+        <p class="tit">hi～我是<span class="name">小柠</span>～ 正在使用柠檬竞价
+        </p>
+        <img src="image/caret.png" class="caret">
+    </div>
+    <div class="cen">
+        <p class="p1">柠檬竞价</p>
+        <p class="p2">精选车源，现场竞拍场次／车辆，抢鲜看</p>
+        <p class="p3">邀请你来加入</p>
+    </div>
+    <ul>
+        <li>
+            <div class="l imgBox">
+                <img src="image/car-l.png" alt="">
+            </div>
+            <div class="l">
+                <p class="tit">2011款 马自达3星 1.6T手动舒适型</p>
+                <em class="tag">好友已购买</em>
+            </div>
+        </li>
+    </ul>
+    <div class="fix download">
+        <a href="javascript:void(0)">下载App</a>
+    </div>
+    <div class="msg"></div>
+    <div class="load">
+        <img src="image/load_top.png" alt="在微信中打开" class="loadTop r">
+        <img src="image/load_btm.png" class="loadBtm">
+    </div>
+</div>
+</body>
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script src="js/share.js"></script>
+<script>
+    function init() {
+        getBaseMsg(getUrlParam().userId)
+    }
+    init();
+    function getBaseMsg(userId) {
+        $.ajax({
+            url:basePath+'/boss/share/getShareContent',
+            type:'post',
+            dataType:'json',
+            data:JSON.stringify({
+                userId:userId
+            }),
+            beforeSend:beforeSend,
+            error : function(data) {
+                $('.msg').html('服务器走丢了，请联系管理员').fadeIn(500).delay(2500).fadeOut(500)
+            },
+            success : function(data){
+                console.log(data)
+                if(data.success){
+                    listView(data.data)
+                }else{
+                    $('.msg').html(data.resultMsg).fadeIn(500).delay(2500).fadeOut(500)
+                }
+            }
+        });
+    }
+    function listView(data) {
+        var myName=data.userName?data.userName:'小柠'
+       $('.name').html(myName);
+        var tag=data.code?data.code:'推荐好车';
+        $('.tag').html(tag);
+        if(data.list.length<1){
+            $('.msg').html('没有更多数据').fadeIn(500).delay(2000).fadeOut(500)
+        }else{
+            $('ul').html('')
+            $.each(data.list,function (i, v) {
+                var mainPhoto='http://static.yuntongauto.com/web/lay-ui/images/car-index.png'
+                if(v.mainPhoto){
+                    mainPhoto=v.mainPhoto;
+                }
+                var tit='柠檬竞价精选-让二手车买卖更轻松'
+                if(v.autoInfoName){
+                    tit=v.autoInfoName;
+                }
+                $('ul').append(' <li>\n' +
+                        '            <div class="l imgBox">\n' +
+                        '                <img src="'+mainPhoto+'">\n' +
+                        '            </div>\n' +
+                        '            <div class="l">\n' +
+                        '                <p class="tit">'+tit+'</p>\n' +
+                        '                <em class="tag">'+tag+'</em>\n' +
+                        '            </div>\n' +
+                        '        </li>')
+            })
+        }
+    }
+
+</script>
+</html>

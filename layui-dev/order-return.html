@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+	</head>
+
+	<body class="layui-field-box">
+          <div class="layui-field-box layui-form">
+              <div class="layui-input-inline" style="width:220px"><input id="text" placeholder="订单编号/姓名/电话号/车辆编号" class="layui-input" type="text"></div>
+              <div class="layui-input-inline">
+                  <select class="layui-input" id="auctionType">
+                      <option value="0">竞拍类型</option>
+                      <option value="2">现场竞拍</option>
+                      <option value="1">线上竞拍</option>
+                  </select>
+              </div>
+              <div class="layui-input-inline">
+                  <select class="layui-input" id="move">
+                  	<option value="0">迁出类型</option>
+                      <option value="1">本市外迁均可</option>
+                      <option value="2">外迁</option>
+                      <option value="3">本市</option>
+                  </select>
+              </div>
+              <div class="layui-btn" id="search"><i class="fa fa-search"></i>查询</div>
+          </div>
+          <div class="layui-field-box">
+              <table class="layui-table">
+                  <thead>
+                      <tr>
+                          <th>订单编号</th>
+                          <th>成交时间</th>
+                          <th>成交人姓名</th>
+                          <th>成交人电话</th>
+                          <th>竞拍类型</th>
+                          <th>车辆编号</th>
+                          <th>车辆名称</th>
+                          <th>车牌号</th>
+                          <th>迁往何处</th>
+                          <th>代办公司</th>
+                          <th>代办人</th>
+                          <th>代办状态</th>
+                          <th>操作</th>
+                      </tr>
+                  </thead>
+                  <tbody id="list">
+                      
+                       <tr>
+                          <td colspan="13" style="text-align:center;height:200px">暂无信息！</td>
+                       </tr>
+                       
+                  </tbody>
+              </table>
+          </div>
+			<div id="content_div" class="layui-form" lay-filter="pop-form" style="padding:30px 40px 0 0 ;display: none;">
+				<div class="layui-form-item" >
+					<label class="layui-form-label">回传资料：</label>
+					<div class="layui-input-inline" style="width:130px" id="img">
+						
+					</div>
+				</div>
+				<div class="layui-form-item" >
+					<label class="layui-form-label">确认结果：</label>
+					<div class="layui-input-inline" style="width:130px" id="btn">
+							
+					</div>
+				</div>
+				<div class="layui-form-item" >
+					<label class="layui-form-label">意见：</label>
+				<div class="layui-input-inline" style="width:250px">
+					<textarea class="layui-textarea" id="msg"></textarea>
+				</div>
+				</div>
+			
+			</div>
+	</body>
+     <script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+	<script type="text/javascript" src="js/common/common_sup.js"></script>
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script>
+		var page=1;
+		var limit=10;
+		var uri_list ='/boss/order/selectProcedurePassbackOrderList';
+  
+    $(function(){
+    	init_tab();
+    	$("#search").on('click',function(){
+    		var searchName = $("#text").val().trim()==""?null:$("#text").val().trim();
+    		var auctionType =$("#auctionType").val()=='0'?null:$("#auctionType").val();
+    		var moveType = $("#move").val()=='0'?null:$("#move").val();
+    		init_tab(searchName,auctionType,moveType);
+    	})
+    })
+    function init_tab(searchName,auctionType,moveType){//初始化表单数据
+    	var data_list ={
+    		
+    		"searchName":searchName
+    		,"page":page
+    		,"limit":limit
+    		,"auctionType":auctionType
+    		,"moveType":moveType
+    	}
+    	var result_list  = sup_ajax(uri_list,data_list,false);
+    	if(result_list==null||result_list==""){
+    		return;
+    	}
+    	if(result_list.resultCode!=100){
+    		layer.msg(result_list.resultMsg);
+    		return;
+    	}
+    	var html="";
+    	var name=["orderNo","createTime","userName","mobile","auctionType","carAutoNo","autoInfoName","licenseNumber","moveToWhere","agentCompanyName","handleUserName","ifAgent"];
+    	for(var i=0;i<result_list.data.list.length;i++){
+    		html+='<tr>';
+    		for(var j=0;j<name.length;j++){
+    			html+='<td>';
+    			var tmp = eval('result_list.data.list[i].'+name[j]);
+    			if(tmp!=null){
+    				switch (name[j]){
+    					case 'moveToWhere':
+    					if(tmp=='1'||tmp==1){
+    						tmp="本市外迁均可";
+    					}
+    					else if(tmp=='2'||tmp==2){
+    						tmp="外迁";
+    					}
+    						else if(tmp=='3'||tmp==3){
+    						tmp="本市";
+    					}
+    						break;
+    					
+    					case 'auctionType':
+    					if(tmp=='1'||tmp==1){
+    						tmp="线上";
+    					}
+    					else if(tmp=='2'||tmp==2){
+    						tmp="线下";
+    					}
+    						break;
+    					case "ifAgent":
+    					if(tmp=='1'||tmp==1){
+    						tmp="代办";
+    					}
+    					else if(tmp=='2'||tmp==2){
+    						tmp="非代办";
+    					}
+    					break;
+    					case 'createTime':
+    					tmp=timeFormat(tmp);
+    						break;
+    					case 'orderNo':
+    					tmp='<a target="_blank" href="order-detail.html?orderId='+result_list.data.list[i].id+'">'+tmp+'</a>';
+    					break;
+    				}
+    				html+=tmp;
+    			}
+    			
+    			html+='</td>';
+    		}
+    		html+='<td><a href="javascript:;" onclick="upCase(\''+result_list.data.list[i].id+'\')" class="layui-btn layui-btn-warm layui-btn-sm">确认</a></td>';  
+    		html+='</tr>';
+    	}
+    	$("#list").html(html);
+    }
+    function upCase(orderId){
+    	var uri_img = '/boss/order/saveProcedurePassback';
+    	var result_img = sup_ajax(uri_img,{"orderId":orderId},false);
+    	if(result_img==null||result_img==""){
+    		layer.msg("服务器链接失败");
+    		return;
+    	}
+    	
+    	if(result_img.resultCode!=100){
+    		layer.msg(result_img.resultMsg);
+    		return;
+    	}
+    
+		var html='<div  class="layui-input-inline"><input class="layui-form-radio" name="pass" type="radio" value="1" title="通过" /></div>'
+		html+='<div  class="layui-input-inline"><input class="layui-form-radio" name="pass" type="radio" value="2" title="不通过" /></div>';
+    	console.log(html);
+    	$("#btn").html(html);
+    	html='';
+    	
+    	for(var i=0;i<result_img.data.length;i++){
+    		html+='<a class="layui-btn layui-btn-warm layui-btn-sm"  target="_blank" href="';
+    		html+=result_img.data[i].fileUrl;
+    		html+='">';
+    		if(result_img.data[i].fileType=='1'||result_img.data[i].fileType==1){
+    			html+='查看图片';
+    		}
+    		else if(result_img.data[i].fileType=='2'||result_img.data[i].fileType==2){
+    			html+='附件'+(i+1)+'';
+    		}
+    		html+='</a>';
+    	}
+    	$("#img").html(html);
+    	$("#msg").val("");
+    	  layui.use('form', function(){
+        form = layui.form;
+        form.render();
+    });
+    	layer.open({
+					title: "确认",
+					type: 1,
+					content: $("#content_div"),
+					btn: ['确定', '取消'],
+					area: ['422px', '387px'],
+					shade: 0,
+					success: function() {
+
+					},
+					cancel: function(index) {
+						layer.close(index);
+						$("#content_div").hide();
+					},
+					yes:function(index){
+						var msg = $("#msg").val().trim()==""?null: $("#msg").val().trim();
+						var authResult = $("input[name='pass']:checked").val();
+						var data = {
+							"orderId":orderId,
+							"authResult":authResult,
+							"authMsg":msg
+						};
+						var result = sup_ajax('/boss/order/saveProcedurePassback',data,false);
+						if(result==null||result==""){
+							layer.msg("网络异常");
+							return;
+						}
+						layer.msg(result.resultMsg);
+						if(result.resultCode!=100){
+							return;
+						}
+						init_tab();
+						layer.close(index);
+						$("#content_div").hide();
+					},
+					btn2:function(index){
+						layer.close(index);
+						$("#content_div").hide();
+					}
+					});
+    }
+    </script>
+
+</html>

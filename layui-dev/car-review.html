@@ -1,0 +1,544 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+		<style>
+		.layui-table-cell {
+			height: auto;
+			line-height: 20px;
+			padding: 9px 15px
+		}
+		.car-no {
+			background: rgba(0, 0, 0, .6);
+			position: absolute;
+			bottom: 10px;
+			left: 15px;
+			color: #fff;
+			height: 20px;
+			width: 99px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap
+		}
+		.car-list {
+			width: 300px;
+			float: left
+		}
+		</style>
+	</head>
+
+	<body class="layui-field-box layui-form">
+		<div class="layui-field-box">
+			<div class="layui-input-inline" style="width:300px;position:relative">
+				<div class="layui-input-inline" style="width:100px">
+					<select class="layui-input" id="tp_s1">
+						<option value="carAutoNo">车辆编号</option>
+						<option value="autoInfoName">车辆名称</option>
+						<option value="licenseNumber">车牌号</option>
+						<option value="createUserName">车辆提交人</option>
+						<option value="vin">VIN码</option>
+					</select>
+				</div>
+				<input  id="tx_s1" style="position:absolute;width:200px;right:6px;top:0" placeholder="请输入" class="layui-input" type="text">
+			</div>
+			<div class="layui-input-inline" style="width:200px"><input placeholder="时间" id="date" class="layui-input" type="text"></div>
+			<div class="layui-input-inline">
+				<select class="layui-input" id="tp_s2">
+					<option value="0">发车审核</option>
+					<option value="1">撤回审核</option>
+				</select>
+			</div>
+			<div class="layui-btn" id="find_all"><i class="fa fa-search"></i>查询</div>
+			<!--<div class="layui-btn"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;导出</div>-->
+		</div>
+		<div class="layui-field-box">
+			<table class="layui-table" id="car_tab">
+				<thead>
+					<tr>
+						<th>车辆信息</th>
+						<th>所属店铺</th>
+						<th>车辆类型</th>
+						<th>车辆来源</th>
+						<th>价格信息</th>
+						<th>竞拍类型</th>
+						<th>开拍信息</th>
+						<th>竞拍结果</th>
+						<th>是否代办</th>
+						<th>车辆状态</th>
+						<th>发车信息</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="car_tbody">
+
+				</tbody>
+			</table>
+		</div>
+		
+	<div id="member-th" lay-filter="pop-form" style="padding:30px 40px 0 0;display:none">
+		<div class="layui-form-item">
+			<label class="layui-form-label">开拍时间</label>
+			<div class="layui-input-block" style="width:200px">
+				<input class="layui-input sequence" type="text">
+			</div>
+		</div>
+        <div class="layui-form-item layui-form">
+            <label class="layui-form-label">可见范围</label>
+            <div class="layui-input-block" id="checkbox_div">
+                <input value="2" title="全部" type="checkbox">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">审核意见</label>
+            <div class="layui-input-block" style="width:200px"><textarea class="layui-textarea msg" id="text"></textarea></div>
+        </div>
+    </div>
+
+	</body>
+
+	<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+	<script type="text/javascript" src="js/common/common_sup.js"></script>
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+
+	<script>
+		var url = "/boss/carAuto/approveCarAuto";
+		var uri=['/boss/carAuto/getApproveCarAutoList','/boss/carAuto/getRevokeApproveCarAutoList'];
+		layui.use('table', function() {
+			var table = layui.table,
+				laydate = layui.laydate;
+			laydate.render({
+				elem: '#date',
+				range: true
+			});
+		});
+		var count;
+		$(function() {
+			init_tab('/boss/carAuto/getApproveCarAutoList');
+			$("#find_all").on('click',function(){
+				var type = $("#search_select").val();
+				var data_all = {
+					"startTime":null
+					,"endTime":null
+					,"auctionType":null
+					,"ifNew":null
+					,"sourceType":null
+					,"createUserName":null
+					,"storeId":null
+					,"carAutoNo":null
+					,"autoInfoName":null
+					,"licenseNumber":null
+					,"vin":null
+					,"status":null
+				};
+				var tp_s1 = $("#tp_s1").val();
+				var tx_s1 = $("#tx_s1").val();
+				if(tx_s1!=""){
+					tx_s1='\''+tx_s1+'\'';
+					eval('data_all.'+tp_s1+'='+tx_s1+'');
+				}
+				
+			   
+				var tm_s1 = $("#date").val();
+				var my = tm_s1.split(" - ");
+				data_all.startTime=my[0];
+				data_all.endTime = my[1];
+				if($("#tp_s2").val()==0||$("#tp_s2").val()=='0'){
+					url='/boss/carAuto/approveCarAuto';
+				}
+				else if($("#tp_s2").val()==1||$("#tp_s2").val()=='1'){
+					url='/boss/carAuto/revokeApprove';
+				}
+				init_tab(uri[$("#tp_s2").val()],data_all.createUserName,data_all.licenseNumber,data_all.autoInfoName,data_all.storeId, data_all.sourceType, data_all.ifNew, data_all.status, data_all.auctionType,
+					data_all.startTime, data_all.endTime,data_all.vin,data_all.carAutoNo); 
+			});
+			
+			
+			
+			
+		})
+		
+	</script>
+
+</html>
+<script>
+	var page = 1;
+	var limit = 10;
+	/*链接参数*/
+	/*页面初始化*/
+	function init_tab(uri_tab,createUserName,licenseNumber,autoInfoName,storeId, sourceType, ifNew, status, auctionType, startTime, endTime,vin,carAutoNo) {
+		var data_tab = {
+			"page": page,
+			"limit": limit,
+			"storeId": storeId,
+			"sourceType": sourceType,
+			"ifNew": ifNew,
+			"status": status,
+			"auctionType": auctionType,
+			"startTime": startTime,
+			"autoInfoName":autoInfoName,
+			"createUserName":createUserName,
+			"licenseNumber":licenseNumber,
+			"endTime": endTime,
+			"vin":vin,
+			"carAutoNo":carAutoNo
+		}
+		var result_tab = sup_ajax(uri_tab, data_tab, false);
+		var car_tbody = $("#car_tbody");
+		var map_tab = ['mainPhoto', 'carAutoNo', 'carStoreNme', 'ifNew', 'sourceType',
+			'startingPrice', 'reservePrice', 'auctionType',
+			'auctionStartTime', 'title', 'transactionFee', 'serviceFee',
+			'ifAgent', 'statusName', 'createTime',
+			'createUserName'
+		];
+
+		var map_fix_front = {
+			'mainPhoto': {
+				"way": "normal",
+				"value": null
+			},
+			'carAutoNo': {
+				"way": "normal",
+				"value": "车辆编号："
+			},
+			'carStoreNme': {
+				"way": "normal",
+				"value": null
+			},
+			'ifNew': {
+				"way": "normal",
+				"value": null
+			},
+			'sourceType': {
+				"way": "normal",
+				"value": null
+			},
+			'startingPrice': {
+				"way": "normal",
+				"value": "起拍价： "
+			},
+			'reservePrice': {
+				"way": "normal",
+				"value": "保留价："
+			},
+			'auctionType': {
+				"way": "normal",
+				"value": null
+			},
+			'auctionStartTime': {
+				"way": "normal",
+				"value": "开拍时间："
+			},
+			'title': {
+				"way": "normal",
+				"value": "场次："
+			},
+			'transactionFee': {
+				"way": "normal",
+				"value": "成交价： "
+			},
+			'serviceFee': {
+				"way": "normal",
+				"value": "服务费： "
+			},
+			'ifAgent': {
+				"way": "normal",
+				"value": null
+			},
+			'statusName': {
+				"way": "normal",
+				"value": ""
+			},
+			'createTime': {
+				"way": "normal",
+				"value": "发车时间："
+			},
+			'createUserName': {
+				"way": "normal",
+				"value": "发车人："
+			}
+		};
+		var map_fix_middle = {
+			'mainPhoto': null,
+			'carAutoNo': null,
+			'carStoreNme': null,
+			'ifNew': {
+				"way": "replace",
+				"value": ['二手车', '新车']
+			},
+			'sourceType': {
+				"way": "replace",
+				"value": ['个人车源', '公务车', '4S店置换', '店铺车', '试乘试驾车']
+			},
+			'startingPrice': null,
+			'reservePrice': null,
+			'auctionType': {
+				"way": "replace",
+				"value": ['线上', '线下']
+			},
+			'auctionStartTime': {
+				"way": "const_st",
+				"value": "timestamp"
+			},
+			'title': null,
+			'transactionFee': null,
+			'serviceFee': null,
+			'ifAgent': {
+				"way": "replace",
+				"value": ['代办', '非代办']
+			},
+			'statusName': null,
+			'createTime': {
+				"way": "const_st",
+				"value": "timestamp"
+			},
+			'createUserName': null
+		};
+		var main_php;
+		var tab = '';
+		count = result_tab.data.count;
+		if(count==0){
+			$("#car_tbody").html('<td colspan="12" style="text-align:center;height:200px">暂无待审核车辆！</td>');
+			return;
+		}	
+		for(var i = 0; i < result_tab.data.list.length; i++) {
+			tab += '<tr>';
+			var review_list = result_tab.data.list[i];
+			for(var j = 0; j < map_tab.length; j++) {
+				if(!td_sup(map_tab[j], 1)) {
+					tab += '<td>';
+				}
+				if(eval('review_list.' + map_tab[j]) != null) {
+
+					if(map_tab[j] == 'mainPhoto') {
+
+						main_php = '<a class="car-list"><img src="' + review_list.mainPhoto + '" alt="图片一" height="78px" width="100px" style="float:left"/>';
+						main_php += '<span>' +
+							review_list.autoInfoName +
+							'<br/>车牌号：' +
+							review_list.licenseNumber +
+							'| ' + result_tab.data.list[i].auctionNum +
+							'次上拍<br/>' +
+							review_list.vehicleAttributionCity +
+							"  " +
+							new Date(review_list.beginRegisterDate).getFullYear() +
+							'年' +
+							review_list.mileage +
+							'万千里<br/>VIN：' +
+							review_list.vin +
+							'</span></a>';
+						tab += main_php;
+						continue;
+					} else if(map_tab[j] == 'carAutoNo') {
+						tab += '<a class="car-no">车辆编号:' + review_list.carAutoNo + '</a>' + '<br>';
+						continue;
+					}
+					tab += modif(map_fix_front, null, null, map_tab[j], "pre", eval('review_list.' + map_tab[j]));
+					tab += modif(null, null, map_fix_middle, map_tab[j], 'middle', eval('review_list.' + map_tab[j]));
+					if(td_sup(map_tab[j], 3)) {
+						tab += '元<br>';
+						continue;
+					}
+					tab += '<br>';
+				}
+
+				if(!td_sup(map_tab[j], 2)) {
+					tab += '</td>';
+				}
+			}
+			tab += '<td><a carid="'+review_list.id+'" href="javascript:;" type="'+review_list.auctionType+'" class="layui-btn layui-btn-danger layui-btn-xs revoke">审核</a></td>';
+			tab += '</tr>';
+		}
+
+		car_tbody.html(tab);
+		layui.use('laypage', function() {
+			var laypage = layui.laypage;
+			laypage.render({
+				elem: 'page',
+				count: count,//数据总数，从服务端得到
+				jump: function(obj, first) {
+					//obj包含了当前分页的所有参数，比如：
+					console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+					console.log(obj.limit); //得到每页显示的条数
+
+					//首次不执行
+					if(!first) {
+						//do something
+					}
+				}
+			});
+		});
+		$(".revoke").on('click', function(){
+				var type = $(this).attr('type');
+				
+				id = $(this).attr('carid');
+				if(type==2){
+					parent.layer.open({
+						title: '信息',
+						type: 1,
+						content: '<p style="padding:34px 0 10px 23px">该车辆是否审核通过？</p>',
+						btn: ['通过', '不通过'],
+						area: ['332px', '168px'],
+						yes: function(index){
+							parent.layer.close(index);
+							var result = sup_ajax(url, {"carId":id,"status":1,"msg":"审核通过"}, false);
+							layer.msg(result.resultMsg);
+							init_tab(uri[$("#tp_s2").val()]);
+						},
+						btn2: function(index){
+							parent.layer.close(index);
+							var result = sup_ajax(url, {"carId":id,"status":2,"msg":"审核不通过"}, false);
+							layer.msg(result.resultMsg);
+							init_tab(uri[$("#tp_s2").val()]);
+						}
+					});
+				}else{//线上
+					layui.use('laydate', function() {
+					var laydate = layui.laydate;
+					upload = layui.upload,
+					//常规用法
+					laydate.render({
+						elem: '.sequence',
+						type: 'datetime'
+					});
+					});
+					var result_group_A = sup_ajax('/boss/group/getGroupForSelect',{},true);
+					if(result_group_A==null||result_group_A==""||result_group_A.resultCode!=100){
+						layer.msg("网络异常");
+						return;
+					}
+					var tmp_opt='';
+					for(var i=0;i<result_group_A.data.length;i++){
+						tmp_opt+='<input name="groupCk" value="'+result_group_A.data[i].id+'" title="'+result_group_A.data[i].groupName+'" type="checkbox">';
+					}
+					$("#checkbox_div").html(tmp_opt);
+					layui.use('form', function() {
+						form=layui.form;
+						form.render();
+					});
+					layer.open({
+						title: '线上车辆审核',
+						type: 1,
+						content: $("#member-th"),
+						btn: ['通过', '不通过'],
+						area: ['440px', '390px'],
+						shade:false,
+						yes: function(index,layero){
+							var time = layero.find('.sequence').val();
+							var nowtime = new Date();
+							if(time==""){
+								if(url=='/boss/carAuto/revokeApprove'){
+									time=null;
+								}
+								else{
+									parent.layer.msg('开拍时间不能为空')
+									return;
+								}
+								
+							}
+							if(nowtime >= new Date(time)){
+								layer.msg("开拍时间不能小于当前时间");
+								return;
+							}
+							var box_checked = $("input[name='groupCk']:checked");
+							var openLimit="";
+							var openLimitCn="";
+							box_checked.each(function() {
+								openLimit += $(this).attr('value') + ",";
+								openLimitCn+=$(this).attr('title') + ",";
+							})
+							if(box_checked!=null||msg_checked!=""){
+								openLimit = openLimit.substring(0, openLimit.length - 1);
+								openLimitCn = openLimitCn.substring(0, openLimitCn.length - 1);
+							}
+							var range_checked = $('#checkbox_div').find('.layui-form-checked').length;
+							if(range_checked == 0){
+								layer.msg("请选择可见范围");
+								return;
+							}
+							var msg_checked = layero.find('.msg').val();
+							if(msg_checked==""){
+								layer.msg("请填写审核意见");
+								return;
+							}
+							var result = sup_ajax(url, {"carId":id,"status":1,"msg":msg_checked,"openLimit":openLimit,"auctionStartTime":time,"openLimitCn":openLimitCn}, false);
+							if(result==null||result==""){
+								layer.msg("网络异常");
+								return;
+							}
+							if(result.resultCode!=100){
+								layer.msg("接口异常");
+								return;
+							}
+							layer.close(index);
+							$("#member-th").hide();
+							init_tab(uri[$("#tp_s2").val()]);
+						},
+						btn2: function(index){
+							var msg_checked = $('.msg').val();
+							if(msg_checked==""){
+								layer.msg("请填写审核不通过的原因");
+								return false;
+							}
+							var result = sup_ajax(url, {"carId":id,"status":2,"msg":msg_checked}, false);
+							if(result==null||result==""){
+								layer.msg("网络异常");
+								return;
+							}
+							if(result.resultCode!=100){
+								layer.msg("接口异常");
+								return;
+							}
+							layer.close(index);
+							$("#member-th").hide();
+							init_tab(uri[$("#tp_s2").val()]);
+							
+						},
+						cancel:function(index){
+							layer.close(index);
+							$("#member-th").hide();
+						}
+					});
+					
+				}
+			})
+	}
+
+	function td_sup(str, type) {
+		var name_fd = ['carAutoNo', 'reservePrice', 'title', 'serviceFee', 'createUserName'];
+		var name_td = ['startingPrice', 'auctionStartTime', 'transactionFee', 'createTime'];
+		var name_md = ['serviceFee', 'agentFee', 'transactionFee', 'maxBidFee', 'startingPrice', 'reservePrice'];
+		switch(type) {
+			case 1:
+				for(var i = 0; i < name_fd.length; i++) {
+					if(name_fd[i] == str) {
+						return true;
+					}
+				}
+				return false;
+				break;
+			case 2:
+				for(var i = 0; i < name_td.length; i++) {
+					if(name_td[i] == str) {
+						return true;
+					}
+				}
+				return false;
+				break;
+			case 3:
+				for(var i = 0; i < name_md.length; i++) {
+					if(name_md[i] == str) {
+						return true;
+					}
+				}
+				return false;
+				break;
+		}
+	}
+
+</script>
+
+</html>

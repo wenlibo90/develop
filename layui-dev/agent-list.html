@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+	</head>
+
+	<body class="layui-field-box">
+		<div class="layui-field-box layui-form">
+			<div class="layui-input-inline" style="width:130px">
+				<select class="layui-input" id="auction_type">
+					<option value="0">竞拍类型</option>
+					<option value="1">线上竞拍</option>
+					<option value="2">现场竞拍</option>
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:130px">
+				<select class="layui-input" id="move_type">
+					<option value="0">迁出类型</option>
+					<option value="1">本市外迁均可</option>
+					<option value="2">只能外迁</option>
+					<option value="3">只能本市</option>
+				</select>
+			</div>
+			<div class="layui-input-inline"><input placeholder="成交时间" id="date" class="layui-input" type="text"></div>
+			<div class="layui-input-inline" id="agent_div">
+				<select class="layui-input" id="agent_status" lay-filter="pop-form">
+					<option value="0">全部</option>
+					
+				</select>
+			</div>
+			<div class="layui-btn" id="search"><i class="fa fa-search"></i>查询</div>
+			<div class="layui-btn"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;导出</div>
+		</div>
+		<div class="layui-field-box">
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>订单编号</th>
+						<th>成交时间</th>
+						<th>成交人姓名</th>
+						<th>成交人电话</th>
+						<th>车辆编号</th>
+						<th>车辆名称</th>
+						<th>车牌号</th>
+						<th>所属店铺</th>
+						<th>竞拍类型</th>
+						<th>迁出类型</th>
+						<th>迁往地</th>
+						<th>代办状态</th>
+						<th>手续信息</th>
+					</tr>
+				</thead>
+				<tbody id="tb_agent">
+
+					<tr>
+						<td colspan="13" style="text-align:center;height:200px">没有代办信息！</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+	<script type="text/javascript" src="js/common/common_sup.js"></script>
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script>
+layui.use('table', function(){
+    var laydate = layui.laydate,$ = layui.$;
+    laydate.render({
+      elem: '#date',
+      range: true
+    });
+    
+   
+});
+</script>
+
+	<script>
+		$(function() {
+			init_tab();
+			init_lab();
+		});
+
+		function init_tab(moveToWhere,auctionType,startTime,endTime,status) {
+			var page = 1;
+			var limit = 10;
+			var uri_list_agent = '/boss/carAgent/getCarAgentList'; /*拉去车辆列表URI*/
+			var data_request_agent = {
+				"moveToWhere":moveToWhere,
+				"auctionType":auctionType,
+				"startTime":startTime,
+				"endTime":endTime,
+				"status":status,
+				"page": page,
+				"limit": limit
+			};
+			var result_list_agent = sup_ajax(uri_list_agent, data_request_agent, false);
+			if(result_list_agent == null) {
+				layer.msg("网络环境受限，服务器链接失败");
+				return;
+			}
+			if(result_list_agent.resultCode != 100) {
+				var html1 = '<tr><td colspan="13" style="text-align:center;height:200px">没有代办信息！</td></tr>';
+				$("#tb_agent").html(html1);
+				return;
+			}
+			var map_name_agent = ["orderNo", "orderTime", "name", "mobile", "carAutoNo", "autoInfoName", "licenseNumber", "carStoreName", "auctionType", "moveToWhere", "moveAddress", "statusName"];
+
+			var html = "";
+			for(var i = 0; i < result_list_agent.data.list.length; i++) {
+				html += '<tr>';
+				for(var j = 0; j < map_name_agent.length; j++) {
+					html += '<td>';
+					if(eval('result_list_agent.data.list[i].' + map_name_agent[j]) != null) {
+						var tmp_html = eval('result_list_agent.data.list[i].' + map_name_agent[j]);
+						switch(map_name_agent[j]) {
+							case "orderTime":
+								tmp_html = timeFormat(tmp_html);
+								break;
+							case "auctionType":
+								switch(tmp_html) {
+									case "1":
+										tmp_html = "线上竞拍";
+										break;
+									case "2":
+										tmp_html = "现场竞拍";
+
+										break;
+								}
+								break;
+							case "moveToWhere":
+								switch(tmp_html) {
+
+									case "1":
+										tmp_html = "本市外迁均可";
+										break;
+									case "2":
+										tmp_html = "只能外迁";
+										break;
+									case "3":
+										tmp_html = "只能本市";
+										break;
+								}
+								break;
+						}
+						html += tmp_html;
+					}
+					html += '</td>';
+				}
+				html += ' <td><a onclick="look(' + result_list_agent.data.list[i].transferId + ')" href="javascript:;" id="routine" class="layui-btn layui-btn-warm layui-btn-sm">查看</a></td>';
+				html += '</tr>';
+			}
+			$("#tb_agent").html(html);
+		}
+
+		function init_lab() { //标签初始化
+			var uri_status = '/boss/carAgent/selectAllAgentStatus';
+			var result_status = sup_ajax(uri_status, {}, true);
+			if(result_status.resultCode != 100) {
+				return;
+			}
+			layui.use('form', function() {
+				form = layui.form;
+			var html = '<option value="0">全部</option>';
+			for(var i = 0; i < result_status.data.length; i++) {
+				html += '<option value="' + result_status.data[i].status + '">' + result_status.data[i].statusName + '</option>'
+			}
+			
+			$("#agent_status").html(html);
+			form.render();
+			});
+			$("#search").on('click',function(){
+				var time  = $("#date").val();//时间戳
+				var move  = $("#move_type").val();
+				var auction = $("#auction_type").val();
+				var status  = $("#agent_status").val();
+				var startTime=null,endTime=null,moveToWhere=null,auctionType=null,status_=null;
+			
+				if(time!=null&&time!=""){
+					var s = time.split(" - ");
+					startTime=s[0];
+					endTime=s[1];
+				}
+				if(move!=0){
+					moveToWhere=move;
+				}
+				if(auction!=0){
+					auctionType=auction;
+				}
+					if(status!=0){
+					status_=status;
+				}
+				init_tab(moveToWhere,auctionType,startTime,endTime,status_);
+			});
+		}
+
+		function look(id) {
+			
+			 layer.full(layer.open({
+                title: '编辑场次信息',
+                type: 2,
+                shade: 0,//不显示遮罩
+                content: 'agent-routine.html?id='+id
+            }));
+		}
+	</script>
+
+</html>

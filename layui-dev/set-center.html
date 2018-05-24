@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+
+<div class="layui-field-box">
+    <div class="layui-tab-content" style="height:560px">
+        <div class="layui-tab-item layui-show">
+            <!--<div class="layui-field-box">
+                <div class="layui-input-inline" style="width:220px"><input placeholder="输入中心名称搜索" class="layui-input" type="text"></div>
+                <div class="layui-btn"><i class="fa fa-search"></i>查询</div>
+                <div class="layui-btn" id="add-center"><i class="layui-icon">&#xe608;</i>&nbsp;新增</div>
+            </div>-->
+            <div class="layui-field-box layui-form">
+                <table class="layui-table">
+                    <thead>
+                        <tr>
+                            <th>中心编码</th>
+                            <th>中心名称</th>
+                            <th>中心地址</th>
+                            <th>联系电话</th>
+                            <th>是否启用</th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="center_list">
+                         
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--新增中心-->
+<div class="layui-field-box layui-form" id="level-set" lay-filter="pop-form" style="padding:30px 40px 0 0;display: none;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">中心名称：</label>
+        <div class="layui-input-inline"><input class="layui-input" placeholder="请输入中心名称" type="text"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">中心地址：</label>
+        <div class="layui-input-inline"><input class="layui-input" placeholder="请输入中心地址" type="text"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话：</label>
+        <div class="layui-input-inline"><input class="layui-input" placeholder="请输入中心地址" type="text"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否启用：</label>
+        <div class="layui-input-inline"><select class="layui-input" id="isOpen"><option value="1">是</option><option value="2">否</option></select></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">保证金：</label>
+        <div class="layui-input-inline"><input class="layui-input" placeholder="填写缴纳保证金金额（元）" type="text" id="depositMoney"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">竞拍加价：</label>
+        <div class="layui-input-inline" id="lab_pr">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+<script type="text/javascript" src="js/common/common_sup.js"></script>
+<script>
+layui.use(['element','table'], function(){
+	
+	var $ = layui.jquery ,element = layui.element,laypage = layui.laypage;
+	
+	$(function(){
+		//初始化
+		center_set();
+		
+		//删除
+		$(".del").on('click', function(){
+				var url = "/boss/carCenter/deleteCarCenter";
+				var data = {
+					id:$(this).attr("data")
+				};
+				parent.layer.confirm('是否删除？',{shade:0}, function(index){
+					parent.layer.close(index);
+					var result = sup_ajax(url, data, false);
+					layer.msg(result.resultMsg);
+					//重新加载
+					center_set();
+				});
+		})
+		
+		//修改提示
+		$(".change-tips").on('click', function(){
+				layer.msg("如有修改请联系管理员");
+		})
+
+	})
+	
+	//中心设置
+	function center_set() {
+		var url = "/boss/carCenter/selectCenterList";
+		var data = {
+			
+		};
+		var data = sup_ajax(url, data, false);
+		var list = data.data.list;
+		if(data.data.count==0){
+			$('#center_list').html('<tr><td colspan="7" style="text-align:center;height:200px">没有数据</td></tr>');
+		}else{
+			$('#center_list').html('');
+			$.each(list,function(i,r){
+			  var ison_mark;
+			  if(r.status==1){
+					 ison_mark='是';
+			  }else{
+				  ison_mark='否';
+			  }
+			  $('#center_list').append('<tr>' +
+				  '<td>'+r.centerCode+'</td> ' +
+				  '<td>'+r.centerName+'</td> ' +
+				  '<td>'+r.address+'</td> ' +
+				  '<td>'+r.centerTel+'</td> ' +
+				  '<td><a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-xs">'+ison_mark+'</a></td> ' +
+				  '<td>'+r.remark+'</td> ' +
+				  //'<td><a href="javascript:;" class="layui-btn layui-btn-xs">修改</a><a href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs del" data="'+r.id+'" type="center">删除</a></td></tr>')
+				  '<td><a href="javascript:;" class="layui-btn layui-btn-xs change-tips">修改</a></td></tr>')
+			})
+		}
+		
+	 }
+  
+});
+</script>
+
+</body>
+</html>

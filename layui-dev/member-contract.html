@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+	</head>
+
+	<body class="layui-field-box">
+		<div class="layui-field-box">
+			<div class="layui-input-inline"><input placeholder="输入姓名/手机号" class="layui-input" type="text" id="member-input"></div>
+			<div class="layui-btn js-search" data-type="reload"><i class="fa fa-search"></i>搜索</div>
+			<!--<div class="layui-btn" id="reviewed-all" data-type="getCheckData"><i class="fa fa-align-justify"></i>&nbsp;批量审核</div>-->
+		</div>
+		<div class="layui-field-box layui-form">
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>会员编号</th>
+						<th>会员姓名</th>
+						<th>注册手机号</th>
+						<th>所在城市</th>
+						<th>通讯地址</th>
+						<th>所属店铺</th>
+						<th>保证金明细</th>
+						<th>身份证信息</th>
+						<th>合同信息</th>
+						<th>签约时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+
+				<tbody id="tb_search">
+
+				</tbody>
+			</table>
+		</div>
+
+	</body>
+
+	<!--审核-->
+	<div id="member-th" lay-filter="pop-form" style="padding:30px 40px 0 0;display:none">
+		<div class="layui-form-item layui-form">
+			<label class="layui-form-label">审核结果</label>
+			<div class="layui-input-block" id="all_div">
+				<input name="sex" value="2" title="全部同意" checked="" type="radio"><br>
+				<input name="sex" value="3" title="仅保证金通过" type="radio"><br>
+				<input name="sex" value="4" title="仅签约通过" type="radio"><br>
+				<input name="sex" value="5" title="全部否决" type="radio"><br>
+			</div>
+			
+			
+				
+			
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">审核意见</label>
+			<div class="layui-input-block" style="width:200px"><textarea id="text" class="layui-textarea"></textarea></div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="js/common/common_sup.js"></script>
+	<script>
+		$(function() {
+			init();
+		});
+		var page = 1;
+		var limit = 10;
+
+		function init(name) {
+			var data = {
+				"searchName": name,
+				"page": page,
+				"limit": limit
+			};
+			var uri_search = "/boss/user/getSignUserList";
+			var result_all_search = sup_ajax(uri_search, data, false);
+
+			if(result_all_search == null || result_all_search == "" || result_all_search.resultCode != 100 || result_all_search.data.count == 0) {
+				$("#tb_search").html('<td colspan="12" style="text-align:center;height:200px">没有数据！</td>');
+				return;
+			}
+
+			var map_search = ["id", "name", "mobile", "cityName", "address", "userStoreName",
+				"magic", "authId", "signId", "signatureTime"
+			];
+
+			var html = "";
+			for(var i = 0; i < result_all_search.data.list.length; i++) {
+				html += "<tr>";
+				/*	html +="<td><input value=\"" + result_all_search.data.list[i].userId+ "\" lay-skin=\"primary\" type=\"checkbox\" name=\"mycheck\"/></td>";*/
+				for(var j = 0; j < map_search.length; j++) {
+					if(j == 6) {
+						var tp = '<a class="layui-btn layui-btn-primary layui-btn-sm" onclick="gcott(' + result_all_search.data.list[i].id + ',1)">查看</a>';
+						html += '<td>';
+						html += tp;
+						html += '</td>';
+						continue;
+					}
+					html += '<td>';
+					if(eval('result_all_search.data.list[i].' + map_search[j]) != null) {
+						if(map_search[j]=='signId'){
+							
+							html+='<a id="gsign" class="layui-btn layui-btn-primary layui-btn-sm" onclick="gsign(' + result_all_search.data.list[i].signId + ')">查看</a>';
+							continue;
+						}
+						if(map_search[j]=='signatureTime'){
+							html+=timeFormat(result_all_search.data.list[i].signatureTime);continue;
+						}
+						html += eval('result_all_search.data.list[i].' + map_search[j]);
+					}
+					html += '</td>';
+				}
+				html += '<td onclick="check_id(' + result_all_search.data.list[i].id + ',' + result_all_search.data.list[i].signId +','+result_all_search.data.list[i].type+')"><a href="javascript:;" class="layui-btn layui-btn-warm layui-btn-sm">审核</a></td>';
+				html += "</tr>";
+			};
+			$("#tb_search").html(html);
+		}
+
+		function check_id(id, signId,type) {
+			layui.use('table', function() {
+				var table = layui.table,
+					form = layui.form,
+					$ = layui.jquery;
+					if(type==undefined){
+						layer.msg("type字段不存在");
+						return;
+					}
+					if(type==2||type=='2'){
+						var html ='<input name="sex" value="6" title="签约通过" type="radio"><br><input name="sex" value="7" title="不通过" type="radio"><br>';
+						$("#all_div").html(html);
+						form.render();
+					}
+					if(type==3||type=='3'){
+						var html ='<input name="sex" value="8" title="保证金通过" type="radio"><br><input name="sex" value="9" title="不通过" type="radio"><br>';
+						$("#all_div").html(html);
+						form.render();
+					}
+					
+				layer.open({
+					title: '会员审核',
+					type: 1,
+					content: $('#member-th'),
+					btn: ['确定', '取消'],
+					shade: false,
+					success: function() {
+						form.render(null, 'pop-form');
+					},
+					cancel: function(index) {
+						$("#member-th").hide();
+						layer.close(index);
+					},
+					yes: function(index) {
+						//确定以后回调函数
+						var agree = $("input[name='sex']:checked").val();
+						var textA = $("#text").val();
+						if(textA.trim() == "" || textA == null) {
+							layer.msg("请认真填写审批意见！");
+						} else {
+							var data = {
+								"userId": id,
+								"signId": signId,
+								"authStatus": agree,
+								"authMsg": textA
+							};
+							var uri = "/boss/user/approveSignInfo";
+							var result = sup_ajax(uri, data, false);
+							if(result.resultCode == 100) {
+								layer.msg("提交审核成功");
+								$("#member-th").hide();
+								layer.close(index);
+								init();
+							} else {
+								layer.msg("审核提交失败，请重试");
+							}
+						}
+
+					},
+					btn2: function() {
+						$("#member-th").hide();
+					}
+				});
+
+			});
+		};
+
+		/*搜索*/
+		$('.js-search').on('click', function() {
+			var temp = $("#member-input").val();
+			init(temp);
+		});
+		/**/
+		function gcott(id, page) {
+
+			var data = {
+				"userId": id,
+				"page": Number(page),
+				"limit": 1
+			};
+			var uri_price = '/boss/deposit/getUserDepositRecord';
+			var result = sup_ajax(uri_price, data, false);
+			if(!check_str(result, 'result')) {
+				layer.msg("服务端或网络故障，请重试");
+				return;
+			}
+			var count = Number(result.data.count);
+			if(count == 0) {
+				layer.msg("当前会员暂无记录！");
+			}
+			var t_bd = ['depositAmount', 'userNum', 'depositNo', 'payTime', 'userStoreName', 'mobile'];
+			var f_bd = ['保证金金额', '车商号', '支付流水号', '支付时间', '会员所属店铺', '联系电话'];
+			var front = '<div id="mgg" style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">';
+			var bd = '';
+			for(var i = 0; i < result.data.list.length; i++) { //当前每页限定仅显示一条数据
+				for(var j = 0; j < t_bd.length; j++) {
+					if(eval('result.data.list[i].' + t_bd[j]) != null) {
+						bd += f_bd[j] + ':';
+						bd += eval('result.data.list[i].' + t_bd[j]);
+						bd += '<br><br>';
+					}
+				}
+			}
+			var tail = '</div>';
+			var btb = ['上一条', '不看了', '下一条'];
+			if(page >= 1 && page <= count)
+				lay_open(front + bd + tail, btb, id, page, count);
+
+		}
+
+		function lay_open(cott, btb, id, page, count) { //创建layer简单弹出层 
+			layer.open({
+				type: 1,
+				anim: 3,
+				title: false //不显示标题栏
+					,
+				closeBtn: false,
+				area: ['500px', '500px'],
+				shade: 0.8
+					/* ,id: 'LAY_layuipro' */
+					,
+				btn: btb,
+				btnAlign: 'c',
+				moveType: 1 //拖拽模式，0或者1
+					,
+				content: cott,
+				success: function(layero) {
+
+				},
+				btn1: function(index) {
+					if(Number(page) <= 1) {
+						layer.msg("当前已经是第一条！");
+						return false;
+					}
+						$("#mgg").hide();
+					layer.close(index);
+					var ct = Number(page);
+					gcott(id, --ct);
+
+				},
+				btn3: function(index) {
+					if(Number(page) >= Number(count)) {
+						layer.msg("当前已经是最后一条了");
+						return false;
+					}
+					$("#mgg").hide();
+					layer.close(index);
+					var ct = Number(page);
+					gcott(id, ++ct);
+
+				}
+			});
+		}
+		function gsign(id){
+			var uri_sign = '/boss/sign/getSignInfoSignId';
+			var data_sign ={
+				"signId":id
+			};
+			var result_sign = sup_ajax(uri_sign,data_sign,false);
+			if(!check_str(result_sign,'result')||result_sign.data[0].pdfFileUrl==null){
+				layer.msg("暂无签约信息");
+				return;
+			}
+			$("#gsign").attr('href',result_sign.data[0].pdfFileUrl);
+			$("#gsign").attr('target','_blank');
+		}
+	</script>
+
+</html>

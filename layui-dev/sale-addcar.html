@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+        <style>
+            .all{
+                width: 18px;
+                height: 18px;
+                line-height: 16px;
+                border: 1px solid #d2d2d2;
+                font-size: 12px;
+                border-radius: 2px;
+                background-color: #fff;
+                -webkit-transition: .1s linear;
+                transition: .1s linear;
+                color: #fff;
+                position: relative;
+            }
+            .all.on{
+                background-color: orange;
+                border: 1px solid orange;
+            }
+            .myicon{
+                position: absolute;
+                left: 1px;
+            }
+        </style>
+	</head>
+
+	<body class="layui-field-box  layui-form" style="background:#fff">
+          <div class="layui-field-box layui-row">
+                  <div class="layui-input-inline"><input placeholder="车辆标题/车辆编号" class="layui-input" type="text" id="searchParam"></div>
+                  <div class="layui-btn search"><i class="fa fa-search"></i>查找</div>
+          </div>
+          <div class="layui-field-box">
+              <table class="layui-table carList" id="carList">
+                  <thead>
+                      <tr>
+                          <th>
+                              <a href="javascript:;" class="layui-btn layui-btn-xs all">
+                                  <i class="layui-icon myicon"></i>
+                              </a>
+                          </th>
+                          <th>车辆编号</th>
+                          <th>车辆标题</th>
+                          <th>起拍价</th>
+                          <th>保留价</th>
+                          <th>初登日期</th>
+                          <th>车辆来源</th>
+                          <th>竞拍次数</th>
+                          <th>发车人</th>
+                          <th>竞拍类型</th>
+                      </tr>
+                  </thead>
+                  <tbody></tbody>
+              </table>
+          </div>
+          <div class="layui-field-box">
+                  <button class="layui-btn save">确认添加</button>
+                  <button class="layui-btn layui-btn-primary cancel">取消</button>
+          </div>
+	</body>
+    
+    <script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+    <script src="js/sate/sate.js"></script>
+    <script src="js/sate/cookie_help.js"></script>
+    <script src="js/sate/saleAddcar.js"></script>
+</html>

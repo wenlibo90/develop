@@ -1,0 +1,487 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+		<style>
+			.layui-table-cell {
+				height: auto;
+				line-height: 20px;
+				padding: 9px 15px
+			}
+			.car-no{
+				background:rgba(0,0,0,.6);
+				position:absolute;
+				bottom:10px;
+				left:15px;
+				color:#fff;
+				height:20px;
+				width:99px;
+				overflow:hidden;
+				text-overflow:ellipsis;
+				white-space:nowrap
+				
+			}
+			.car-list{
+				width:300px;
+				float:left
+			}
+		</style>
+	</head>
+
+	<body class="layui-field-box layui-form">
+		<div class="layui-field-box">
+			<div class="layui-input-inline" style="width:300px;position:relative">
+				<div class="layui-input-inline" style="width:100px">
+					<select class="layui-input">
+						<option value="0">车辆编号</option>
+						<option value="1">车辆标题</option>
+						<option value="2">车牌号</option>
+						<option value="3">车辆提交人</option>
+						<option value="3">VIN码</option>
+					</select>
+				</div>
+				<input style="position:absolute;width:200px;right:6px;top:0" placeholder="请输入" class="layui-input" type="text">
+			</div>
+			<div class="layui-input-inline">
+				<select class="layui-input">
+					<option value="0">所属店铺</option>
+					<option value="1">运通二手车总公司</option>
+				</select>
+			</div>
+			<div class="layui-input-inline">
+				<select class="layui-input">
+					<option value="0">车辆类型</option>
+					<option value="1">新车(未上牌)</option>
+					<option value="2">二手车</option>
+				</select>
+			</div>
+			<!--<div class="layui-input-inline">
+				<select class="layui-input">
+					<option value="0">车辆来源</option>
+					<option value="1">个人车源</option>
+					<option value="2">公务车</option>
+					<option value="3">4s店置换车</option>
+					<option value="4">店铺车</option>
+					<option value="5">试乘试驾车</option>
+					<option value="6">其他</option>
+				</select>
+			</div>
+			<div class="layui-input-inline">
+                  <select class="layui-input">
+                      <option value="0">竞拍类型</option>
+                      <option value="1">线上竞拍</option>
+                      <option value="2">现场竞拍</option>
+                  </select>
+              </div>-->
+			<div class="layui-input-inline"><input placeholder="发车时间" id="date" style="width:200px" class="layui-input" type="text"></div>
+			<div class="layui-btn"><i class="fa fa-search"></i>查询</div>
+			<div class="layui-btn"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;导出</div>
+			<div class="layui-btn add-car"><i class="layui-icon">&#xe608;</i>&nbsp;录入车辆</div>
+		</div>
+		<div class="layui-field-box layui-form">
+			<table class="layui-table" id="car_tab">
+				<thead>
+					<tr>
+						<th>车辆信息</th>
+						<th>所属店铺</th>
+						<th>车辆类型</th>
+						<th>车辆来源</th>
+						<th>价格信息</th>
+						<th>竞拍类型</th>
+						<th>开拍信息</th>
+						<th>竞拍结果</th>
+						<th>是否代办</th>
+						<th>车辆状态</th>
+						<th>发车信息</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+
+				<tbody id="car_tbody">
+					
+				</tbody>
+			</table>
+		</div>
+
+		<!--撤回-->
+		<div id="member-th" style="padding:30px 0 0 0;display:none">
+			<div class="layui-form-item">
+				<label class="layui-form-label">原因</label>
+				<div class="layui-input-block" style="width:210px"><textarea id="lay_remark" class="layui-textarea"></textarea></div>
+				<p style="font-size:12px;padding:20px 30px 0">提示：线上竞拍的车辆，已经安排开拍时间的，撤回后需要审核；现场竞拍的车辆，已经安排上拍信息的，撤回后需要审核。</p>
+			</div>
+
+		</div>
+
+	</body>
+	<div id="page" style="margin-left:16px"></div>
+	<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+	<script type="text/javascript" src="js/common/common_sup.js"></script>
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script>
+	var count;
+		$(function() {
+			init_tab();
+
+		})
+		
+		layui.use('table', function() {
+
+			var table = layui.table,
+				laydate = layui.laydate,
+				$ = layui.jquery;
+
+			laydate.render({
+				elem: '#date',
+				range: true
+			});
+
+			//录入车辆提示 一期暂未开发
+			$('.add-car').on('click', function() {
+				layer.msg("录入接口暂未开放")
+			});
+
+			//撤回
+			table.on('tool(tableEvent)', function(obj) {
+				var data = obj.data;
+				if(obj.event === 'revoke') {
+					layer.open({
+						title: '撤回',
+						type: 1,
+						content: $('#member-th'),
+						btn: ['确定', '取消'],
+						shade: false,
+						yes: function() {
+							//确定以后回调函数
+						}
+					});
+				}
+			});
+
+			/*查询*/
+			active = {
+				getCheckData: function() {
+					var sel_shop = $("#sel_shop").val();
+					var car_res = $("#car_res").val();
+					var car_type = $("#car_type").val();
+
+					//执行重载
+					table.reload('car_tab', {
+						page: {
+							curr: 1 //重新从第 1 页开始
+						},
+						where: {
+							car_type: car_type,
+							sel_shop: sel_shop,
+							car_res: car_res
+						}
+					});
+
+				}
+			};
+
+			/*绑定查询事件*/
+			$('#search').on('click', function() {
+				var type = $(this).data('type');
+				active[type] ? active[type].call(this) : '';
+			});
+
+		});
+	</script>
+
+</html>
+<script>
+	var page = 1;
+	var limit = 10;
+	/*链接参数*/
+	var uri_tab = '/boss/carAuto/getCarAutoListByParam';
+	/*页面初始化*/
+	function init_tab(storeId, sourceType, ifNew, status, auctionType, startTime, endTime) {
+		var map_tab = ['mainPhoto', 'carAutoNo', 'carStoreNme', 'ifNew', 'sourceType',
+			'startingPrice', 'reservePrice', 'auctionType',
+			'auctionStartTime', 'title', 'transactionFee', 'serviceFee',
+			'ifAgent', 'statusName', 'createTime',
+			'createUserName'
+		];
+
+		var map_fix_front = {
+			'mainPhoto': {
+				"way": "normal",
+				"value": null
+			},
+			'carAutoNo': {
+				"way": "normal",
+				"value": "车辆编号："
+			},
+			'carStoreNme': {
+				"way": "normal",
+				"value": null
+			},
+			'ifNew': {
+				"way": "normal",
+				"value": null
+			},
+			'sourceType': {
+				"way": "normal",
+				"value": null
+			},
+			'startingPrice': {
+				"way": "normal",
+				"value": "起拍价： "
+			},
+			'reservePrice': {
+				"way": "normal",
+				"value": "保留价："
+			},
+			'auctionType': {
+				"way": "normal",
+				"value": null
+			},
+			'auctionStartTime': {
+				"way": "normal",
+				"value": "开拍时间："
+			},
+			'title': {
+				"way": "normal",
+				"value": "场次："
+			},
+			'transactionFee': {
+				"way": "normal",
+				"value": "成交价： "
+			},
+			'serviceFee': {
+				"way": "normal",
+				"value": "服务费： "
+			},
+			'ifAgent': {
+				"way": "normal",
+				"value": null
+			},
+			'statusName': {
+				"way": "normal",
+				"value": ""
+			},
+			'createTime': {
+				"way": "normal",
+				"value": "发车时间："
+			},
+			'createUserName': {
+				"way": "normal",
+				"value": "发车人："
+			}
+		};
+		var map_fix_middle = {
+			'mainPhoto':null, 
+			'carAutoNo':null,
+			'carStoreNme':null,
+			'ifNew': {
+				"way": "replace",
+				"value":['二手车','新车']
+			},
+			'sourceType': {
+				"way": "replace",
+				"value": ['个人车源','公务车','4S店置换','店铺车','试乘试驾车']  
+			},
+			'startingPrice':null,
+			'reservePrice':null,
+			'auctionType': {
+				"way": "replace",
+				"value": ['线上','线下']
+			},
+			'auctionStartTime': {
+				"way": "const_st",
+				"value": "timestamp"
+			},
+			'title': null,
+			'transactionFee':null,
+			'serviceFee': null,
+			'ifAgent': {
+				"way": "replace",
+				"value": ['代办','非代办']
+			},
+			'statusName':null,
+			'createTime': {
+				"way": "const_st",
+				"value": "timestamp"
+			},
+			'createUserName':null
+		};
+		
+		layui.use('laypage', function(){
+		var laypage = layui.laypage;
+		var data_tab = {
+			"page": page,
+			"limit": limit,
+			"storeId": storeId,
+			"sourceType": sourceType,
+			"ifNew": ifNew,
+			"status": status,
+			"auctionType": auctionType,
+			"startTime": startTime,
+			"endTime": endTime
+		}
+		var result_tab = sup_ajax(uri_tab, data_tab, false);
+		laypage.render({
+			elem: 'page',
+			count: result_tab.data.count,
+			limit:limit,
+			jump: function(obj) {
+				var data_tab = {
+					"page": obj.curr,
+					"limit": limit,
+					"storeId": storeId,
+					"sourceType": sourceType,
+					"ifNew": ifNew,
+					"status": status,
+					"auctionType": auctionType,
+					"startTime": startTime,
+					"endTime": endTime
+				}
+				var tab = "";
+				var main_php;
+				var result_tab = sup_ajax(uri_tab, data_tab, false);
+				var car_tbody = $("#car_tbody");
+				//请求不成功或成功以后无返回数据
+				if(result_tab == null || result_tab.data.count == 0 || result_tab.success == false ) {
+					car_tbody.html('<td colspan="12" style="text-align:center;height:200px">没有车辆信息！</td>');
+					return;
+				}
+				for(var i = 0; i < result_tab.data.list.length; i++) {
+					tab += '<tr>';
+					
+					for(var j = 0; j < map_tab.length; j++) {
+						if(!td_sup(map_tab[j], 1)) {
+							tab += '<td>';
+						}
+						if(eval('result_tab.data.list[i].' + map_tab[j]) != null) {
+		
+							if(map_tab[j] == 'mainPhoto') {
+		
+								main_php = '<a class="car-list"><img src="' + result_tab.data.list[i].mainPhoto + '" alt="图片一" height="78px" width ="100px" style="float:left"/>';
+								main_php += '<span><b>' +
+									result_tab.data.list[i].autoInfoName +
+									'</b><br/>车牌号：' +
+									result_tab.data.list[i].licenseNumber +
+									' | ' + result_tab.data.list[i].auctionNum +
+									'次上拍<br/>' +
+									result_tab.data.list[i].vehicleAttributionCity +
+									"  " +
+									new Date(result_tab.data.list[i].beginRegisterDate).getFullYear() +
+									'年 ' +
+									result_tab.data.list[i].mileage +
+									'公里<br/>VIN：' +
+									result_tab.data.list[i].vin +
+									'</span></a>';
+								tab += main_php;
+								continue;
+							}
+							else if(map_tab[j] == 'carAutoNo'){
+								tab+='<a class="car-no">车辆编号:'+result_tab.data.list[i].carAutoNo+'</a>'+'<br>';
+								continue;
+							}
+							tab += modif(map_fix_front, null, null, map_tab[j], "pre", eval('result_tab.data.list[i].' + map_tab[j]));
+							tab+=modif(null,null,map_fix_middle,map_tab[j],'middle', eval('result_tab.data.list[i].' + map_tab[j]));
+							if(td_sup(map_tab[j],3)){
+								tab+='元<br>';
+								continue;
+							}
+							tab+='<br>';
+						}
+		
+						if(!td_sup(map_tab[j], 2)) {
+							tab += '</td>';
+						}
+					}
+					tab += '<td><a onclick="toReview('+result_tab.data.list[i].id+')" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="revoke">撤回</a></td>';
+					tab += '</tr>';
+				}
+		
+				car_tbody.html(tab);
+		
+			}
+		});
+		});
+	}
+
+	function td_sup(str, type) {
+		var name_fd = ['carAutoNo', 'reservePrice', 'title', 'serviceFee', 'createUserName'];
+		var name_td = ['startingPrice', 'auctionStartTime', 'transactionFee', 'createTime'];
+		var name_md = ['serviceFee','agentFee','transactionFee','maxBidFee','startingPrice','reservePrice'];
+		switch(type) {
+			case 1:
+				for(var i = 0; i < name_fd.length; i++) {
+					if(name_fd[i] == str) {
+						return true;
+					}
+				}
+				return false;
+				break;
+			case 2:
+				for(var i = 0; i < name_td.length; i++) {
+					if(name_td[i] == str) {
+						return true;
+					}
+				}
+				return false;
+				break;
+			case 3:
+				for(var i = 0; i < name_md.length; i++) {
+					if(name_md[i] == str) {
+						return true;
+					}
+				}
+				return false;
+				break;
+		}
+	}
+	function toReview(id){
+		var uri='/boss/handleDispute/insertRevocationCar';
+		layer.open({
+					title: '撤回审核',
+					type: 1,
+					content: $('#member-th'),
+					btn: ['确定', '取消'],
+					area: ['485px', '300px'],
+					shade: 0,
+					success: function() {
+
+					},
+					cancel: function(index) {
+						layer.close(index);
+						$("#member-th").hide();
+					},
+					yes: function(index) {
+						var remark  = $("#lay_remark").val().trim();
+							var data={
+								"carId":id
+								,"msg":remark
+							}
+						 var result_operation = sup_ajax(uri,data,false);
+						 if(result_operation == null || result_operation == "") {
+							layer.msg("网络连接异常，确认操作未执行");
+							return;
+						}
+						if(result_operation.resultCode != 100) {
+							layer.msg(result_operation.resultMsg);
+						} else {
+							layer.msg("操作成功");
+							init_tab();
+							
+							$("#member-th").hide();
+							layer.close(index);
+						}
+					},
+
+					btn2: function(index) {
+
+						layer.close(index);
+						$("#member-th").hide();
+					}
+
+				});
+	}
+</script>

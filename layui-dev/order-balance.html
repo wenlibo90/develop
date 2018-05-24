@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+	</head>
+
+	<body>
+
+		<div class="layui-tab layui-form" style="padding-top:10px">
+			<ul class="layui-tab-title" style="margin-left:24px">
+				<li class="layui-this">到店结算审核</li>
+				<li>线上结算审核</li>
+			</ul>
+			<div class="layui-tab-content">
+				<div class="layui-tab-item layui-show">
+					<div class="layui-field-box">
+						<div class="layui-input-inline" style="width:220px"><input id="orderNameLive" placeholder="订单编号/姓名/电话号/车辆编号" class="layui-input" type="text"></div>
+						
+						<div class="layui-btn" id="conditionLive"><i class="fa fa-search"></i>查询</div>
+						<div class="layui-btn"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;导出</div>
+					</div>
+					<div class="layui-field-box">
+						<table class="layui-table">
+							<thead>
+								<tr>
+									<th>订单编号</th>
+									<th>买家姓名</th>
+									<th>买家电话</th>
+									<th>车辆编号</th>
+									<th>车辆名称</th>
+									<th>成交价</th>
+									<th>应付总金额</th>
+									<th>实付总金额</th>
+									<th>订单状态</th>
+									<th>创建时间</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="listLive">
+								
+								<tr>
+									<td colspan="11" style="text-align:center;height:200px">暂无信息！</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="layui-tab-item">
+					<div class="layui-field-box">
+						<div class="layui-input-inline" style="width:220px"><input id="orderNameOnline" placeholder="订单编号/姓名/电话号/车辆编号" class="layui-input" type="text"></div>
+						<div class="layui-btn" id="conditionOl"><i class="fa fa-search"></i>查询</div>
+						<div class="layui-btn"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;导出</div>
+					</div>
+					<div class="layui-field-box">
+						<table class="layui-table">
+							<thead>
+								<tr>
+									<th>订单编号</th>
+									<th>买家姓名</th>
+									<th>买家电话</th>
+									<th>车辆编号</th>
+									<th>车辆名称</th>
+									<th>成交价</th>
+									<th>应付总金额</th>
+									<th>实付总金额</th>
+									<th>订单状态</th>
+									<th>创建时间</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="listOl">
+
+								<tr>
+									<td colspan="11" style="text-align:center;height:200px">暂无信息！</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="content_div" class="layui-form" lay-filter="pop-form" style="padding:30px 40px 0 0 ;display: none;">
+			<div class="layui-form-item" id="content_way"><label class="layui-form-label">付款金额</label>
+				<div class="layui-input-inline" style="width:130px" id="payFee">
+					
+				</div>
+			</div>
+			<div class="layui-form-item" id="content_way"><label class="layui-form-label">线下支付凭证</label>
+				
+				<div class="layui-upload">
+					<button type="button" class="layui-btn" id="upload"><i class="layui-icon">&#xe67c;</i>上传凭证</button>
+					
+				</div>
+				
+			</div>
+			<div class="layui-form-item" id="content_way"><label class="layui-form-label">备注</label>
+				<div class="layui-input-inline" style="width:130px"><textarea class="layui-textarea" id="remark"></textarea></div>
+			</div>
+			<div class="layui-form-item" id="content_way"><label class="layui-form-label">支付方式</label>
+				<div class="layui-input-inline" style="width:80px">
+					<select id="payWay"  class="layui-input">
+						<option value="1">现金</option>
+						<option value="2">银行卡</option>
+						<option value="3">支付宝</option>
+						<option value="4">微信</option>
+						<option value="5">其他</option>
+					</select>
+				</div>
+			</div>
+		</div>
+ 
+		<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+		<script type="text/javascript" src="js/common/common_sup.js"></script>
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+
+		<script>
+			var on_uri;
+			layui.use('table', function() {
+				var upload = layui.upload;
+				upload.render({
+					elem: '#upload',
+					url: base_url + '/boss/localeAuction/uploadImage',
+
+					before: function(obj) {
+						layer.load();
+					},
+					done: function(res) {
+						if(res.resultCode != 100) {
+							alert("图片上传失败请重试");
+
+							return;
+						}
+						on_uri = res.data.url;
+						layer.msg("图片加载成功！");
+						layer.closeAll('loading');
+					},
+					error: function(res) {
+						alert(JSON.stringify(res));
+						layer.closeAll('loading');
+					}
+				});
+			});
+			
+			$(function() {
+				init("listOl", null, "2");
+				init("listLive", null, "1");
+				init_lab();
+			});
+			var uri_order = '/boss/order/selectOrderList';
+			var limit = 15;
+
+			function init_lab() {
+				$("#conditionOl").on("click", function() {
+
+					var orderName = $("#orderNameOnline").val().trim();
+					init("listOl", null, "1", orderName == "" ? null : orderName);
+				});
+				$("#conditionLive").on("click", function() {
+
+					var orderName = $("#orderNameLive").val().trim();
+					init("listLive", null, "1", orderName == "" ? null : orderName);
+				});
+			}
+
+			function init(listName, auctionType, orderStatus, searchName, orderBeginTime, orderEndTime) {
+
+				var data_order = {
+					"page": 1,
+					'limit': limit,
+					'auctionType': auctionType,
+					"orderStatus": orderStatus,
+					"searchName": searchName,
+					"orderBeginTime": orderBeginTime,
+					"orderEndTime": orderEndTime
+				};
+				var map_name = ['orderNo', 'userName', 'mobile',
+					'carAutoNo', 'autoInfoName', 'transactionFee', 'amountFee', 'payFee', 'status', 'createTime'
+				];
+				var result_order = sup_ajax(uri_order, data_order, false);
+				if(!check_str(result_order, 'result')) {
+					layer.msg("网络或服务器异常，页面加载失败");
+				}
+				count = result_order.data.count;
+
+				layui.use(['table', 'laypage'], function() {
+					var $ = layui.jquery,
+						layer = layui.layer,
+						laypage = layui.laypage,
+						form = layui.form,
+						upload = layui.upload;
+					laypage.render({
+						elem: 'page',
+						limit: limit,
+						count: count,
+						jump: function(obj) {
+							var data_order = {
+								"page": obj.curr,
+								'limit': limit,
+								"orderStatus": orderStatus,
+								"searchName": searchName,
+								"orderBeginTime": orderBeginTime,
+								"orderEndTime": orderEndTime,
+								'auctionType': auctionType
+							};
+							result_order = sup_ajax(uri_order, data_order, false);
+							count = result_order.data.count;
+							if(count == 0) {
+								$("#tb_order").html('<td colspan="11" style="text-align:center;height:200px">暂无订单信息！</td>');
+								return;
+							}
+							var html = '';
+							for(var i = 0; i < result_order.data.list.length; i++) {
+								html += '<tr>'
+								for(var j = 0; j < map_name.length; j++) {
+									html += '<td>';
+									if(eval('result_order.data.list[i].' + map_name[j]) != null) {
+										if(j==0){
+											html += '<a target="_blank"  href=\'order-detail.html?orderId='+result_order.data.list[i].id+'\'>'+eval('result_order.data.list[i].' + map_name[j]) + '</a>';
+											continue;
+										}
+										else if(j == 5 || j == 6 || j == 7) {
+											html += eval('result_order.data.list[i].' + map_name[j]) + '元';
+											continue;
+										} else if(j == 9) {
+											html += timeFormat(eval('result_order.data.list[i].' + map_name[j]));
+											continue;
+										} else if(j == 8) {
+
+											var tp = Number(eval('result_order.data.list[i].' + map_name[j]));
+											switch(tp) {
+												case 1:
+													html += '等待付款';
+													break;
+												case 2:
+													html += '付款信息待审核';
+													break;
+												case 3:
+													html += '过户处理中';
+													break;
+												case 4:
+													html += '争议处理中';
+													break;
+												case 5:
+													html += '违约金支付确认中';
+													break;
+												case 6:
+													html += '手续回传待确认';
+													break;
+												case 7:
+													html += '交易完成';
+													break;
+												case 8:
+													html += '交易关闭';
+													break;
+
+											}
+											continue;
+										}
+										html += eval('result_order.data.list[i].' + map_name[j]);
+									}
+
+									html += '</td>';
+								}
+								html += '<td><a onclick="cfAdult(' + result_order.data.list[i].id + ',' + "1" +','+result_order.data.list[i].amountFee+ ')" href="javascript:;" class="layui-btn layui-btn-warm layui-btn-sm">审核</a></td>';
+								
+								html += '</tr>';
+							}
+							$("#" + listName).html(html);
+						}
+					})
+				});
+			}
+
+			function cfAdult(id, type,payFee) {
+				$("#payFee").html('<span class="layui-btn layui-btn-xs layui-btn-radius layui-btn-danger">'+payFee+'元</span>');
+				$("#payFee").attr('readonly','readonly');
+				var uri;
+				var html = '';
+				on_uri=null;
+				switch(type) {
+
+					case 2:
+						uri = '';
+						layer.msg("后台尚未提供线上相关设置");
+						return;
+						break;
+					case 1:
+						uri = '/boss/order/saveOfflineOrderPay';
+
+						break;
+				}
+
+				layer.open({
+					title: "确认",
+					type: 1,
+					content: $("#content_div"),
+					btn: ['确定', '取消'],
+					area: ['437px', '440px'],
+					shade: 0,
+					success: function() {
+
+					},
+					cancel: function(index) {
+						layer.close(index);
+						$("#content_div").hide();
+					},
+					yes: function(index) {
+						
+						var payEvidence = on_uri;
+						var payWay = $("#payWay").val();
+						var remark = $("#remark").val();
+						var data = {
+							"orderId": id,
+							"payFee": payFee,
+							"payEvidence": payEvidence,
+							"payWay": payWay,
+							"remark": remark
+						}
+						var result = sup_ajax(uri, data, false);
+						if(result == null || result == "") {
+							layer.msg("网络连接失败");
+							return;
+						}
+						layer.msg(result.resultMsg);
+						if(result.resultCode != 100) {
+							return;
+						}
+						init("listOl", null, "2");
+						init("listLive", null, "1");
+						layer.close(index);
+						$("#content_div").hide();
+					},
+					btn2: function(index) {
+						layer.close(index);
+						$("#content_div").hide();
+					}
+				});
+			}
+		</script>
+
+	</body>
+
+</html>
