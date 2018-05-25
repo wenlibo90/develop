@@ -79,7 +79,7 @@
               </div>-->
 			<div class="layui-input-inline"><input placeholder="发车时间" id="date" style="width:200px" class="layui-input" type="text"></div>
 			<div class="layui-btn"><i class="fa fa-search"></i>查询</div>
-			<div class="layui-btn"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;导出</div>
+			<!--<div class="layui-btn"><i class="fa fa-arrow-circle-o-up"></i>&nbsp;导出</div>-->
 			<div class="layui-btn add-car"><i class="layui-icon">&#xe608;</i>&nbsp;录入车辆</div>
 		</div>
 		<div class="layui-field-box layui-form">
@@ -396,7 +396,14 @@
 							tab += '</td>';
 						}
 					}
-					tab += '<td><a onclick="toReview('+result_tab.data.list[i].id+')" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="revoke">撤回</a></td>';
+					
+					var s_over = result_tab.data.list[i].status;
+					if(s_over == 5 || s_over == 6 ){
+						tab += '<td><a onclick="toReview('+result_tab.data.list[i].id+')" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="revoke">撤回</a></td>';
+					}else{
+						tab += '<td></td>';
+					}
+					
 					tab += '</tr>';
 				}
 		

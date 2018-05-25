@@ -48,11 +48,7 @@
                       </tr>
                   </thead>
                   <tbody id="list">
-                      
-                       <tr>
-                          <td colspan="13" style="text-align:center;height:200px">暂无信息！</td>
-                       </tr>
-                       
+
                   </tbody>
               </table>
           </div>
@@ -105,9 +101,11 @@
     		,"moveType":moveType
     	}
     	var result_list  = sup_ajax(uri_list,data_list,false);
-    	if(result_list==null||result_list==""){
-    		return;
-    	}
+		
+		if(result_list == null || result_list.data.count == 0 || result_list.success == false ) {
+			$("#list").html('<td colspan="13" style="text-align:center;height:200px">没有数据！</td>');
+			return;
+		}
     	if(result_list.resultCode!=100){
     		layer.msg(result_list.resultMsg);
     		return;
@@ -181,21 +179,18 @@
     
 		var html='<div  class="layui-input-inline"><input class="layui-form-radio" name="pass" type="radio" value="1" title="通过" /></div>'
 		html+='<div  class="layui-input-inline"><input class="layui-form-radio" name="pass" type="radio" value="2" title="不通过" /></div>';
-    	console.log(html);
     	$("#btn").html(html);
     	html='';
     	
     	for(var i=0;i<result_img.data.length;i++){
-    		html+='<a class="layui-btn layui-btn-warm layui-btn-sm"  target="_blank" href="';
-    		html+=result_img.data[i].fileUrl;
-    		html+='">';
+    		html +='<a class="layui-btn layui-btn-warm layui-btn-sm" target="_blank" href="'+result_img.data[i].fileUrl+'">'
     		if(result_img.data[i].fileType=='1'||result_img.data[i].fileType==1){
     			html+='查看图片';
     		}
     		else if(result_img.data[i].fileType=='2'||result_img.data[i].fileType==2){
     			html+='附件'+(i+1)+'';
     		}
-    		html+='</a>';
+			html +='</a>'
     	}
     	$("#img").html(html);
     	$("#msg").val("");

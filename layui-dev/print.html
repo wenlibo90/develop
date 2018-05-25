@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>柠檬竞价-成交确认单</title>
+<style>
+td{border-bottom: 1px solid #000;border-left: 1px solid #000;text-align: center;font-size: 14px;font-weight: bold;}.title{text-align:center;font-size:18px;letter-spacing:4px; padding:12px 0 14px;border-right:1px solid #000;border-top:1px solid #000}.price{
+border-right:1px solid #000;text-indent:4px;font-weight:normal}
+.price span{display:inline-block;letter-spacing:4px;}.fee{border-right:1px solid #000;text-indent:10px;font-weight:normal}
+.check_box{
+	font-weight:normal
+}
+.check_box input{
+	border:2px solid #000;
+	vertical-align:text-bottom;
+	margin-right:5px
+}
+.check_box span{
+	display:inline-block;
+	width:80px;
+	text-align:left
+}
+.autoInfoName{
+	border-right:1px solid #000;font-weight:normal;height:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;vertical-align:middle;line-height:40px
+}
+#printpage{
+	background-color:#ff5722;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    height: 38px;
+    line-height:38px;
+    padding: 0 18px;
+    text-align: center;
+	display:inline-block;
+	text-decoration:none;
+	margin-left:550px;
+	margin-bottom:10px
+}
+</style>
+</head>
+
+<body>
+
+<a href="javascript:;" id="printpage">确认打印</a>
+
+<table width="650" border="0" cellspacing="0" cellpadding="0" id="content">
+  <tr>
+    <td colspan="8" class="title">竞价成交确认单</td>
+  </tr>
+  <tr>
+    <td width="110" height="32">拍品号</td>
+    <td width="110" style="font-weight:normal" class="carAutoNo"></td>
+    <td width="110">原车牌号</td>
+    <td width="110" style="font-weight:normal" class="licenseNumber"></td>
+    <td width="110">品牌型号</td>
+    <td width="110" class="autoInfoName"></td>
+  </tr>
+  <tr>
+    <td height="40">车架号</td>
+    <td colspan="3" style="font-weight:normal" class="vin"></td>
+    <td>成交号牌</td>
+    <td class="fee">NO.&nbsp;<span class="auctionPlateNum"></span></td>
+  </tr>
+  <tr>
+    <td height="40" style="font-weight: bold">本地牌/外地牌</td>
+    <td colspan="3" class="check_box"><span><input type="checkbox">本地牌</span><span><input type="checkbox">外地牌</span><span><input type="checkbox">不带牌</span></td>
+    <td>&nbsp;</td>
+    <td style="border-right:1px solid #000">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="40">办证类型</td>
+    <td colspan="3" class="check_box"><span><input type="checkbox">转籍</span><span><input type="checkbox">过户</span><span><input type="checkbox">上牌</span></td>
+    <td>佣金</td>
+    <td class="fee">¥&nbsp;<span class="serviceFee"></span></td>
+  </tr>
+  <tr>
+    <td height="40">成交价</td>
+    <td colspan="3" style="font-weight:normal">¥&nbsp;<span class="transactionFee"></span></td>
+    <td>办证费</td>
+    <td class="fee">¥&nbsp;<span class="agentFee"></span></td>
+  </tr>
+  <tr>
+    <td height="72">成交价总额<br/>(小写)</td>
+    <td colspan="2" style="font-weight:normal">¥&nbsp;<span class="amountFee"></span></td>
+    <td>成交价总金额<br/>
+    (大写)</td>
+    <td colspan="2" class="price">¥<span class="DX_amountFee"></span></td>
+  </tr>
+  <tr>
+    <td height="70" colspan="6" style="border-right:1px solid #000;font-weight:normal">买受人签字则表明对竞买的拍品现状及竞买程序无任何异议，买受人在规定期限内支付全额款项，否则视为买受人违约，按照违约条款进行处理，有权扣除违约金及中止合作。此单据作为提车凭据。</td>
+  </tr>
+  <tr>
+    <td height="66">买受人签字</td>
+    <td colspan="3"></td>
+    <td colspan="2" class="fee" style="text-align:left">日期：<span class="time"></span></td>
+  </tr>
+  <tr>
+    <td height="72" colspan="3" style="border:none">&nbsp;</td>
+    <td style="border:none;text-align:right">开单人：</td>
+    <td colspan="2" style="border:none">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="22" colspan="3" style="border:none">&nbsp;</td>
+    <td style="border:none;text-align:right">核对人：</td>
+    <td colspan="2" style="border:none">&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td height="40" colspan="6" style="border:none"></td>
+  </tr>
+
+</table>
+<script type="text/javascript" src="plugins/layui/layui.all.js"></script>
+<script type="text/javascript" src="js/common/common_sup.js"></script>
+<script>
+layui.use(['element','table'], function(){
+	
+	var $ = layui.jquery
+	
+	$(function(){
+		//初始化
+		print_info();
+		
+		$("#printpage").on('click',function(){
+			window.print();
+		});
+
+	})
+	
+	//渲染打印表格
+	function print_info() {
+		var id = window.location.search.slice(1).split('=')[1];
+		var url = "/boss/order/selectOrderPrintInfo ";
+		var data = sup_ajax(url, {id: id}, false);
+		if(data == null || data.success == false || data.data.count==0){
+			layer.msg("没有查到信息");
+			return;
+		}
+		
+		var info = data.data;
+		var time = new Date();
+		
+		$('.carAutoNo').html(info.carAutoNo);
+		$('.licenseNumber').html(info.licenseNumber);
+		$('.autoInfoName').html(info.autoInfoName);
+		$('.vin').html(info.vin);
+		$('.auctionPlateNum').html(info.auctionPlateNum);
+		$('.agentFee').html(info.agentFee);
+		$('.serviceFee').html(info.serviceFee);
+		$('.transactionFee').html(info.transactionFee);
+		$('.amountFee').html(info.amountFee);
+		$('.DX_amountFee').html(DX(info.amountFee))
+		$('.time').html(time.getFullYear()+ '-' +(time.getMonth()+1)+ '-' +time.getDate());
+		
+	 }
+	 
+	 //金额转大写
+	 function DX(n) {
+        if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n))
+            return "数据非法";
+        var unit = "千百拾亿千百拾万千百拾元角分", str = "";
+            n += "00";
+        var p = n.indexOf('.');
+        if (p >= 0)
+            n = n.substring(0, p) + n.substr(p+1, 2);
+            unit = unit.substr(unit.length - n.length);
+        for (var i=0; i < n.length; i++)
+            str += '零壹贰叁肆伍陆柒捌玖'.charAt(n.charAt(i)) + unit.charAt(i);
+        return str.replace(/零(千|百|拾|角)/g, "零").replace(/(零)+/g, "零").replace(/零(万|亿|元)/g, "$1").replace(/(亿)万|壹(拾)/g, "$1$2").replace(/^元零?|零分/g, "").replace(/元$/g, "元整");
+}
+  
+});
+</script>
+</body>
+</html>

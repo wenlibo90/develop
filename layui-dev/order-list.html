@@ -42,6 +42,7 @@
                           <th>实付总金额</th>
                           <th>订单状态</th>
                           <th>创建时间</th>
+                          <th>成交确认单</th>
                       </tr>
                   </thead>
                   <tbody id="tb_order">
@@ -113,7 +114,7 @@
                         var html='';
                         for(var i=0;i<result_order.data.list.length;i++){
                             html+='<tr>'
-                            for(var j=0;j<map_name.length;j++){
+                            for(var j=0;j<11;j++){
                                 html+='<td>';
                                 if(eval('result_order.data.list[i].'+map_name[j])!=null){
                                     if(j==6||j==7||j==8){
@@ -168,7 +169,7 @@
                                         continue;
                                     }
                                     else if(j==0){
-                                    	html+='<a target="_blank" href="order-detail.html?orderId='+result_order.data.list[i].id+'">'+eval('result_order.data.list[i].'+map_name[j])+'</a>';
+                                    	html+='<a href="order-detail.html?orderId='+result_order.data.list[i].id+'">'+eval('result_order.data.list[i].'+map_name[j])+'</a>';
                                     	continue;
                                     }
                                     
@@ -176,15 +177,33 @@
                                 }
 								
                                 html+='</td>';
+								
                             }
+							
+							//添加打印
+							html+='<td><a href="javascript:;" class="layui-btn layui-btn-xs layui-btn-danger print" data="'+result_order.data.list[i].id+'">打印</a></td>';
+							
                             html+='</tr>';
                         }
                        
                         $("#tb_order").html(html);
+						
+						$(".print").on("click",function(){
+							var id=$(this).attr("data");
+							layer.full(layer.open({
+								title: '成交确认单',
+								type: 2,
+								shade: 0,//不显示遮罩
+								content: 'print.html?id='+id
+							}));
+							
+						});
                     }
                 })
             });
   		}
+		
+		
   		
     </script>
 
