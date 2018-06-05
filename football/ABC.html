@@ -1,0 +1,431 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750px,user-scalable=no">
+    <title>Russia世界杯</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="http://static.yuntongauto.com/yth/meber/css/animate.css">
+    <style>
+        body{
+            background:#f2f2f2
+        }
+        .box{
+            background:url(images/abcBg.jpg) no-repeat top;
+            margin-bottom: 120px;
+        }
+        .submitBtn{
+            height:120px;
+            width:750px;
+            position:fixed;
+            bottom:0;
+            background:url(images/3-page-btn.jpg.png) #fff no-repeat center 13px;
+            font-size:30px;
+            color:#fff;
+            text-align:center;
+            border-radius:30px 30px 0 0;
+            box-shadow: 0 3px 10px rgba(30,20,18,0.05);
+        }
+        .submitBtn a{
+            font-size:30px;
+            color:#fff;
+            line-height:115px;
+            display:inline-block;
+            width:400px
+        }
+        .abcCont .tabBtns{
+            overflow: hidden;
+            width:380px;
+            margin: 470px auto 20px;
+            line-height: 75px;
+            position: relative;
+        }
+        .abcCont .tabBtns div{
+            color: #fff;
+            opacity: .7;
+            font-size: 28px;
+            width: 100px;
+            text-align: center;
+            float: left;
+            padding-bottom: 15px;
+            margin-right: 40px;
+            transition: all .5s;
+        }
+        .abcCont .tabBtns div:last-child{
+            margin-right: 0;
+        }
+        .abcCont .tabBtns div.on{
+            opacity: 1;
+            font-size: 44px;
+        }
+        .abcCont .line{
+            display: block;
+            position: absolute;
+            width: 100px;
+            height: 6px;
+            background-color: #fff;
+            left: 0;
+            bottom: 0;
+            border-radius: 10px;
+            transition: all .3s;
+        }
+        .tabCon .gassBg{
+            width: 710px;
+            height: 435px;
+            box-sizing: border-box;
+            background: url(images/abcBg-1.png) no-repeat top;
+            margin:  0 auto 23px;
+            padding: 35px;
+        }
+        .tabCon .game_{
+            width: 490px;
+            height: 105px;
+            background: url(images/2-page-l.jpg.png) no-repeat;
+            background-size: cover;
+            margin: 0 auto 70px;overflow: hidden;
+            font-size: 22px;
+            line-height: 90px;
+        }
+        .game_ img{
+            height: 92px;
+            width: 92px;overflow: hidden;
+            float: none;
+        }
+        .l{
+            float: left;
+        }
+        .r{
+            float: right;
+        }
+        .tabCon .game_ .l{
+            margin: 7px 0 0 7px;
+        }
+        .tabCon .game_ .r{
+            margin: 7px 7px 0 0;
+        }
+        .tabCon .game_ .l span{
+            margin-left: 15px;
+        }
+        .tabCon .game_ .r span{
+            margin-right: 5px;
+        }
+        .resBtn{
+            width: 75px;
+            height: 75px;
+            box-sizing: border-box;
+            border: 2px solid #fff;
+            border-radius: 15px;
+            background-color: transparent;
+            color: #fff;
+            text-align: center;
+            line-height: 70px;
+            font-size: 32px;
+            opacity: 0.8;
+            float: left;
+            margin-right: 100px;
+        }
+        .resultBtn{
+            width: 430px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .resBtn:last-child{
+            margin-right: 0;
+        }
+        .resBtn.on{
+            background-color: #e22c3b;
+            opacity: 1;
+        }
+        .resCode{
+            width: 490px;
+            height: 60px;
+            background-color: rgba(255,255,255,.6);
+            border-radius: 60px;
+            color: #fff;
+            line-height: 40px;
+            box-sizing: border-box;
+            margin: 30px auto;
+            padding: 8px 30px;
+        }
+        .resCode input{
+            width: 200px;
+            font-size: 32px;
+            line-height: 40px;
+            background: transparent;
+            color: #fff;
+            outline: none;
+            padding: 10px 0;
+            text-align: center;
+            height: 25px;
+        }
+
+        .tabShow{
+            display: none;
+        }
+        .tabShow.on{
+            display: block;
+        }
+        .tabCon .game_{
+            position: relative;
+        }
+        .imgVs{
+            position: absolute;
+            display: block;
+            height: 100px!important;
+            top: 1px;
+            left: 200px;animation-iteration-count:infinite;
+        }
+    </style>
+</head>
+
+<body>
+<div class="box">
+    <div class="record"></div>
+
+    <div class="abcCont">
+        <div class="tabBtns">
+            <span class="line"></span>
+            <div class="on" data-id="A">A轮</div>
+            <div data-id="B">B轮</div>
+            <div data-id="C">C轮</div>
+        </div>
+        <div class="tabCon">
+            <div class="tabShow on">
+             <!--   <div class="gassBg">
+                    <div class="game_">
+
+                        <div class="l">
+                            <img src="images/timg-16.png" /><span>西班牙</span>
+                        </div>
+                        <div class="r">
+                            <span>西班牙</span> <img src="images/timg-17.png" />
+                        </div>
+                    </div>
+                    <div class="resultBtn">
+                        <div class="resBtn on">胜</div>
+                        <div class="resBtn">负</div>
+                        <div class="resBtn">平</div>
+                    </div>
+                    <div class="resCode">
+                        <input type="number">
+                        <span>:</span>
+                        <input type="number">
+                    </div>
+                </div>-->
+            </div>
+            <div class="tabShow "></div>
+            <div class="tabShow"></div>
+        </div>
+    </div>
+    <div class="submitBtn"><a href="javascript:void(0)">提交</a></div>
+</div>
+<div class="loginBox">
+    <div class="login">
+        <span class="close">&times;</span>
+        <p class="tit">登录</p>
+        <p class="t-cont">
+            <input type="text" placeholder="请输入您的姓名" id="uName">
+        </p>
+        <p class="t-cont">
+            <input type="number" placeholder="请输入您的手机号" id="uCall" maxlength="11">
+            <span class="yzm">获取验证码</span>
+        </p>
+        <p class="t-cont">
+            <input type="number" placeholder="请输入验证码" id="uCode" maxlength="6">
+        </p>
+        <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
+    </div>
+</div>
+<div class="msg"></div>
+<!--吃球球 动画-->
+<div class="loadBox">
+    <div class="loader">
+        <div class="loader-inner pacman">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    服务请求中，请稍后
+</div>
+</body>
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script src="http://static.yuntongauto.com/js/cookie.js" type="text/javascript"></script>
+<script src="js/base.js"></script>
+<script>
+    $('.tabBtns div').click(function () {
+        $(this).addClass('on').siblings().removeClass('on')
+        $('.abcCont .line').css('left',($(this).offset().left-$('.tabBtns').offset().left))
+        $('.tabCon .tabShow').eq($(this).index()-1).addClass('on').siblings().removeClass('on')
+        init()
+    })
+    function isNumber(num) {
+        var n = parseInt(num);
+        if(isNaN(n)) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+    function init() {
+        var data={
+            groupName:$('.tabBtns div.on').attr('data-id')
+        }
+        console.log(data)
+        setAjax('/footballGame/getGameByGroup',data,function (data) {
+            console.log(data)
+            if(data.success){
+                if(data.result.length<1){
+                    $(".msg").html('没有当前轮次的竞猜').stop().slideDown().delay(2000).slideUp()
+                }else{
+                    $('.tabShow.on').html('')
+                    $.each(data.result,function (i,v) {
+                        $('.tabShow.on').append(' <div class="gassBg" data-id="'+v.id+'">\n' +
+                                '                    <div class="game_"> <img src="images/vs_.png" class="imgVs animated tada">\n' +
+                                '                        <div class="l">\n' +
+                                '                            <img src="'+v.homePicture+'" /><span>'+v.homeTeam+'</span>\n' +
+                                '                        </div>\n' +
+                                '                        <div class="r">\n' +
+                                '                            <span>'+v.guestTeam+'</span> <img src="'+v.guestPicture+'" />\n' +
+                                '                        </div>\n' +
+                                '                    </div>\n' +
+                                '                    <div class="resultBtn">\n' +
+                                '                        <div class="resBtn on">胜</div>\n' +
+                                '                        <div class="resBtn">负</div>\n' +
+                                '                        <div class="resBtn">平</div>\n' +
+                                '                    </div>\n' +
+                                '                    <div class="resCode">\n' +
+                                '                        <input type="number"  min="0">\n' +
+                                '                        <span style="font-size: 35px;font-weight: 600">:</span>\n' +
+                                '                        <input type="number"  min="0">\n' +
+                                '                    </div>\n' +
+                                '                </div>')
+                    })
+
+                    $('.resultBtn .resBtn').click(function () {
+                        $(this).addClass('on').siblings().removeClass('on')
+                    })
+                }
+            }else{
+                $(".msg").html(data.message).stop().slideDown().delay(2000).slideUp()
+            }
+        })
+
+    }
+    $(function(){
+      init();
+
+      if(!cookie.getCookie('token')){
+          window.location.href='index.html'
+      }
+
+      function isTureSuccessFlase(userGuessSuccessFalse,userHomeTeamResultScore,userGuestTeamResultScore) {
+          var flag=true;
+          var msg=null;
+          switch (userGuessSuccessFalse){
+              case '胜':
+                  if(userHomeTeamResultScore<=userGuestTeamResultScore){
+                      msg='在选择胜的情况下，主队比分不能小于客队';
+                      //$(".msg").html('在选择胜的情况下，主队比分不能小于客队').stop().slideDown().delay(2000).slideUp()
+                      flag=false;
+                  }
+                  break;
+              case '负':
+                  if(userHomeTeamResultScore>=userGuestTeamResultScore){
+                      msg='在选择负的情况下，主队比分不能大于客队'
+                      //$(".msg").html('在选择负的情况下，主队比分不能大于客队').stop().slideDown().delay(2000).slideUp()
+                      flag=false
+                  }
+                  break;
+              case '平':
+                  if(userHomeTeamResultScore != userGuestTeamResultScore){
+                      msg='在选择平的情况下，主队比分必须等于客队比分';
+                      //$(".msg").html('在选择平的情况下，主队比分必须等于客队比分').stop().slideDown().delay(2000).slideUp()
+                      flag=false
+                  }
+                  break;
+              default:
+                  $(".msg").html('发生了无法预知的错误，请联系管理员').stop().slideDown().delay(2000).slideUp()
+                  flag=false
+                  break;
+          }
+          return {
+              flag:flag,
+              msg:msg
+          };
+      }
+
+        $('.submitBtn a').click(function () {
+            var dataBox=$('.tabShow.on');
+            var dataList=dataBox.find('.gassBg');
+            var str='';
+
+            if(cookie.getCookie('userId')){
+
+                $.each(dataList,function (i,v) {
+                    var gameId=$(v).attr('data-id');
+                    var userGuessSuccessFalse=$(v).find('.resBtn.on').html();
+                    var userHomeTeamResultScore=$(v).find('.resCode input:first-child').val();
+                    var userGuestTeamResultScore=$(v).find('.resCode input:last-child').val();
+                    if(isNumber(userHomeTeamResultScore) && isNumber(userGuestTeamResultScore) && isTureSuccessFlase(userGuessSuccessFalse,userHomeTeamResultScore,userGuestTeamResultScore)){
+                            str+=gameId+'_'+userGuessSuccessFalse+'_'+userHomeTeamResultScore+'_'+userGuestTeamResultScore+','
+                    }else{
+                        $(".msg").html('请核对您的竞猜信息').stop().slideDown().delay(2000).slideUp()
+                        return null;
+                    }
+                });
+                if(str !== '') {
+                    if (countChar(str, ',') < dataList.length) {
+                        $(".msg").html('请完善所有的竞猜').stop().slideDown().delay(2000).slideUp()
+                       return null
+                    } else {
+
+                    var parma = str.slice(0, -1);
+                        getData(str)
+
+                    var data = {
+                        json: parma,
+                        userId:cookie.getCookie('userId'),
+                        token:cookie.getCookie('token')
+                    }
+
+                    setAjax('/footballGameGuess/saveGiftFootballGameGuess', data, function (data) {
+                        if (data.success) {
+                            window.location.href = 'abcRecord.html'
+
+                        } else {
+                            if(data.code=='0'){
+                                $('.loginBox').show();
+                            }else{
+                                $(".msg").html(data.message).stop().slideDown().delay(2000).slideUp()
+                            }
+                        }
+                    })
+                    }
+                }
+            }else{
+               $('.loginBox').show();
+            }
+
+        })
+        function getData(str) {
+            var arr=str.split(',');
+            $.each(arr,function (i,v) {
+                console.log(v.split('_'))
+            })
+        }
+        function countChar(str,char){    //str为字符串，char为字符
+            var count=0;
+            for(var i=0;i<str.length;i++){
+                if(str.charAt(i) == char){
+                    count++;
+                }
+            }
+            console.log(count)
+            return count;
+        }
+    })
+</script>
+</html>

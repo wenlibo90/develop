@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=750px,user-scalable=no">
+<title>Russia世界杯</title>
+<link rel="stylesheet" href="css/style.css"/>
+<style>
+body{
+	background:#f2f2f2
+}
+</style>
+</head>
+<body>
+<div class="box">
+	<div class="pay-tip"><i></i><p class="level">您购买的是专家组竞猜</p>
+    	<span class="des">可继续进行小组赛A、B、C轮竞猜，精彩大奖不容错过！<a href="ABC.html">立即前往</a></span>
+    </div>
+</div>
+
+</body>
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script src="http://static.yuntongauto.com/js/cookie.js" type="text/javascript"></script>
+<script src="js/base.js"></script>
+<script>
+	function init() {
+		if(Number(getUrlParam().level)==0){//非专家组会员
+			$('.level').html('请不要关闭页面！')
+			$('.des').html('竞猜成功，精彩大奖不容错过！<a href="groupRecord.html">立即查看竞猜记录</a>')
+		}
+		if(Number(getUrlParam().status)!=2){
+			$('.pay-tip i').css('background-image','url("images/error.jpg")');
+			$('.level').html('回调存在异常！');
+			$('.des').hide();
+		}
+    }
+    init()
+</script>
+</html>
