@@ -170,16 +170,16 @@ body{
         <h3 class="h3">精彩一重礼</h3>
         <ul class="ruleUl">
             <li >
-                <p style="height: 130px;"><strong>业余级：</strong>储值500元即可获得免拆清洗空调风道一次、单场业余级竞猜一次，竞猜须完成胜负关系竞猜及比分竞猜。</p>
+                <p style="height: 130px;"><strong>业余级：</strong>储值500元即可获得单场业余级竞猜一次，竞猜须完成胜负关系竞猜及比分竞猜。</p>
                 <span class="t5" style="height: 90px;">胜负关系竞猜正确额外赠送储值金额的40%；比分竞猜作为终极大奖筛选条件，比分猜错不影响单场竞猜结果。</span>
             </li>
             <li >
-                <p style="height: 170px;"><strong>职业级：</strong>储值1000元即可获得免拆清洗空调风道一次、免拆清洗水箱冷凝器一次、单场职业级竞猜一次，竞猜须完成胜负关系竞猜、大小球竞猜及比分竞猜。</p>
+                <p style="height: 170px;"><strong>职业级：</strong>储值1000元即可获得单场职业级竞猜一次，竞猜须完成胜负关系竞猜、大小球竞猜及比分竞猜。</p>
                 <span class="t5" style="height: 200px;">胜负关系竞猜正确赠送储值金额的40%，大小球竞猜正确赠送储值金额的30%，全部竞猜正确赠送储值金额的70%；<br>
 比分竞猜作为终极大奖筛选条件，比分猜错不影响单场竞猜结果。</span>
             </li>
             <li >
-                <p style="height: 170px;"><strong>专家级：</strong>储值3000元即可获得免拆清洗空调风道一次、免拆清洗水箱冷凝器一次氢氧除碳清洗一次，单场专家级竞猜一次，小组赛（A、B、C轮任意一轮）竞猜一次。</p>
+                <p style="height: 170px;"><strong>专家级：</strong>储值3000元即可获得免拆清洗空调风道一次、氢氧除碳清洗一次，单场专家级竞猜一次，小组赛（A、B、C轮任意一轮）竞猜一次。</p>
                 <span class="t5" style="height: 200px;">胜负关系竞猜正确赠送储值金额的40%，大小球竞猜正确赠送储值金额的30%，比分竞猜正确赠送储值金额的50%，全部竞猜正确赠送储值金额的120%； <br>
 小组赛竞猜作为终极大奖筛选条件，猜错不影响单场竞猜结果。</span>
             </li>
@@ -301,6 +301,8 @@ $(function(){
             var gassWin=$('.guss-win li.on').html()
             var userId=cookie.getCookie('userId')
             var userGuessSuccessFalse=$('.guss-win li.on').html();
+            console.log(cookie.getCookie('token'))
+            console.log(cookie.getCookie('userId'))
             if(userId){
                 var data={
                     gameId:gameId,
@@ -313,6 +315,7 @@ $(function(){
                     userHomeTeamResultScore:userHomeTeamResultScore,
                     userGuestTeamResultScore:userGuestTeamResultScore
                 }
+                console.log(data)
               //  alert(JSON.stringify(data))
                 if(isTureSuccessFlase(userGuessSuccessFalse,userHomeTeamResultScore,userGuestTeamResultScore).flag){
                     setAjax('/footballGameGuess/saveFootballGameGuess',data,function (data) {

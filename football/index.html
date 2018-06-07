@@ -209,8 +209,10 @@
 </body>
 <script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
 <script src="http://static.yuntongauto.com/js/cookie.js" type="text/javascript"></script>
+
 <script src="js/base.js"></script>
 <script>
+    sessionStorage.setItem('shareId',getUrlParam().id);
 $('.beginGame').click(function () {
     $('.fBall').addClass('rollFy')
     $('.fBallBg').addClass('rollFyBg')
@@ -219,6 +221,7 @@ $('.beginGame').click(function () {
     },1800)
 
     sessionStorage.setItem('appId',appArr[getUrlParam().id>10?getUrlParam().id:getUrlParam().id.slice(1)]);
+
 })
 function isIphoneX(){
     return /iphone/gi.test(navigator.userAgent) && (screen.height == 812 && screen.width == 375)
@@ -227,5 +230,18 @@ if(isIphoneX()){
     $('.dm').css('bottom','450px')
 }
 
+
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script src="http://test.yuntongauto.com/js/weixin-wintop-1.0.js" type="text/javascript"></script>
+<script>
+    weixin_sdk.PAGE.init({
+        basePath: 'http://test.yuntongauto.com',
+        share_title:'Russia世界杯',
+        share_link:'http://static.yuntongauto.com/web/worldcup/index.html?id='+sessionStorage.getItem('shareId'),
+        share_desc:'运通世界杯嘉年华活动,储值即送竞猜,更有机会赢大奖',
+        share_imgUrl:'http://static.yuntongauto.com/web/worldcup/images/1-ball.png',
+        wechatPlatformId:'3036684041086976'
+    });
 </script>
 </html>
