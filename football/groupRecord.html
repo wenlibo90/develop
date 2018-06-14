@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=750px,user-scalable=no">
 <title>Russia世界杯</title>
 <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="http://static.yuntongauto.com/yth/meber/css/animate.css">
 <style>
 .box{
 	background:url(images/4-page.jpg) no-repeat
@@ -123,7 +124,13 @@
     height: 40px;
 
     }
+    .toABCbtn{
+        color: #d23c3d;
+    }
 
+    .abcBox{
+        animation-name: tada;    animation-iteration-count: infinite;
+    }
 </style>
 </head>
 
@@ -185,53 +192,54 @@
        if(cookie.getCookie('token')){
            setAjax('/footballGameGuess/findFootballGameGuessByUerId',data,function (data) {
                console.log(data)
-               //alert(JSON.stringify(data))
                if(data.success){
-                   if(!(data.result[0].level=='专家')){
-                       $('.toABC').hide()
-                   }
                    if(!data.result){
-                       /* $(".msg").html('还没有竞猜记录').stop().slideDown().delay(2000).slideUp()
-                        setTimeout(function () {
-                            window.location.href='list.html'
-                        },2000)*/
+
                        $('.recordBox').html(' <p class="tit">\n' +
                                '                <span class="l">小组赛竞赛记录</span>\n' +
                                '                <a href="abcRecord.html" class="toABC r">ABC轮竞猜记录</a>\n' +
                                '            </p><p class="error" style="font-size: 30px;text-align: center;margin: 100px auto;color: #ccc;">暂时没有竞猜记录</p>')
                    }else{
-                       $('.recordBox').html(' <p class="tit">\n' +
-                               '                <span class="l">单场竞猜记录</span>\n' +
-                               '                <a href="abcRecord.html" class="toABC r">ABC轮竞猜记录</a>\n' +
-                               '            </p>')
-                       $.each(data.result,function (i,v) {
-                           var bigSmaell=' <div class="gassDetail"><span class="t1">大小球：</span><span class="t2">'+v.userGuessBigSmall+'</span></div>' ;
-                           if(!v.userGuessBigSmall){
-                               bigSmaell='';
+                           if(!(data.result[0].level=='专家')){
+                               $('.toABC').hide()
                            }
-                           $('.recordBox').append('<div class="item">\n' +
-                                   '                <div class="contryShow">\n' +
-                                   '                   <span class="l">\n' +
-                                   '                       <img src="'+v.homePicture+'" ><span class="t r">'+v.homeTeam+'</span>\n' +
-                                   '                   </span>\n' +
-                                   '                    <span class="r">\n' +
-                                   '                       <img src="'+v.guestPicture+'"><span class="t l">'+v.guestTeam+'</span>\n' +
-                                   '                   </span>\n' +
-                                   '                </div>\n' +
-                                   '                <p class="pankou">净胜球差：'+v.plate+'</p>\n' +
-                                   '                <div class="gassDetail">\n' +
-                                   '                    <span class="t1">胜负平：</span>\n' +
-                                   '                    <span class="t2">'+v.userGuessSuccessFalse+'</span>\n' +
-                                   '                </div>\n' +bigSmaell+
-                                   '                <div class="gassDetail">\n' +
-                                   '                    <span class="t1">比&nbsp;&nbsp;&nbsp;分：</span>\n' +
-                                   '                    <span class="t2">'+v.userHomeTeamResultScore+':'+v.userGuestTeamResultScore+'</span>\n' +
-                                   '                </div>\n' +
-                                   '            </div>')
-                       })
-                   }
+                           $('.recordBox').html(' <p class="tit">\n' +
+                                   '                <span class="l">单场竞猜记录</span>\n' +
+                                   '                <a href="abcRecord.html" class="toABC r">ABC轮竞猜记录</a>\n' +
+                                   '            </p>')
+                           $.each(data.result,function (i,v) {
+                               var bigSmaell=' <div class="gassDetail"><span class="t1">大小球：</span><span class="t2">'+v.userGuessBigSmall+'</span></div>' ;
+                               if(!v.userGuessBigSmall){
+                                   bigSmaell='';
+                               }
+                               var isHave=v.lostGift =='1'?'<p class="pankou animated tada abcBox" ><a href="ABC.html?guessId='+v.id+'" class="toABCbtn ">前往ABC轮竞猜</a></p>':''
+                               $('.recordBox').append('<div class="item">\n' +
+                                       '                <div class="contryShow">\n' +
+                                       '                   <span class="l">\n' +
+                                       '                       <img src="'+v.homePicture+'" ><span class="t r">'+v.homeTeam+'</span>\n' +
+                                       '                   </span>\n' +
+                                       '                    <span class="r">\n' +
+                                       '                       <img src="'+v.guestPicture+'"><span class="t l">'+v.guestTeam+'</span>\n' +
+                                       '                   </span>\n' +
+                                       '                </div>\n' +
+                                       '                <p class="pankou">净胜球差：'+v.plate+'</p>\n' +
+                                       '                <div class="gassDetail">\n' +
+                                       '                    <span class="t1">胜负平：</span>\n' +
+                                       '                    <span class="t2">'+v.userGuessSuccessFalse+'</span>\n' +
+                                       '                </div>\n' +bigSmaell+
+                                       '                <div class="gassDetail">\n' +
+                                       '                    <span class="t1">比&nbsp;&nbsp;&nbsp;分：</span>\n' +
+                                       '                    <span class="t2">'+v.userHomeTeamResultScore+':'+v.userGuestTeamResultScore+'</span>\n' +
+                                       '                </div>\n' +isHave+
+                                       '            </div>')
+                           })
+                       }
                }else{
-                   $(".msg").html(data.message).stop().slideDown().delay(2000).slideUp()
+                   if(data.code=='0'){
+                       $('.loginBox').show();
+                   }else{
+                       $(".msg").html(data.message).stop().slideDown().delay(2000).slideUp()
+                   }
                }
            })
        }else{

@@ -278,7 +278,7 @@
             console.log(data)
             if(data.success){
                 if(data.result.length<1){
-                    $(".msg").html('没有当前轮次的竞猜').stop().slideDown().delay(2000).slideUp()
+                    $(".msg").html('没有当前轮次的竞猜').show().delay(2000).slideUp()
                 }else{
                     $('.tabShow.on').html('')
                     $.each(data.result,function (i,v) {
@@ -309,11 +309,12 @@
                     })
                 }
             }else{
-                $(".msg").html(data.message).stop().slideDown().delay(2000).slideUp()
+                $(".msg").html(data.message).show().delay(2000).slideUp()
             }
         })
-
     }
+
+
     $(function(){
       init();
 
@@ -328,26 +329,26 @@
               case '胜':
                   if(userHomeTeamResultScore<=userGuestTeamResultScore){
                       msg='在选择胜的情况下，主队比分不能小于客队';
-                      //$(".msg").html('在选择胜的情况下，主队比分不能小于客队').stop().slideDown().delay(2000).slideUp()
+                      //$(".msg").html('在选择胜的情况下，主队比分不能小于客队').show().delay(2000).slideUp()
                       flag=false;
                   }
                   break;
               case '负':
                   if(userHomeTeamResultScore>=userGuestTeamResultScore){
                       msg='在选择负的情况下，主队比分不能大于客队'
-                      //$(".msg").html('在选择负的情况下，主队比分不能大于客队').stop().slideDown().delay(2000).slideUp()
+                      //$(".msg").html('在选择负的情况下，主队比分不能大于客队').show().delay(2000).slideUp()
                       flag=false
                   }
                   break;
               case '平':
                   if(userHomeTeamResultScore != userGuestTeamResultScore){
                       msg='在选择平的情况下，主队比分必须等于客队比分';
-                      //$(".msg").html('在选择平的情况下，主队比分必须等于客队比分').stop().slideDown().delay(2000).slideUp()
+                      //$(".msg").html('在选择平的情况下，主队比分必须等于客队比分').show().delay(2000).slideUp()
                       flag=false
                   }
                   break;
               default:
-                  $(".msg").html('发生了无法预知的错误，请联系管理员').stop().slideDown().delay(2000).slideUp()
+                  $(".msg").html('发生了无法预知的错误，请联系管理员').show().delay(2000).slideUp()
                   flag=false
                   break;
           }
@@ -358,6 +359,7 @@
       }
 
         $('.submitBtn a').click(function () {
+
             var dataBox=$('.tabShow.on');
             var dataList=dataBox.find('.gassBg');
             var str='';
@@ -372,43 +374,61 @@
                     if(isNumber(userHomeTeamResultScore) && isNumber(userGuestTeamResultScore) && isTureSuccessFlase(userGuessSuccessFalse,userHomeTeamResultScore,userGuestTeamResultScore)){
                             str+=gameId+'_'+userGuessSuccessFalse+'_'+userHomeTeamResultScore+'_'+userGuestTeamResultScore+','
                     }else{
-                        $(".msg").html('请核对您的竞猜信息').stop().slideDown().delay(2000).slideUp()
+                        $(".msg").html('请核对您的竞猜信息').show().delay(2000).slideUp()
                         return null;
                     }
                 });
                 if(str !== '') {
                     if (countChar(str, ',') < dataList.length) {
-                        $(".msg").html('请完善所有的竞猜').stop().slideDown().delay(2000).slideUp()
+                        $(".msg").html('请完善所有的竞猜').show().delay(2000).slideUp()
                        return null
                     } else {
-
-                    var parma = str.slice(0, -1);
-                        getData(str)
-
-                    var data = {
-                        json: parma,
-                        userId:cookie.getCookie('userId'),
-                        token:cookie.getCookie('token')
-                    }
-
-                    setAjax('/footballGameGuess/saveGiftFootballGameGuess', data, function (data) {
-                        if (data.success) {
-                            window.location.href = 'abcRecord.html'
-
-                        } else {
-                            if(data.code=='0'){
-                                $('.loginBox').show();
-                            }else{
-                                $(".msg").html(data.message).stop().slideDown().delay(2000).slideUp()
+                        var parma = str.slice(0, -1);
+                            getData(str)
+                        var data = {}
+                        //补猜16场次
+                        if(getUrlParam().guessId){
+                            data = {
+                                json: parma,
+                                userId:cookie.getCookie('userId'),
+                                token:cookie.getCookie('token'),
+                                guessId:Number(getUrlParam().guessId)
                             }
+                            console.log(data)
+                            setAjax('/footballGameGuess/saveGiftGameGuessForLost', data, function (data) {
+                                if (data.success) {
+                                    window.location.href = 'abcRecord.html'
+                                } else {
+                                    if(data.code=='0'){
+                                        $('.loginBox').show();
+                                    }else{
+                                        $(".msg").html(data.message).show().delay(2000).slideUp()
+                                    }
+                                }
+                            })
+                        }else{
+                            data = {
+                                json: parma,
+                                userId:cookie.getCookie('userId'),
+                                token:cookie.getCookie('token')
+                            }
+                            setAjax('/footballGameGuess/saveGiftFootballGameGuess', data, function (data) {
+                                if (data.success) {
+                                    window.location.href = 'abcRecord.html'
+                                } else {
+                                    if(data.code=='0'){
+                                        $('.loginBox').show();
+                                    }else{
+                                        $(".msg").html(data.message).show().delay(2000).slideUp()
+                                    }
+                                }
+                            })
                         }
-                    })
                     }
                 }
             }else{
                $('.loginBox').show();
             }
-
         })
         function getData(str) {
             var arr=str.split(',');
