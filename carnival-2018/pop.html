@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=750px,user-scalable=no">
+<title>运通嘉年华-7×24小时</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+
+<body>
+
+<div class="box">
+	
+    <!--遮罩弹层-->
+    <div class="pop">
+    	<!--提示-->
+    	<div class="pop-msg">
+        	<!--抽奖提示：抽中xxx；抽奖登录以后提示：已领取xxx,按钮显示‘查看记录’。领券提示：获得电动尾门试用机会一次/二手车1000元礼金券一张-->
+        	<div class="tit">抽中原厂玻璃水一瓶</div>
+            <!--按钮状态：抽奖成功显示‘立即领取’，领券成功显示‘查看记录’-->
+            <div class="btn">立即领取</div>
+        </div>
+        
+        <!--登录-->
+        <div class="pop-login">
+        	<span class="close">&times;</span>
+            <p class="tit">登录</p>
+            <p class="t-cont">
+                <input type="text" placeholder="姓名" id="uName">
+            </p>
+            <p class="t-cont">
+                <input type="number" placeholder="手机号" id="uCall" maxlength="11">
+                <span class="yzm">获取验证码</span>
+            </p>
+            <p class="t-cont">
+                <input type="number" placeholder="验证码" id="uCode" maxlength="6">
+            </p>
+            <p class="shopListDiv">
+                <span>选择经销店:</span><span class="shopListBtn">未选择</span>
+            </p>
+            <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
+        </div>
+    </div>
+    
+    <!--选择4s店-->
+    <div class="shopListBox hide">
+        <div class="shopList">
+            <span class="tit">请选择所在城市</span>
+            <div class="cityBox">
+                <ul class="city">
+                    <li class="on">北京</li>
+                    <li>北京</li>
+                    <li>北京</li>
+                    <li>哈尔滨</li>
+                </ul>
+                <div class="lineBox">
+                    <div class="line"></div>
+                    <img src="img/cityBtn.png" class="cityBtn">
+                </div>
+            </div>
+            <ul class="cityListShow">
+                <li class="on"><span>北京运通博恩(亦庄)</span></li>
+                <li><span>运通博恩一汽大众(亦庄)</span></li>
+                <li><span>运通博恩(亦庄)</span></li>
+                <li><span>运通博恩(亦庄)</span></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
