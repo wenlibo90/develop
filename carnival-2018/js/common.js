@@ -13,12 +13,12 @@ var base={
     * @param okFn  请求成功的回调   require
     * @param noFn  请求失败的回调   require
     * */
-    setAjax:function (url,data,okFn,noFn,beforeFn){
+    setAjax:function (url,data,okFn,beforeFn){
         $.ajax({
-            type:'post',
-            //contentType:'application/json',
-            url:url,
-            data:data,
+            type:'get',
+            url:base.path+url,
+            dataType:'jsonp',
+            data:JSON.stringify(data),
             beforeSend:function(xhr){
                 //xhr.setRequestHeader("appId", common.VAR.connectId);
                 //xhr.setRequestHeader("Content-Type", "application/json");
@@ -32,7 +32,7 @@ var base={
                     okFn(data)
                 }
             },
-            error:function(data){
+            error:function(){
                 $('.msg').html('服务器异常').fadeIn(100).delay(1500).hide()
             }
         });
@@ -282,4 +282,8 @@ loginBtn.click(function () {
     loginObj.uCode=uCode;
     var productId=sessionStorage.getItem('productId')?sessionStorage.getItem('productId'):null
     loginObj.loginCheck(productId);
+})
+
+$('.close').click(function () {
+    $(this).parents('.pop').hide()
 })

@@ -97,6 +97,15 @@
         <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
     </div>
 </div>
+<div class="pop popMsgBox">
+    <!--提示-->
+    <div class="pop-msg">
+        <!--抽奖提示：抽中xxx；抽奖登录以后提示：已领取xxx,按钮显示‘查看记录’。领券提示：获得电动尾门试用机会一次/二手车1000元礼金券一张-->
+        <div class="tit">抽中原厂玻璃水一瓶</div>
+        <!--按钮状态：抽奖成功显示‘立即领取’，领券成功显示‘查看记录’-->
+        <div class="btn">立即领取</div>
+    </div>
+</div>
 <div class="loadBox">
     <div class="loader">
         <div class="loader-inner pacman">
@@ -116,19 +125,18 @@
 <script src="js/common.js"></script>
 <script>
     $(function () {
-        //动画样式添加
-        $('.carBg').addClass('slideInUp')
-        $('.money_1').addClass('rotateInDownLeft')
 
-        $('.money_2').addClass('rotateInDownRight')
-        $('.money_3').addClass('rotateInDownRight')
-        $('.red-1').addClass('rotateInDownLeft')
-        $('.red-2').addClass('rotateInDownRight')
+        init()
+
 
        $('.trictBg .rules').click(function () {
            alert('点我干嘛，弹框还没有呢')
            //setAjax('/carnival/insertturnplateorder',data,okFn,noFn,beforeFn)
        })
+        //定金支付
+        $('.toPayBtn').click(function () {
+            sessionStorage.setItem('productId',1)
+        })
         //概率函数
         function rnd(n, m){
             //概率
@@ -151,7 +159,7 @@
         //选择开关
         var bRotate = false;
         //旋转函数
-        var rotateFn = function (awards, angles, txt){
+        var rotateFn = function (awards, angles, txt,goodid){
             bRotate = !bRotate;
             $('#rotate').stopRotate();
             $('#rotate').rotate({
@@ -160,7 +168,10 @@
                 animateTo:angles+1800,
                 duration:8000,
                 callback:function (){
-                    alert(txt);
+                    $('.popMsgBox').show()
+                    $('.pop-msg .tit').html(txt)
+                    $('.pop-msg .btn').html('<a href="record.html" style="display: block;">查看记录</a>')
+                    sessionStorage.setItem('productId',goodid)
                     bRotate = !bRotate;
                     $('#rotate').addClass('rotate2');
                 }
@@ -170,28 +181,35 @@
         $('.pointer').click(function (){
             $('#rotate').removeClass('rotate2');
             if(bRotate)return;
-            var item = rnd(0,5);
+            sessionStorage.removeItem('productId')
+            var item = rnd(0,4);
+            //谢谢参与 概率为0
             var arrDial=[
                 {
                     angle:0,
-                    Prize:'机滤一个'
+                    Prize:'机滤一个',
+                    id:2
                 },
                 {
                     angle:-61,
                     Prize:'续保代金券500元'
+                    , id:3
                 },
                 {
                     angle:-120,
                     Prize:'瑞典拓乐高端运动背包'
+                    , id:4
                 }
                 ,
                 {
                     angle:-180,
-                    Prize:'免工时更换防冻液'
+                    Prize:'免工时更换防冻液',
+                    id:5
                 },
                 {
                     angle:-240,
-                    Prize:'等离子空气净化试用一个月'
+                    Prize:'等离子空气净化试用一个月',
+                    id:6
                 },
                 {
                     angle:-300,
@@ -199,7 +217,7 @@
                 }
             ];
             console.log(item)
-            rotateFn(item, arrDial[item].angle, arrDial[item].Prize)
+            rotateFn(item, arrDial[item].angle, arrDial[item].Prize,arrDial[item].id)
 
         });
         //领取优惠券
@@ -219,11 +237,46 @@
             }
         })
     });
-    //获取当前4s店appid
-    sessionStorage.setItem("appId", base.appIdArr[10 <= getUrlParam().id ? getUrlParam().id : getUrlParam().id.slice(1)])
-    console.log(sessionStorage.getItem("appId"))
-    if(getUrlParam().id != '01'){
-        $('.shopListDiv').hide()
+    function init() {
+        base.setAjax('/carnival/gettime',{},function (data) {
+            console.log(data)
+            $('.timeBox').html()
+        })
+
+        $.ajax({
+            type:'get',
+            url:base.path+'/carnival/insertturnplateorder',
+            dataType:'jsonp',
+            data:JSON.stringify({
+                token:null,
+                appId:'wxaf424323472e4f17',
+                carnivalProductId:'1'
+            }),
+            success:function (data) {
+                console.log(data)
+            }
+            ,error:function (data) {
+                console.log(data)
+            }
+        })
+
+        //获取当前4s店appid
+        sessionStorage.setItem("appId", base.appIdArr[10 <= getUrlParam().id ? getUrlParam().id : getUrlParam().id.slice(1)])
+        console.log(sessionStorage.getItem("appId"))
+        if(getUrlParam().id != '01'){
+            $('.shopListDiv').hide()
+        }
+        //主题图片加载完执行 images
+        //动画样式添加
+        $('.carBg').addClass('slideInUp')
+        $('.money_1').addClass('rotateInDownLeft')
+
+        $('.money_2').addClass('rotateInDownRight')
+        $('.money_3').addClass('rotateInDownRight')
+        $('.red-1').addClass('rotateInDownLeft')
+        $('.red-2').addClass('rotateInDownRight')
+
     }
+
 </script>
 </html>
