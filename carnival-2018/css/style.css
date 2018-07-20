@@ -408,3 +408,107 @@ body{
     text-overflow: ellipsis;
     background: url(../img/shopBtnBg.png) no-repeat 94% center;
 }
+
+/*支付回调*/
+.pay-box{
+	width:640px;
+	height:693px;
+	background:url(../img/r-tpay.png) no-repeat;
+	margin:64px 55px 0
+}
+.pay-box .tips{
+	font-size:38px;
+	color:#ff7f02;
+	text-align:center;
+	padding:100px 0 40px
+}
+.pay-box .tips i{
+	width:80px;
+	height:80px;
+	background:url(../img/r-tpicon.png) no-repeat;
+	display:inline-block
+}
+.pay-box .name{
+	font-size:30px;
+	color:#606060;
+	text-align:center
+}
+.pay-box .btn{
+	text-align:center;
+	padding-top:160px
+}
+.pay-box .btn a{
+	display:inline-block;
+	color:#ff7f02;
+	font-size:26px;
+	border:1px solid #ff7f02;
+	border-radius:30px;
+	height:60px;
+	width:210px;
+	line-height:60px;
+	margin:0 16px
+}
+.pay-box .btn a.index{
+	color:#fff;
+	background:#ff7f02;
+	box-shadow:0 3px 8px rgba(255, 127, 2, 0.23)
+}
+
+/*使用规则*/
+.tips-rule{
+	width:651px;
+	margin:40px 48px 0 51px
+}
+.rule-top{
+	width:651px;
+	height:124px;
+	background:url(../img/r-tctops-2.png) no-repeat
+}
+.rule-top-e{
+	width:651px;
+	height:184px;
+	background:url(../img/r-tctops-3.png) no-repeat
+}
+.rule-top-e.dzp{
+	background:url(../img/r-tctops-4.png) no-repeat
+}
+.rule-top-e span{
+	text-align:center;
+	color:#fff;
+	font-size:25px;
+	display:block;
+	padding-top:114px
+}
+.rule-rep{
+	background:url(../img/r-tcreps.png) repeat-y;
+	color:#909090;
+	font-size:26px;
+	padding:30px 54px 50px;
+	line-height:48px
+}
+.rule-rep p span{
+	color:#ff7f02
+}
+.rule-rep p{
+	padding:17px 0
+}
+.rule-rep .tit{
+	color:#606060;
+	font-size:32px
+}
+.rule-btn{
+	width:651px;
+	height:137px;
+	background:url(../img/r-tcbots.png) no-repeat
+}
+.rule-btn a{
+	font-size:32px;
+	color:#5f3ddf;
+	width:300px;
+	height:74px;
+	line-height:73px;
+	text-align:center;
+	border-radius:37px;
+	display:inline-block;
+	margin:57px 0 0 174px
+}
