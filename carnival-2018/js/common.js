@@ -18,7 +18,7 @@ var base={
             type:'get',
             url:base.path+url,
             dataType:'jsonp',
-            data:JSON.stringify(data),
+            data:data,
             beforeSend:function(xhr){
                 //xhr.setRequestHeader("appId", common.VAR.connectId);
                 //xhr.setRequestHeader("Content-Type", "application/json");
@@ -62,7 +62,7 @@ var base={
         delCookie:function (objName) {
             var date = new Date();
             date.setTime(date.getTime() - 1);
-            var cval=common.cookie.getCookie(objName);
+            var cval=base.cookie.getCookie(objName);
             if(cval!=null) {
                 document.cookie= objName + "="+cval+";expires="+date.toGMTString();
                 return true
@@ -72,7 +72,7 @@ var base={
         },
         //删除根目录cookie
         delCookieByPath:function (objName) {
-            var cval=common.cookie.getCookie(objName);
+            var cval=base.cookie.getCookie(objName);
             var objHours=-1;
             if(cval!=null) {
                 var str = objName + "=" + escape('');
@@ -231,7 +231,17 @@ function getUrlParam() {
     }
     return obj;
 }
-
+//时间戳转时间格式
+function timestampToTime(timestamp) {
+    var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    Y = date.getFullYear() + '-';
+    M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    D = date.getDate() + ' ';
+    h = date.getHours() + ':';
+    m = date.getMinutes() + ':';
+    s = date.getSeconds();
+    return Y+M+D;
+}
 function setMsg() {
     //调用短信发送接口
     var uCall=$('#uCall').val();

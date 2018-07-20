@@ -1,26 +1,74 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=750px,user-scalable=no">
-<title>运通嘉年华-7×24小时</title>
-<link rel="stylesheet" href="css/style.css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=750px,user-scalable=no">
+    <title>运通嘉年华-7×24小时</title>
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
 
 <body>
 
 <div class="box">
-	<div class="ea-top"><img src="img/r-tearnest.jpg" /></div>
+    <div class="ea-top"><img src="img/r-tearnest.jpg" /></div>
     <ul class="ea-rule">
-    	<li class="tit">使用规则:</li>
+        <li class="tit">使用规则:</li>
         <li><i>1</i>购买此订金产品即可参与运通汽车集团旗下所有经销店基础保养买一赠一活动；此订金可在实际购买基础保养买一赠一产品时进行抵用；</li>
         <li><i>2</i>此订金可多次购买，可一次购买多份，一份订金只对应一份基础保养买一赠一产品</li>
         <li><i>3</i>预付订金后，应在活动期间内（7月24-30日内）前往所选经销店进行后续费用补交，或与店内工作人员联系在线上完成费用补交，逾期未进行费用补交，则视为放弃本次活动，请联系经销店进行订金退款；</li>
         <li><i>4</i>订单中您所填写的姓名及联系方式是我们确认您购买的唯一途径，请务必保证填写正确；</li>
         <li><i>5</i>此次活动中基础保养产品有效期为5年（自充值之日起计算）。</li>
     </ul>
-    <a class="ea-btn" href="info.html">立即支付定金</a>
+    <a class="ea-btn">立即支付定金</a>
 </div>
 
+<!--登录-->
+<div class="pop">
+<div class="pop-login">
+    <span class="close">&times;</span>
+    <p class="tit">登录</p>
+    <p class="t-cont">
+        <input type="text" placeholder="姓名" id="uName">
+    </p>
+    <p class="t-cont">
+        <input type="number" placeholder="手机号" id="uCall" maxlength="11">
+        <span class="yzm">获取验证码</span>
+    </p>
+    <p class="t-cont">
+        <input type="number" placeholder="验证码" id="uCode" maxlength="6">
+    </p>
+    <p class="shopListDiv">
+        <span>选择经销店:</span><span class="shopListBtn">未选择</span>
+    </p>
+    <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
+</div>
+</div>
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script>
+    $(".ea-btn").click(function () {
+        sessionStorage.setItem("appId","wx017397a5a78e210a");
+        sessionStorage.setItem("token","6475c0cd4980104ff11740bfb745fe93");
+        sessionStorage.setItem("carnivalProductId","4");
+        var param= {
+            "appId": sessionStorage.getItem("appId"),
+            "token": sessionStorage.getItem("token"),
+            "carnivalProductId": sessionStorage.getItem("carnivalProductId")
+        }
+        base.cookie.setCookie("token");
+        if (loginObj.isLogin()){
+            base.setAjax('/carnival/inserteernestorder',param,function (data) {
+                console.log(data.success);
+                if(data.success){
+                    window.location.href = "/pay/gotocarnivalpay?carnivalProductId="+carnivalProductId;
+                }else{
+                    alert("支付过程发生未知错误！");
+                }
+            })
+        }
+
+    });
+
+</script>
 </body>
 </html>
