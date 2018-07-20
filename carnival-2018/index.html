@@ -41,7 +41,7 @@
         </p>
         <div class="cont1">
             <img src="img/txt-2.png" alt="" class="txt2 animated slideInUp">
-            <a href="earnest.html" class="toPayBtn"><img src="img/toPay.png"></a>
+            <a href="javascript:void(0)" class="toPayBtn"><img src="img/toPay.png"></a>
         </div>
     </div>
     <div class="cont_2">
@@ -56,27 +56,20 @@
         <p class="turntableRuleBtn">请详细阅读 <strong>抽奖规则</strong></p>
     </div>
     <div class="cont_3">
-        <div class="trictBg trictBox1">
+        <div class="trictBg trictBox1" data-goodid="8">
             <span class="rules"></span>
-            <span class="getBtn">免费领取</span>
+            <span class="getBtn" >免费领取</span>
         </div>
-        <div class="trictBg trictBox2">
+        <div class="trictBg trictBox2" data-goodid="7">
             <span class="rules"></span>
-            <span class="getBtn">免费领取</span>
+            <span class="getBtn" >免费领取</span>
         </div>
     </div>
     <p class="bottom">WINTOP</p>
     <p class="bottom">集团信息技术部提供技术支持</p>
 </div>
 <!--遮罩弹层-->
-<div class="pop">
-    <!--提示-->
-    <div class="pop-msg">
-        <!--抽奖提示：抽中xxx；抽奖登录以后提示：已领取xxx,按钮显示‘查看记录’。领券提示：获得电动尾门试用机会一次/二手车1000元礼金券一张-->
-        <div class="tit">抽中原厂玻璃水一瓶</div>
-        <!--按钮状态：抽奖成功显示‘立即领取’，领券成功显示‘查看记录’-->
-        <div class="btn">立即领取</div>
-    </div>
+<div class="pop popLoginBox">
     <!--登录-->
     <div class="pop-login">
         <span class="close">&times;</span>
@@ -119,23 +112,108 @@
     服务请求中，请稍后
 </div>
 <div class="msg"></div>
+<!--二手车通用券-->
+<div class="pop usedcarRule">
+    <div class="tips-rule">
+        <div class="rule-top-e"><span>二手车通用券1000元</span></div>
+        <div class="rule-rep">
+            <p class="tit">使用规则</p>
+            <p>可用于二手车购买时使用，可在成交价格基础上减少1000元；</p>
+            <p>可用于二手车置换、寄卖时使用，可在成交价格基础上增加1000元；</p>
+            <p>每个用户仅限领取一张；</p>
+            <p>单笔交易仅限抵用一张；</p>
+            <p>请到店消费时将此券领取记录向店内工作人员出示。</p>
+            <p>有效期5个月（自充值之日起计算）。</p>
+        </div>
+        <div class="rule-btn"><a>我知道了</a></div>
+    </div>
+</div>
+<!--电动尾门试用-->
+<div class="pop doorRule">
+    <div class="tips-rule">
+        <div class="rule-top"></div>
+        <div class="rule-rep">
+            <p class="tit">使用规则</p>
+            <p>此活动仅适用于运通汽车集团旗下经销店所覆盖的城市，如不覆盖，恕无法提供服务；</p>
+            <p>报名后，店内工作人员会与您电话联系到店签署协议及安装事宜。</p>
+        </div>
+        <div class="rule-btn"><a>我知道了</a></div>
+    </div>
+</div>
+<!--大转盘-->
+<div class="pop turntableRule">
+    <div class="tips-rule">
+        <div class="rule-top-e dzp"><span>每个用户仅限参与一次</span></div>
+        <div class="rule-rep">
+            <p class="tit">奖品说明：</p>
+            <p><span>机滤一个</span><br/>仅限到店使用，有效期一年，自发放之日起计算；</p>
+            <p><span>享受一次免工时更换防冻液</span><br/>有效期一年，自发放之日起计算；</p>
+            <p><span>续保代金券500元</span><br/>有效期一年，自发放之日起计算，不与其他优惠同享；</p>
+            <p><span>低温等离子空气净化清风系统</span><br/>一个月免费试用权；仅适用于运通汽车集团旗下经销店所覆盖的城市，如不覆盖，恕无法提供服务；店内工作人员会电话联系您到店签署协议
+                及告知您相关安装事宜。</p>
+            <p><span>威固赞助瑞典拓乐高端运动背包10个</span><br/>工作人员会电话联系您邮寄事宜。</p>
+
+        </div>
+        <div class="rule-btn"><a>我知道了</a></div>
+    </div>
+</div>
 </body>
 <script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
 <script src="js/awardRotate.js"></script>
 <script src="js/common.js"></script>
 <script>
     $(function () {
-
-        init()
-
-
+      init()
        $('.trictBg .rules').click(function () {
-           alert('点我干嘛，弹框还没有呢')
-           //setAjax('/carnival/insertturnplateorder',data,okFn,noFn,beforeFn)
+           if($(this).parent('.trictBg').attr('data-goodid')  == 8){
+                $('.doorRule').show()
+           }else{
+               $('.usedcarRule').show()
+           }
        })
+
+        $('.rule-btn a').click(function () {
+            $(this).parents('.pop').hide()
+        })
+        $('.turntableRuleBtn').click(function () {
+            $('.turntableRule').show();
+        })
         //定金支付
         $('.toPayBtn').click(function () {
             sessionStorage.setItem('productId',1)
+            setTimeout(function () {
+                window.location.href='earnest.html'
+            },800)
+        })
+        $('.getBtn').click(function () {
+
+            sessionStorage.setItem('productId',$(this).parent('.trictBg').attr('data-goodid'))
+            if(base.cookie.getCookie('token')){
+
+                var data={
+                    carnivalProductId:sessionStorage.getItem('productId'),
+                    appId:sessionStorage.getItem("appId"),
+                    token:base.cookie.getCookie('token')
+                }
+
+                base.setAjax('/carnival/savecashgiftorder',data,function (data) {
+                    console.log(data)
+                    if(data.code==0){
+
+                    }else{
+                        if(sessionStorage.getItem('productId') == 8){
+                            $('.popMsgBox').show()
+                            $('.pop-msg .tit').html('电动尾门适用')
+                            $('.pop-msg .btn').html('<a href="record.html" style="display: block;">查看记录</a>')
+                        }else{
+                            $('.popMsgBox').show()
+                            $('.pop-msg .tit').html('二手车礼金')
+                            $('.pop-msg .btn').html('<a href="record.html" style="display: block;">查看记录</a>')
+                        }
+                    }
+                })
+            }
+
         })
         //概率函数
         function rnd(n, m){
@@ -220,10 +298,6 @@
             rotateFn(item, arrDial[item].angle, arrDial[item].Prize,arrDial[item].id)
 
         });
-        //领取优惠券
-        $('.getBtn').click(function () {
-            alert('恭喜免费领取')
-        })
 
         function getTime() {
             $.ajax({
@@ -233,15 +307,28 @@
         }
         $('.myRecord').click(function () {
             if(loginObj.isLogin()){
-                window.location.href=''
+                window.location.href='record.html'
             }
         })
+
+
     });
     function init() {
+        //倒计时
         base.setAjax('/carnival/gettime',{},function (data) {
             console.log(data)
             $('.timeBox').html()
+            var date = new Date('2018-07-27 08:00:00:00');
+            // 有三种方式获取
+            //var time1 = date.getTime();
+            //var timerid = setInterval(function(){base.timeEnd(timerid,time1,data2)}, 1000);
+            //base.timeEnd(timerid,time1,data)
+            //(timerid,needTime,now)
         })
+
+
+        //if(data2<date1)return;//设置的时间小于现在时间退出
+        //_ordertimer = setInterval(function(){base.timeEnd(timerid,time1,data2)}, 1000);
 
         $.ajax({
             type:'get',

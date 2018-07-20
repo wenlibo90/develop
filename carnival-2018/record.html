@@ -17,15 +17,14 @@
 <script src="js/common.js"></script>
 <script>
     $(function () {
-        console.log("页面初始化....");
-        var customerId="3979690775914496";
-        //var customerId=sessionStorage.getItem("customerId")
+        //获取用户id
+        var customerId=base.cookie.getCookie('userId');
         var paramdata ={customerId:customerId};
         base.setAjax('/carnival/selectorderlistbycustomerid',paramdata,function (data) {
-            console.log(data);
             if(data.success){
                 if(data.result.length<1){
-                    alert("当前账号没有任何记录哦!");
+					//没有记录
+                    $('.recordList').html('<li class="record" style="font-size:34px;color:#606060;text-align:center;padding-top:201px;">没有任何记录</li>')
                 }else{
                     $.each(data.result,function (i,v) {
                         $('.recordList').append('<li class="record">\n' +
