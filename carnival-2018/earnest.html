@@ -20,30 +20,32 @@
         <li><i>5</i>此次活动中基础保养产品有效期为5年（自充值之日起计算）。</li>
     </ul>
     <a class="ea-btn">立即支付定金</a>
+    
+    <!--登录-->
+    <div class="pop popLoginBox">
+        <!--登录-->
+        <div class="pop-login">
+            <span class="close">&times;</span>
+            <p class="tit">登录</p>
+            <p class="t-cont">
+                <input type="text" placeholder="姓名" id="uName">
+            </p>
+            <p class="t-cont">
+                <input type="number" placeholder="手机号" id="uCall" maxlength="11">
+                <span class="yzm">获取验证码</span>
+            </p>
+            <p class="t-cont">
+                <input type="number" placeholder="验证码" id="uCode" maxlength="6">
+            </p>
+            <p class="shopListDiv">
+                <span>选择经销店:</span><span class="shopListBtn"><select name="" id=""><option value="">未选择</option></select></span>
+            </p>
+            <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
+        </div>
+    </div>
+
 </div>
 
-<!--登录-->
-<div class="pop popLoginBox">
-    <!--登录-->
-    <div class="pop-login">
-        <span class="close">&times;</span>
-        <p class="tit">登录</p>
-        <p class="t-cont">
-            <input type="text" placeholder="姓名" id="uName">
-        </p>
-        <p class="t-cont">
-            <input type="number" placeholder="手机号" id="uCall" maxlength="11">
-            <span class="yzm">获取验证码</span>
-        </p>
-        <p class="t-cont">
-            <input type="number" placeholder="验证码" id="uCode" maxlength="6">
-        </p>
-        <p class="shopListDiv">
-            <span>选择经销店:</span><span class="shopListBtn">未选择</span>
-        </p>
-        <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
-    </div>
-</div>
 <script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
 <script src="js/common.js"></script>
 <script>
@@ -59,10 +61,35 @@
 			//已登录处理逻辑
             base.setAjax('/carnival/inserteernestorder',param,function (data) {
                 if(data.success){
-                    window.location.href = "/pay/gotocarnivalpay?carnivalProductId=1";
+                    window.location.href = "http://test.yuntongauto.com/pay/gotocarnivalpay?carnivalOrderId="+data.result+"&appId="+sessionStorage.getItem("appId");
                 }else{
                     //接口返回失败处理
                 }
+            })
+        }
+		
+		//获取当前4s店appid
+        if(sessionStorage.getItem("shareId") != '01'){
+            $('.shopListDiv').hide();
+        }else{
+            $.ajax({
+                type:'get',
+                url:base.path+'/carnival/getservicenetworklist',
+                dataType:'jsonp',
+                //jsonpCallback:'callback',
+                success:function(data){
+                    console.log(data.result)
+                    $.each(data.result,function (index, v) {
+                        $('.shopListBtn select').append('<option value="'+v.id+'">'+v.simpleName+'</option>')
+                    })
+                },
+                error:function(){
+                    $('.msg').html('服务器异常').fadeIn(100).delay(1500).hide()
+                }
+            });
+           
+            $('.city').click(function () {
+               console.log($('.city').attr('data-id'))
             })
         }
 

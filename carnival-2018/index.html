@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>嘉年华</title>
+    <title>运通嘉年华-7×24小时</title>
     <meta name="viewport" content="width=750px,user-scalable=no">
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/index.css">
@@ -41,7 +41,7 @@
         </p>
         <div class="cont1">
             <img src="img/txt-2.png" alt="" class="txt2 animated slideInUp">
-            <a href="javascript:void(0)" class="toPayBtn"><img src="img/toPay.png"></a>
+            <a href="earnest.html" class="toPayBtn"><img src="img/toPay.png"></a>
         </div>
     </div>
     <div class="cont_2">
@@ -85,7 +85,7 @@
             <input type="number" placeholder="验证码" id="uCode" maxlength="6">
         </p>
         <p class="shopListDiv">
-            <span>选择经销店:</span><span class="shopListBtn">未选择</span>
+            <span>选择经销店:</span><span class="shopListBtn"><select name="" id="" style="font-size: 22px"><option value="">未选择</option></select></span>
         </p>
         <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
     </div>
@@ -114,7 +114,7 @@
 <div class="msg"></div>
 <!--二手车通用券-->
 <div class="pop usedcarRule">
-    <div class="tips-rule">
+    <div class="tips-rule" style="padding-bottom:50px">
         <div class="rule-top-e"><span>二手车通用券1000元</span></div>
         <div class="rule-rep">
             <p class="tit">使用规则</p>
@@ -129,8 +129,8 @@
     </div>
 </div>
 <!--电动尾门试用-->
-<div class="pop doorRule">
-    <div class="tips-rule">
+<div class="pop doorRule" >
+    <div class="tips-rule" style="margin-top: 200px">
         <div class="rule-top"></div>
         <div class="rule-rep">
             <p class="tit">使用规则</p>
@@ -141,8 +141,8 @@
     </div>
 </div>
 <!--大转盘-->
-<div class="pop turntableRule">
-    <div class="tips-rule">
+<div class="pop turntableRule" style="overflow-y: scroll;">
+    <div class="tips-rule" style="padding-bottom:50px">
         <div class="rule-top-e dzp"><span>每个用户仅限参与一次</span></div>
         <div class="rule-rep">
             <p class="tit">奖品说明：</p>
@@ -157,13 +157,32 @@
         <div class="rule-btn"><a>我知道了</a></div>
     </div>
 </div>
+<!--基础保养买一赠一-->
+<div class="pop tipsRule" style="overflow: scroll">
+    <div class="tips-rule" style="padding-bottom:50px">
+        <div class="rule-top-e" style="background:url(img/r-tctops-1.png)"><span>基础保养买一赠一活动参与订金</span></div>
+        <div class="rule-rep">
+            <p>购买此订金产品即可参与运通汽车集团旗下所有经销店基础保养买一赠一活动；此订金可在实际购买基础保养买一赠一产品时进行抵用；</p>
+            <p>此订金可多次购买，可一次购买多份一份订金只对应一份基础保养买一赠一产品；</p>
+            <p>预付订金后，应在活动期间内（7月24-30日内）前往所选经销店进行后续费用补交，或与店内工作人员联系在线上完成费用补交，逾期未进行费用补交，则视为放弃本次活动，请联系经销店进行订金退款；</p>
+            <p>订单中您所填写的姓名及联系方式是我们确认您购买的唯一途径，请务必保证填写正确；</p>
+            <p>此次活动中基础保养产品有效期为5年（自充值之日起计算）。</p>
+
+        </div>
+        <div class="rule-btn"><a>我知道了</a></div>
+    </div>
+</div>
 </body>
 <script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
 <script src="js/awardRotate.js"></script>
 <script src="js/common.js"></script>
+
 <script>
     $(function () {
       init()
+        base.setAjax('/carnival/getservicenetworklist',{},function (data) {
+            console.log(data)
+        })
        $('.trictBg .rules').click(function () {
            if($(this).parent('.trictBg').attr('data-goodid')  == 8){
                 $('.doorRule').show()
@@ -178,13 +197,10 @@
         $('.turntableRuleBtn').click(function () {
             $('.turntableRule').show();
         })
-        //定金支付
-        $('.toPayBtn').click(function () {
-            sessionStorage.setItem('productId',1)
-            setTimeout(function () {
-                window.location.href='earnest.html'
-            },800)
+        $('.rule_1').click(function () {
+            $('.tipsRule').show()
         })
+
         $('.getBtn').click(function () {
 
             sessionStorage.setItem('productId',$(this).parent('.trictBg').attr('data-goodid'))
@@ -199,7 +215,7 @@
                 base.setAjax('/carnival/savecashgiftorder',data,function (data) {
                     console.log(data)
                     if(data.code==0){
-
+                        $('.popLoginBox').show();
                     }else{
                         if(sessionStorage.getItem('productId') == 8){
                             $('.popMsgBox').show()
@@ -212,32 +228,17 @@
                         }
                     }
                 })
+            }else{
+                $('.popLoginBox').show();
             }
 
         })
         //概率函数
-        function rnd(n, m){
-            //概率
-            var ratio=Math.random();
-            num=Math.floor(Math.random()*(m-n+1)+n);
-            return num
-            /*if(ratio <0.2){
-                return 0
-            }else if(ratio <0.8 && ratio>0.2){
-                return 4
-            }else{
-                //应该去掉 0 或者 5的数值
-                var num=Math.floor(Math.random()*(m-n+1)+n);
-                if(num==0 || num==5){
-                    do num=Math.floor(Math.random()*(m-n+1)+n); while(num !=0 && num !=5)
-                }
-                return num
-            }*/
-        }
+
         //选择开关
         var bRotate = false;
         //旋转函数
-        var rotateFn = function (awards, angles, txt,goodid){
+        var rotateFn = function (awards, angles, txt,goodid,code){
             bRotate = !bRotate;
             $('#rotate').stopRotate();
             $('#rotate').rotate({
@@ -246,66 +247,107 @@
                 animateTo:angles+1800,
                 duration:8000,
                 callback:function (){
-                    $('.popMsgBox').show()
-                    $('.pop-msg .tit').html(txt)
-                    $('.pop-msg .btn').html('<a href="record.html" style="display: block;">查看记录</a>')
+                    $('.popMsgBox').show();
+                    $('.pop-msg .tit').html(txt);
+
+                    if(code == 0){
+                        $('.pop-msg .btn').html('<a href="javascript:void(0)" class="getGits toLogin" style="display: block;">立即领取</a>')
+                    }else if(code == 2){
+                        $(".msg").html('领取失败，领取失败，已领取过').show().delay(2000).hide()
+                    }else if(code == 3){
+                        $(".msg").html('领取失败，请联系管理员').show().delay(2000).hide()
+                    }else{
+                        $('.pop-msg .btn').html('<a href="javascript:void(0)" class="getGits" style="display: block;">已成功领取</a>')
+                    }
                     sessionStorage.setItem('productId',goodid)
                     bRotate = !bRotate;
                     $('#rotate').addClass('rotate2');
+                    $('.getGits').click(function () {
+                        if($(this).hasClass('toLogin')){
+                            $('.popLoginBox').show();
+                        }
+                        $('.popMsgBox').hide()
+                    })
                 }
             })
         };
+
+
         //开启旋转
         $('.pointer').click(function (){
             $('#rotate').removeClass('rotate2');
             if(bRotate)return;
             sessionStorage.removeItem('productId')
-            var item = rnd(0,4);
-            //谢谢参与 概率为0
-            var arrDial=[
-                {
-                    angle:0,
-                    Prize:'机滤一个',
-                    id:2
+            var data={
+                carnivalProductId:null,
+                token:base.cookie.getCookie('token'),
+                appId:sessionStorage.getItem('appId')
+            }
+
+            $.ajax({
+                type:'get',
+                url:base.path+'/carnival/insertturnplateorder',
+                dataType:'jsonp',
+                data:data,
+                jsonpCallback:'callback',
+                success:function(data){
+                    var item=data.result.id;
+                    //谢谢参与 概率为0
+                    var arrDial=[
+                        {
+                            angle:0,
+                            Prize:'机滤一个',
+                            id:2
+                        },
+                        {
+                            angle:-61,
+                            Prize:'续保代金券500元'
+                            , id:3
+                        },
+                        {
+                            angle:-120,
+                            Prize:'瑞典拓乐高端运动背包'
+                            , id:4
+                        }
+                        ,
+                        {
+                            angle:-180,
+                            Prize:'免工时更换防冻液',
+                            id:5
+                        },
+                        {
+                            angle:-240,
+                            Prize:'等离子空气净化试用一个月',
+                            id:6
+                        },
+                        {
+                            angle:-300,
+                            Prize:'谢谢参与'
+                        }
+                    ];
+                    var angle,Prize;
+                    var code=data.code;
+console.log(data)
+                    $.each(arrDial, function (index, value){
+
+                        if(item == value.id){
+                            angle=value.angle;
+                            Prize=value.Prize;
+                            console.log(code)
+                            rotateFn(item, angle, Prize,item,code)
+                        }
+                    })
                 },
-                {
-                    angle:-61,
-                    Prize:'续保代金券500元'
-                    , id:3
-                },
-                {
-                    angle:-120,
-                    Prize:'瑞典拓乐高端运动背包'
-                    , id:4
+                error:function(){
+                    $('.msg').html('服务器异常').fadeIn(100).delay(1500).hide()
                 }
-                ,
-                {
-                    angle:-180,
-                    Prize:'免工时更换防冻液',
-                    id:5
-                },
-                {
-                    angle:-240,
-                    Prize:'等离子空气净化试用一个月',
-                    id:6
-                },
-                {
-                    angle:-300,
-                    Prize:'谢谢参与'
-                }
-            ];
-            console.log(item)
-            rotateFn(item, arrDial[item].angle, arrDial[item].Prize,arrDial[item].id)
+            })
 
         });
 
-        function getTime() {
-            $.ajax({
-                type:'post',
-                url:''
-            })
-        }
+
         $('.myRecord').click(function () {
+            sessionStorage.removeItem('productId')
             if(loginObj.isLogin()){
                 window.location.href='record.html'
             }
@@ -315,43 +357,64 @@
     });
     function init() {
         //倒计时
-        base.setAjax('/carnival/gettime',{},function (data) {
-            console.log(data)
-            $('.timeBox').html()
-            var date = new Date('2018-07-27 08:00:00:00');
-            // 有三种方式获取
-            //var time1 = date.getTime();
-            //var timerid = setInterval(function(){base.timeEnd(timerid,time1,data2)}, 1000);
-            //base.timeEnd(timerid,time1,data)
-            //(timerid,needTime,now)
-        })
+        var nowTime;
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            Y = date.getFullYear() + '-';
+            M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            D = date.getDate() + ' ';
+            h = date.getHours() + ':';
+            m = date.getMinutes() + ':';
+            s = date.getSeconds();
+            return Y+M+D+h+m+s;
+        }
 
+            var timer=setInterval(function(){
+                //base.setAjax('/carnival/gettime',{},function (data) {
+                //
+                //    nowTime=timestampToTime(data.result);
 
-        //if(data2<date1)return;//设置的时间小于现在时间退出
-        //_ordertimer = setInterval(function(){base.timeEnd(timerid,time1,data2)}, 1000);
+                    var date = new Date('2018-07-27 08:00:00'.replace(/-/g, "/"));
+                    var obj=base.timeEnd(timer,date)
+                    $('.timeBox').html(' <span class="ballBg">'+obj.days+'</span><span>:</span>\n' +
+                            '            <span class="ballBg">'+obj.hours+'</span><span>:</span>\n' +
+                            '            <span class="ballBg">'+obj.minutes+'</span><span>:</span>\n' +
+                            '            <span class="ballBg">'+obj.seconds+'</span>')
+                //})
 
-        $.ajax({
-            type:'get',
-            url:base.path+'/carnival/insertturnplateorder',
-            dataType:'jsonp',
-            data:JSON.stringify({
-                token:null,
-                appId:'wxaf424323472e4f17',
-                carnivalProductId:'1'
-            }),
-            success:function (data) {
-                console.log(data)
-            }
-            ,error:function (data) {
-                console.log(data)
-            }
-        })
+            }, 1000)
+
 
         //获取当前4s店appid
         sessionStorage.setItem("appId", base.appIdArr[10 <= getUrlParam().id ? getUrlParam().id : getUrlParam().id.slice(1)])
         console.log(sessionStorage.getItem("appId"))
         if(getUrlParam().id != '01'){
-            $('.shopListDiv').hide()
+            $('.shopListDiv').hide();
+        }else{
+            $.ajax({
+                type:'get',
+                url:base.path+'/carnival/getservicenetworklist',
+                dataType:'jsonp',
+                //jsonpCallback:'callback',
+                success:function(data){
+                    console.log(data.result)
+                    $.each(data.result,function (index, v) {
+                        $('.shopListBtn select').append('<option value="'+v.id+'">'+v.simpleName+'</option>')
+                    })
+                },
+                error:function(){
+                    $('.msg').html('服务器异常').fadeIn(100).delay(1500).hide()
+                }
+            });
+           /* base.setAjax('/carnival/getservicenetworklist',{},function (data) {
+                console.log(data.result)
+                $.each(data.result,function (index, v) {
+                    $('.shopListBtn select').append('<option value="'+v.id+'">'+v.simpleName+'</option>')
+                })
+            })*/
+            $('.city').click(function () {
+               console.log($('.city').attr('data-id'))
+            })
         }
         //主题图片加载完执行 images
         //动画样式添加
@@ -364,6 +427,16 @@
         $('.red-2').addClass('rotateInDownRight')
 
     }
-
+    sessionStorage.setItem("shareId", getUrlParam().id)
 </script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="http://yth.yuntongauto.com/js/weixin-wintop-1.0.js"></script>
+<script>weixin_sdk.PAGE.init({
+    basePath: "http://yth.yuntongauto.com",
+    share_title: "运通嘉年华",
+    share_link: "http://static.yuntongauto.com/web/carnival-2018/index.html?id="+ sessionStorage.getItem("shareId"),
+    share_desc: "运通嘉年华，运通伴您惠享7×24小时",
+    share_imgUrl: "http://static.yuntongauto.com/web/carnival-2018/img/weixin.jpg",
+    wechatPlatformId: "3036684041086976"
+})</script>
 </html>

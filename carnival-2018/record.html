@@ -1,54 +1,87 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=750px,user-scalable=no">
-    <title>运通嘉年华-7×24小时</title>
-    <link rel="stylesheet" href="css/style.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=750px,user-scalable=no">
+<title>运通嘉年华-7×24小时</title>
+<link rel="stylesheet" href="css/style.css"/>
 </head>
 
 <body>
 
 <div class="box">
-    <div class="r-top"><a href="index.html"></a><a class="login-out" href="javascript:void(0)"></a></div>
+    <div class="r-top"><a class="backIndex"></a><a class="login-out" href="javascript:void(0)"></a></div>
     <ul class="recordList"></ul>
+    <div class="pop-msg" style="background:url(img/r-tipsfile.png) no-repeat;display:none"><div class="tit" style="margin-top:170px;color:#c8c7c8"></div></div>
+    <div class="descrp"><span></span><i>×</i></div>
 </div>
 <script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
 <script src="js/common.js"></script>
 <script>
     $(function () {
-        //获取用户id
+		var shareId=sessionStorage.getItem("shareId");
+		$('.backIndex').attr('href','index.html?id='+shareId)
+		//获取用户id
         var customerId=base.cookie.getCookie('userId');
         var paramdata ={customerId:customerId};
         base.setAjax('/carnival/selectorderlistbycustomerid',paramdata,function (data) {
             if(data.success){
+				$('.pop-msg').hide();
                 if(data.result.length<1){
 					//没有记录
                     $('.recordList').html('<li class="record" style="font-size:34px;color:#606060;text-align:center;padding-top:201px;">没有任何记录</li>')
                 }else{
+					v = 
                     $.each(data.result,function (i,v) {
                         $('.recordList').append('<li class="record">\n' +
                             '                    <p class="type"><i><img src="'+v.banner+'" /></i>\n' +
-                            '                        <i class="q"></i></p>\n' +
+                            '                        <i class="q" data="'+v.describe+'"></i></p>\n' +
                             '                            <p class="name">'+v.name+'</p>\n' +
                             '                            <p class="time">时间</p>\n' +
                             '                            <p class="num">'+timestampToTime(v.createTime)+'<span>订单号：'+v.orderNo+'</span></p>\n' +
-                            '                       </li>')
+                            '                     </li>')
                     })
                 }
-            }
+				$(".q").click(function() {
+					var tips = $(this).attr('data');
+					$(".descrp").show().find('span').html(tips).show();
+				});
+            }else{
+				$('.pop-msg').show().find('.tit').text(data.message);
+			}
         });
+		
+		
+		$(".descrp i").click(function() {
+			$(".descrp").hide()
+		});
+		
+		$(".login-out").click(function() {
+			var param= {
+				"token": base.cookie.getCookie('token')
+			}
+			base.setAjax('/carnival/carnivalexit',param,function (data) {
+				if (data.success){
+					base.cookie.delCookie("token");
+					window.location.href = "index.html?id="+shareId;
+				}else{
+					$('.pop').show().find('.tit').text("退出异常");
+				}
+			});
+		});
+		
     });
-    $(".login-out").click(function() {
-        if (confirm('您确定要退出本次登录吗?')) {
-            base.setAjax('/carnival/carnivalexit',{},function (data) {
-                if (data.success){
-                    base.cookie.delCookie("token");
-                    window.location.href = "index.html";
-                }
-            });
-        }
-    });
+	
+	function timestampToTime(timestamp) {
+		var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+		Y = date.getFullYear() + '-';
+		M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		D = date.getDate() + ' ';
+		h = date.getHours() + ':';
+		m = date.getMinutes() + ':';
+		s = date.getSeconds();
+		return Y+M+D;
+	}
 </script>
 </body>
 </html>

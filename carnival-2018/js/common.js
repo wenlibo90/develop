@@ -1,8 +1,8 @@
 var load=$('.loadBox');
 var base={
-    path:'http://172.16.105.40:8080',
+    //path:'http://172.16.107.47:8080',
     appIdArr:["wx017397a5a78e210a","wxe4d40c4f7c1cc642", "wx73a6b0cd4e18583d", "wx4281be3d95bcf378", "wxaf424323472e4f17", "wx9e46235e9f68570b", "wx08b8f737fe2d1d6e", "wx25a2c792508fcf03", "wxc85d76e10935b756", "wx228e8bb30039ca29", "wx4b6f87aee17940ea", "wx8aabb67352be0285", "wx61802b87feaadf86", "wxfd83aab5df9d5072", "wx01d8a4dcbe19d30a", "wx79a9bcf7ba8ad6a1", "wx0c133041c8e6225a", "wx76b0702d5311b9fe", "wx1d3a42d3a46f3ff6", "wxad930b7d460dba4d", "wx4f3373e75fd4c2f2", "wx211aa119bd4c7674", "wx41583bdd1d4c0182", "wxe3acb9a4822b796e", "wx2575457b40f240b5", "wxbe378bba45be67bb", "wx5df73cdeba858e8f", "wx2a0be4164f321f6e", "wx4f5752b36758e10b", "wx979843a2ac91b627", "wx1bbbb1692fcf9ee8", "wx1a737e13c8cc9f0e", "wx4715195028e145fc", "wx5113e99b2029b2b9", "wx90a428146e3f985e", "wxc0bbedec1975e953", "wxc306c949f04eda8b", "wxca3d334834fde21c", "wx536b0593a0571e3f", "wxfff28e028bb53b89", "wx4473949c80deb86b", "wx56155b194db0ead1", "wxb19d367be22ac40e", "wx4639c95a9eea606d", "wx93920208beaaf6d5", "wxc1373a32bc8be3b3", "wx8be265c7ebd45a77", "wx2eafd82666110208", "wx71c63353f20ddc74", "wx325671e9cf22d55f", "wxfe0beaf154896b9f", "wx6bca2ead9d859df2", "wxfec5d6e59c267eab", "wx5e7d8a38f4ec914c", "wxc7a75b0d2f4abe04", "wxb0ce484a7ff9810d", "wxf12613315b07750c", "wx8159f7794b0153e7", "wx2d74cfdfc3eb30ff", "wxb88ea046b8a3abd0", "wx14809e3559fd74e7"],
-    //path:'http://test.yuntongauto.com',
+    path:'http://test.yuntongauto.com',
     //    ajax 封装
     /*
     * ajax  请求调用说明
@@ -19,17 +19,19 @@ var base={
             url:base.path+url,
             dataType:'jsonp',
             data:data,
+            jsonpCallback:'callback',
             beforeSend:function(xhr){
-                //xhr.setRequestHeader("appId", common.VAR.connectId);
-                //xhr.setRequestHeader("Content-Type", "application/json");
-                //if(common.cookie.getCookie('token') != null && common.cookie.getCookie('token') != "") xhr.setRequestHeader("authorization", common.cookie.getCookie('token'));
                 if(beforeFn || beforeFn != null){
                     beforeFn(xhr)
                 }
             },
             success:function(data){
                 if(okFn || okFn != null){
-                    okFn(data)
+                    if(data.code == '0'){
+                        $('.popLoginBox').show();
+                    }else{
+                        okFn(data)
+                    }
                 }
             },
             error:function(){
@@ -84,6 +86,28 @@ var base={
                 return false
             }
         }
+    },
+
+    timeEnd:function(timerid,needTime)
+    {
+        function add0(m){return m<10?'0'+m:m }
+        var leftTime = (new Date(needTime)) - new Date(); //计算剩余的毫秒数
+        var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+        var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+        var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+        var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
+        days = add0(days);
+        hours = add0(hours);
+        minutes = add0(minutes);
+        seconds = add0(seconds);
+       console.log(days + "天" + hours + "小时" + minutes + "分" + seconds + "秒")
+        if (days >= 0 || hours >= 0 || minutes >= 0 || seconds >= 0) return {
+            days:days, hours :hours,minutes:minutes,seconds:seconds
+        };
+        if (days <= 0 && hours <= 0 && minutes <= 0 && seconds <= 0) {
+            window.clearInterval(timerid);
+            timerid = null;
+        }
     }
 }
 var loginObj={
@@ -96,10 +120,11 @@ var loginObj={
     uName:null,
     loginCallback:function(data){
         console.log(data)
-        if(data.code==0){
-            base.cookie.setCookie('token',data.data);
-            base.cookie.setCookie('userId',data.userId)
-            console.log(cookie.getCookie('token'))
+        load.hide()
+        if(data.code==200){
+            base.cookie.setCookie('token',data.token);
+            base.cookie.setCookie('userId',data.customerId)
+            console.log(base.cookie.getCookie('token'))
             if(base.cookie.getCookie('token')){
                 $(".msg").html('登录成功').show().delay(2000).hide()
                 window.location.reload();
@@ -112,9 +137,7 @@ var loginObj={
         if(base.cookie.getCookie('token')){
             return true;
         }else{
-            $('.pop').show();
-            $('.pop .pop-login').show();
-            $('.pop-msg').hide();
+            $('.popLoginBox').show();
             return false;
         }
     },
@@ -124,7 +147,9 @@ var loginObj={
         var that=this;
         $.ajax({
             url:url,
-            type:'post',
+            type:'get',
+            dataType:'jsonp',
+            jsonpCallback:'callback',
             xhrFields: {
                 withCredentials: true
             },
@@ -163,10 +188,10 @@ var loginObj={
         if(this.checkPhone()){
             if(this.uCode){
                 if(this.uName){
-                    var serviceNetWorkId=null;
+                    var serviceNetWorkId=2981510004500480;
                     if(sessionStorage.getItem('appId') == 'wxe4d40c4f7c1cc642'){
-                        //serviceNetWorkId=
-                       //运通汇的情况下进行4s店铺选择
+                        console.log(111)
+                        serviceNetWorkId=$('.shopListBtn select').val()
                     }
                     this.loginFn(this.loginUrl,{
                         customerNumber:this.uCode,
@@ -189,8 +214,9 @@ var loginObj={
         console.log(MsgParam)
         $.ajax({
             url:url,
-            type:'post',
-            dataType:'json',
+            type:'get',
+            dataType:'jsonp',
+            jsonpCallback:'callback',
             xhrFields: {
                 withCredentials: true
             },
@@ -209,9 +235,7 @@ var loginObj={
             success : function (data) {
                 if(data.success){
                     //$(".msg").html('登录成功').stop().slideDown().delay(1500).slideUp();
-
-                    //$('.pop .pop-login').hide();
-                    $('.pop').hide();
+                    $('.popLoginBox').hide();
                     that.loginCallback(data.result)
                 }else{
                     $(".msg").html(data.message).stop().slideDown().delay(2000).slideUp();
@@ -231,17 +255,7 @@ function getUrlParam() {
     }
     return obj;
 }
-//时间戳转时间格式
-function timestampToTime(timestamp) {
-    var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    Y = date.getFullYear() + '-';
-    M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    D = date.getDate() + ' ';
-    h = date.getHours() + ':';
-    m = date.getMinutes() + ':';
-    s = date.getSeconds();
-    return Y+M+D;
-}
+
 function setMsg() {
     //调用短信发送接口
     var uCall=$('#uCall').val();
@@ -267,8 +281,6 @@ function setMsg() {
             setTimeout(function () {
                 loginObj.sendMsg(base.path+'/earnestLogin/get_validate_code',{
                     telPhone:uCall
-                    //,
-                    //appId:sessionStorage.getItem('appId')
                 })
             },1200)
         }else{

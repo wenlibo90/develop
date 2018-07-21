@@ -167,9 +167,13 @@ img {
 }
 
 .timeBox .ballBg {
+	color:#5c48db;
     width: 80px;
     height: 80px;
     margin: 0;
+    text-align: center;
+    line-height: 80px;
+    font-size: 30px;
     background: url(../img/ballBg.png) top center no-repeat
 }
 
@@ -316,6 +320,7 @@ img {
     position:fixed;
     top:0;
     display: none;
+    z-index: 2;
 }
 .pop-msg{
     width:674px;
@@ -663,4 +668,63 @@ img {
     min-width: 400px;
     font-size: 30px;
     border-radius: 10px;
+}
+
+/*使用规则*/
+.tips-rule{
+    width:651px;
+    margin:40px 48px 0 51px
+}
+.rule-top{
+    width:651px;
+    height:124px;
+    background:url(../img/r-tctops-2.png) no-repeat
+}
+.rule-top-e{
+    width:651px;
+    height:184px;
+    background:url(../img/r-tctops-3.png) no-repeat
+}
+.rule-top-e.dzp{
+    background:url(../img/r-tctops-4.png) no-repeat
+}
+.rule-top-e span{
+    text-align:center;
+    color:#fff;
+    font-size:25px;
+    display:block;
+    padding-top:114px
+}
+.rule-rep{
+    background:url(../img/r-tcreps.png) repeat-y;
+    color:#909090;
+    font-size:26px;
+    padding:30px 54px 50px;
+    line-height:48px
+}
+.rule-rep p span{
+    color:#ff7f02
+}
+.rule-rep p{
+    padding:17px 0
+}
+.rule-rep .tit{
+    color:#606060;
+    font-size:32px
+}
+.rule-btn{
+    width:651px;
+    height:137px;
+    background:url(../img/r-tcbots.png) no-repeat
+}
+.rule-btn a{
+    font-size:32px;
+    color:#5f3ddf;
+    width:300px;
+    height:74px;
+    line-height:73px;
+    text-align:center;
+    border-radius:37px;
+    display:inline-block;
+    margin:57px 0 0 174px
 }
