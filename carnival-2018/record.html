@@ -14,6 +14,30 @@
     <ul class="recordList"></ul>
     <div class="pop-msg" style="background:url(img/r-tipsfile.png) no-repeat;display:none"><div class="tit" style="margin-top:170px;color:#c8c7c8"></div></div>
     <div class="descrp"><span></span><i>×</i></div>
+    
+    <!--登录-->
+    <div class="pop popLoginBox">
+        <!--登录-->
+        <div class="pop-login">
+            <span class="close">&times;</span>
+            <p class="tit">登录</p>
+            <p class="t-cont">
+                <input type="text" placeholder="姓名" id="uName">
+            </p>
+            <p class="t-cont">
+                <input type="number" placeholder="手机号" id="uCall" maxlength="11">
+                <span class="yzm">获取验证码</span>
+            </p>
+            <p class="t-cont">
+                <input type="number" placeholder="验证码" id="uCode" maxlength="6">
+            </p>
+            <p class="shopListDiv">
+                <span>选择经销店:</span><span class="shopListBtn"><select name="" id=""><option value="">未选择</option></select></span>
+            </p>
+            <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
+        </div>
+    </div>
+
 </div>
 <script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
 <script src="js/common.js"></script>
@@ -23,8 +47,13 @@
 		$('.backIndex').attr('href','index.html?id='+shareId)
 		//获取用户id
         var customerId=base.cookie.getCookie('userId');
-        var paramdata ={customerId:customerId};
-        base.setAjax('/carnival/selectorderlistbycustomerid',paramdata,function (data) {
+		var paramdata ={
+            //"appId": sessionStorage.getItem("appId"),
+            "token": base.cookie.getCookie('token'),
+            "customerId":customerId
+        }
+		
+        base.setAjax('/carnival/selectorderlistbycustomerid',paramdata,function (data) {			
             if(data.success){
 				$('.pop-msg').hide();
                 if(data.result.length<1){
@@ -45,12 +74,37 @@
 				$(".q").click(function() {
 					var tips = $(this).attr('data');
 					$(".descrp").show().find('span').html(tips).show();
-				});
-            }else{
+				});		
+            }else{	
 				$('.pop-msg').show().find('.tit').text(data.message);
 			}
+			
         });
 		
+		//获取当前4s店appid
+        if(sessionStorage.getItem("shareId") != '01'){
+            $('.shopListDiv').hide();
+        }else{
+            $.ajax({
+                type:'get',
+                url:base.path+'/carnival/getservicenetworklist',
+                dataType:'jsonp',
+                //jsonpCallback:'callback',
+                success:function(data){
+                    console.log(data.result)
+                    $.each(data.result,function (index, v) {
+                        $('.shopListBtn select').append('<option value="'+v.id+'">'+v.simpleName+'</option>')
+                    })
+                },
+                error:function(){
+                    $('.msg').html('服务器异常').fadeIn(100).delay(1500).hide()
+                }
+            });
+           
+            $('.city').click(function () {
+               console.log($('.city').attr('data-id'))
+            })
+        }
 		
 		$(".descrp i").click(function() {
 			$(".descrp").hide()

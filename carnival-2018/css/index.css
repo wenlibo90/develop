@@ -515,12 +515,17 @@ img {
     border: 1px solid #ff7f21;
     border-radius: 50px;
     margin-left: 15px;
-    max-width: 214px;
+    max-width: 200px;
     overflow: hidden;
     white-space: nowrap;
     display:inline-block;
     text-overflow: ellipsis;
     background: url(../img/shopBtnBg.png) no-repeat 94% center;
+}
+.shopListBtn select{
+	-webkit-appearance:none;
+	font-size:20px;
+	color:#909090
 }
 
 /*过渡*/

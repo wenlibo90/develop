@@ -85,7 +85,7 @@
             <input type="number" placeholder="验证码" id="uCode" maxlength="6">
         </p>
         <p class="shopListDiv">
-            <span>选择经销店:</span><span class="shopListBtn"><select name="" id="" style="font-size: 22px"><option value="">未选择</option></select></span>
+            <span>选择经销店:</span><span class="shopListBtn"><select name="" id=""><option value="">未选择</option></select></span>
         </p>
         <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
     </div>
@@ -172,17 +172,17 @@
         <div class="rule-btn"><a>我知道了</a></div>
     </div>
 </div>
+<div class="descrp"></div>
 </body>
 <script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
 <script src="js/awardRotate.js"></script>
 <script src="js/common.js"></script>
-
 <script>
+    var nowTime;
     $(function () {
+      //  初始化
       init()
-        base.setAjax('/carnival/getservicenetworklist',{},function (data) {
-            console.log(data)
-        })
+
        $('.trictBg .rules').click(function () {
            if($(this).parent('.trictBg').attr('data-goodid')  == 8){
                 $('.doorRule').show()
@@ -190,20 +190,23 @@
                $('.usedcarRule').show()
            }
        })
-
+        //规则关闭
         $('.rule-btn a').click(function () {
             $(this).parents('.pop').hide()
         })
+        //大转盘规则
         $('.turntableRuleBtn').click(function () {
             $('.turntableRule').show();
         })
+        //总规则
         $('.rule_1').click(function () {
             $('.tipsRule').show()
         })
-
+        //二手车 电动尾门规则
         $('.getBtn').click(function () {
-
-            sessionStorage.setItem('productId',$(this).parent('.trictBg').attr('data-goodid'))
+            //if(!compareDate(nowTime)) return;
+            var gooid=$(this).parent('.trictBg').attr('data-goodid')
+            sessionStorage.setItem('productId',gooid)
             if(base.cookie.getCookie('token')){
 
                 var data={
@@ -211,21 +214,31 @@
                     appId:sessionStorage.getItem("appId"),
                     token:base.cookie.getCookie('token')
                 }
-
-                base.setAjax('/carnival/savecashgiftorder',data,function (data) {
+                var url='/carnival/savecashgiftorder';
+                if(Number(gooid) == 8){
+                    url='/carnival/savebackdoororder';
+                }
+                base.setAjax(url,data,function (data) {
                     console.log(data)
                     if(data.code==0){
                         $('.popLoginBox').show();
                     }else{
                         if(sessionStorage.getItem('productId') == 8){
                             $('.popMsgBox').show()
-                            $('.pop-msg .tit').html('电动尾门适用')
-                            $('.pop-msg .btn').html('<a href="record.html" style="display: block;">查看记录</a>')
+                            //$('.popMsgBox').stop().slideDown().delay(5000).slideUp()
+                            $('.pop-msg .tit').html('电动尾门试用')
+                            $('.pop-msg .btn').html('<a href="record.html" style="display: block;" class="torecord">查看记录</a>')
                         }else{
                             $('.popMsgBox').show()
                             $('.pop-msg .tit').html('二手车礼金')
-                            $('.pop-msg .btn').html('<a href="record.html" style="display: block;">查看记录</a>')
+                            $('.pop-msg .btn').html('<a href="record.html" style="display: block;" class="torecord">查看记录</a>')
                         }
+                        if(data.code==2){
+                            $('.pop-msg .tit').html('您已领取过，不能重复领取')
+                        }
+                        $('.torecord').click(function () {
+                            $('.popMsgBox').hide()
+                        })
                     }
                 })
             }else{
@@ -233,9 +246,8 @@
             }
 
         })
-        //概率函数
 
-        //选择开关
+        //转盘选择开关
         var bRotate = false;
         //旋转函数
         var rotateFn = function (awards, angles, txt,goodid,code){
@@ -247,16 +259,23 @@
                 animateTo:angles+1800,
                 duration:8000,
                 callback:function (){
-                    $('.popMsgBox').show();
+                    var msgBox=$('.popMsgBox');
+                    msgBox.show();
                     $('.pop-msg .tit').html(txt);
-
+console.log(code)
                     if(code == 0){
+                        msgBox.show();
                         $('.pop-msg .btn').html('<a href="javascript:void(0)" class="getGits toLogin" style="display: block;">立即领取</a>')
                     }else if(code == 2){
-                        $(".msg").html('领取失败，领取失败，已领取过').show().delay(2000).hide()
+                        msgBox.hide();
+                        alert('你已参与过抽奖，不能重复参与！')
+                        //$(".descrp").html('你已参与过抽奖，不能重复参与！').show().delay(2000).hide()
                     }else if(code == 3){
-                        $(".msg").html('领取失败，请联系管理员').show().delay(2000).hide()
+                        msgBox.hide();
+                        alert('领取失败，请联系管理员')
+                        //$(".descrp").html('领取失败，请联系管理员').show().delay(2000).hide()
                     }else{
+                        msgBox.show();
                         $('.pop-msg .btn').html('<a href="javascript:void(0)" class="getGits" style="display: block;">已成功领取</a>')
                     }
                     sessionStorage.setItem('productId',goodid)
@@ -271,10 +290,9 @@
                 }
             })
         };
-
-
         //开启旋转
         $('.pointer').click(function (){
+            //if(!compareDate(nowTime)) return;
             $('#rotate').removeClass('rotate2');
             if(bRotate)return;
             sessionStorage.removeItem('productId')
@@ -327,14 +345,13 @@
                     ];
                     var angle,Prize;
                     var code=data.code;
-console.log(data)
+                    console.log(data)
                     $.each(arrDial, function (index, value){
-
                         if(item == value.id){
                             angle=value.angle;
                             Prize=value.Prize;
                             console.log(code)
-                            rotateFn(item, angle, Prize,item,code)
+                            rotateFn(item, angle, Prize,item,Number(code))
                         }
                     })
                 },
@@ -355,34 +372,42 @@ console.log(data)
 
 
     });
-    function init() {
-        //倒计时
-        var nowTime;
-        function timestampToTime(timestamp) {
-            var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-            Y = date.getFullYear() + '-';
-            M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-            D = date.getDate() + ' ';
-            h = date.getHours() + ':';
-            m = date.getMinutes() + ':';
-            s = date.getSeconds();
-            return Y+M+D+h+m+s;
+    function compareDate(date){
+        //对获得的时间戳区间与既定的时间戳进行比对
+        var bDate='2018-07-24 00:00:00'.replace(/-/g, "/");
+        var cDate='2018-07-30 17:00:00'.replace(/-/g, "/");
+        bDate=new Date(bDate).getTime();
+        cDate=new Date(cDate).getTime();
+        if(date < bDate){
+            alert('活动于7月24日0点开启，敬请期待！')
+            return false
+        }else if(date >= cDate){
+            alert('活动已结束')
+            return false
         }
-
+    }
+    function init() {
+        //获取分享id
+        sessionStorage.setItem("shareId", getUrlParam().id)
+        //倒计时
+        mygetTime()
+        function mygetTime(){
+            base.setAjax('/carnival/gettime',{},function (data) {
+                nowTime=data.result
+                console.log(nowTime)
+            })
+        }
             var timer=setInterval(function(){
-                //base.setAjax('/carnival/gettime',{},function (data) {
-                //
-                //    nowTime=timestampToTime(data.result);
-
-                    var date = new Date('2018-07-27 08:00:00'.replace(/-/g, "/"));
+                    var date = new Date('2018-07-30 17:00:00'.replace(/-/g, "/"));
                     var obj=base.timeEnd(timer,date)
                     $('.timeBox').html(' <span class="ballBg">'+obj.days+'</span><span>:</span>\n' +
                             '            <span class="ballBg">'+obj.hours+'</span><span>:</span>\n' +
                             '            <span class="ballBg">'+obj.minutes+'</span><span>:</span>\n' +
                             '            <span class="ballBg">'+obj.seconds+'</span>')
-                //})
-
             }, 1000)
+
+
+
 
 
         //获取当前4s店appid
@@ -427,14 +452,16 @@ console.log(data)
         $('.red-2').addClass('rotateInDownRight')
 
     }
-    sessionStorage.setItem("shareId", getUrlParam().id)
+	
+	//sessionStorage.getItem("shareId")
+
 </script>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="http://yth.yuntongauto.com/js/weixin-wintop-1.0.js"></script>
 <script>weixin_sdk.PAGE.init({
     basePath: "http://yth.yuntongauto.com",
     share_title: "运通嘉年华",
-    share_link: "http://static.yuntongauto.com/web/carnival-2018/index.html?id="+ sessionStorage.getItem("shareId"),
+    share_link: "http://static.yuntongauto.com/web/carnival-2018/index.html?id=01",
     share_desc: "运通嘉年华，运通伴您惠享7×24小时",
     share_imgUrl: "http://static.yuntongauto.com/web/carnival-2018/img/weixin.jpg",
     wechatPlatformId: "3036684041086976"
