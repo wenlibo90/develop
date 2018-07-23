@@ -688,6 +688,14 @@ img {
     height:124px;
     background:url(../img/r-tctops-2.png) no-repeat
 }
+.rule-top-tit{
+	color:#fff;
+    display:block;
+    font-size:25px;
+    text-align:center;
+	padding-bottom:20px;
+	background:url(../img/r-tctops-1tit.png) no-repeat center 3px
+}
 .rule-top-e{
     width:651px;
     height:184px;
