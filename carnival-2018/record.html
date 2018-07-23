@@ -53,7 +53,7 @@
             "customerId":customerId
         }
 		
-        base.setAjax('/carnival/selectorderlistbycustomerid',paramdata,function (data) {			
+        base.setAjax('/carnival/selectorderlistbycustomerid',paramdata,function (data) {
             if(data.success){
 				$('.pop-msg').hide();
                 if(data.result.length<1){
@@ -62,6 +62,9 @@
                 }else{
 					v = 
                     $.each(data.result,function (i,v) {
+                        if(v.type==2){
+                            v.name=v.name+'(×'+v.buyNumber+')';
+                        }
                         $('.recordList').append('<li class="record">\n' +
                             '                    <p class="type"><i><img src="'+v.banner+'" /></i>\n' +
                             '                        <i class="q" data="'+v.describe+'"></i></p>\n' +
@@ -100,16 +103,16 @@
                     $('.msg').html('服务器异常').fadeIn(100).delay(1500).hide()
                 }
             });
-           
+
             $('.city').click(function () {
                console.log($('.city').attr('data-id'))
             })
         }
-		
+
 		$(".descrp i").click(function() {
 			$(".descrp").hide()
 		});
-		
+
 		$(".login-out").click(function() {
 			var param= {
 				"token": base.cookie.getCookie('token')
