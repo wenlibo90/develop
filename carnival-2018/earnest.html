@@ -52,7 +52,7 @@
 <script src="js/common.js"></script>
 <script>
     $(".ea-btn").click(function () {
-		//if(!compareDate(sessionStorage.getItem("nowTime"))) return;
+		if(!compareDate(sessionStorage.getItem("nowTime"))) return;
         var param= {
             "appId": sessionStorage.getItem("appId"),
             "token": base.cookie.getCookie('token'),
@@ -78,7 +78,7 @@
 			//已登录处理逻辑
             base.setAjax('/carnival/inserteernestorder',param,function (data) {
                 if(data.success){
-                    window.location.href = "http://test.yuntongauto.com/pay/gotocarnivalpay?carnivalOrderId="+data.result+"&appId="+sessionStorage.getItem("appId");
+                    window.location.href = "http://yth.yuntongauto.com/pay/gotocarnivalpay?carnivalOrderId="+data.result+"&appId="+sessionStorage.getItem("appId");
                 }else{
                     //接口返回失败处理
                 }
