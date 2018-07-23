@@ -34,10 +34,10 @@
         <img src="img/ball.png" alt="" class="starBall">
         <p class="tit-1">今天距离活动结束</p>
         <p class="timeBox">
+            <!--<span class="ballBg"></span><span>:</span>
             <span class="ballBg"></span><span>:</span>
             <span class="ballBg"></span><span>:</span>
-            <span class="ballBg"></span><span>:</span>
-            <span class="ballBg"></span>
+            <span class="ballBg"></span>-->
         </p>
         <div class="cont1">
             <img src="img/txt-2.png" alt="" class="txt2 animated slideInUp">
@@ -204,7 +204,7 @@
         })
         //二手车 电动尾门规则
         $('.getBtn').click(function () {
-            //if(!compareDate(nowTime)) return;
+            if(!compareDate(nowTime)) return;
             var gooid=$(this).parent('.trictBg').attr('data-goodid')
             sessionStorage.setItem('productId',gooid)
             if(base.cookie.getCookie('token')){
@@ -292,7 +292,7 @@ console.log(code)
         };
         //开启旋转
         $('.pointer').click(function (){
-            //if(!compareDate(nowTime)) return;
+            if(!compareDate(nowTime)) return;
             $('#rotate').removeClass('rotate2');
             if(bRotate)return;
             sessionStorage.removeItem('productId')
@@ -393,17 +393,17 @@ console.log(code)
         mygetTime()
         function mygetTime(){
             base.setAjax('/carnival/gettime',{},function (data) {
-                nowTime=data.result
-                console.log(nowTime)
+                nowTime=data.result;
+				sessionStorage.setItem("nowTime", nowTime);
             })
         }
             var timer=setInterval(function(){
                     var date = new Date('2018-07-30 17:00:00'.replace(/-/g, "/"));
                     var obj=base.timeEnd(timer,date)
-                    $('.timeBox').html(' <span class="ballBg">'+obj.days+'</span><span>:</span>\n' +
-                            '            <span class="ballBg">'+obj.hours+'</span><span>:</span>\n' +
-                            '            <span class="ballBg">'+obj.minutes+'</span><span>:</span>\n' +
-                            '            <span class="ballBg">'+obj.seconds+'</span>')
+                    $('.timeBox').html(' <span class="ballBg">'+obj.days+'</span><span>天</span>\n' +
+                            '            <span class="ballBg">'+obj.hours+'</span><span>小时</span>\n' +
+                            '            <span class="ballBg">'+obj.minutes+'</span><span>分</span>\n' +
+                            '            <span class="ballBg">'+obj.seconds+'</span><span>秒</span>')
             }, 1000)
 
 

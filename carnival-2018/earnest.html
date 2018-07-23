@@ -19,7 +19,7 @@
         <li><i>4</i>订单中您所填写的姓名及联系方式是我们确认您购买的唯一途径，请务必保证填写正确；</li>
         <li><i>5</i>此次活动中基础保养产品有效期为5年（自充值之日起计算）。</li>
     </ul>
-    <a class="ea-btn">立即支付定金</a>
+    <a class="ea-btn">立即支付订金</a>
     
     <!--登录-->
     <div class="pop popLoginBox">
@@ -50,6 +50,7 @@
 <script src="js/common.js"></script>
 <script>
     $(".ea-btn").click(function () {
+		if(!compareDate(sessionStorage.getItem("nowTime"))) return;
         var param= {
             "appId": sessionStorage.getItem("appId"),
             "token": base.cookie.getCookie('token'),
@@ -92,6 +93,21 @@
                console.log($('.city').attr('data-id'))
             })
         }
+		
+		function compareDate(date){
+			//对获得的时间戳区间与既定的时间戳进行比对
+			var bDate='2018-07-24 00:00:00'.replace(/-/g, "/");
+			var cDate='2018-07-30 17:00:00'.replace(/-/g, "/");
+			bDate=new Date(bDate).getTime();
+			cDate=new Date(cDate).getTime();
+			if(date < bDate){
+				alert('活动于7月24日0点开启，敬请期待！')
+				return false
+			}else if(date >= cDate){
+				alert('活动已结束')
+				return false
+			}
+		}
 
     });
 

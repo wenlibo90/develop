@@ -407,6 +407,7 @@ body{
 	display:inline-block;
     text-overflow: ellipsis;
     background: url(../img/shopBtnBg.png) no-repeat 94% center;
+	vertical-align:middle
 }
 .shopListBtn select{
 	-webkit-appearance:none;
