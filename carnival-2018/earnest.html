@@ -43,6 +43,8 @@
             <a href="javascript:void(0)" class="loginBtn">确认并提交</a>
         </div>
     </div>
+    
+    <div class="descrp"><span></span><i>×</i></div>
 
 </div>
 
@@ -50,12 +52,26 @@
 <script src="js/common.js"></script>
 <script>
     $(".ea-btn").click(function () {
-		if(!compareDate(sessionStorage.getItem("nowTime"))) return;
+		//if(!compareDate(sessionStorage.getItem("nowTime"))) return;
         var param= {
             "appId": sessionStorage.getItem("appId"),
             "token": base.cookie.getCookie('token'),
             "carnivalProductId":1
         }
+		
+		//非微信客户端打开
+		function is_weixn(){
+			var ua = navigator.userAgent.toLowerCase();
+			if(ua.match(/MicroMessenger/i)=="micromessenger") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		if(!is_weixn()){
+			$(".descrp").show().find('span').html("请在微信端打开并支付");
+			return;
+		}
 
         //base.cookie.setCookie("token");
         if (loginObj.isLogin()){
@@ -112,6 +128,10 @@
 		}
 
     });
+	
+	$(".descrp i").click(function() {
+		$(".descrp").hide()
+	});
 
 </script>
 </body>

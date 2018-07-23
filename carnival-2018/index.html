@@ -422,7 +422,13 @@ console.log(code)
     }
     function init() {
         //获取分享id
-        sessionStorage.setItem("shareId", getUrlParam().id)
+        sessionStorage.setItem("shareId", getUrlParam().id);
+		
+		//隐藏温州欣奥买一赠一
+		if(sessionStorage.getItem("shareId")==47){
+			$('.cont1').hide();
+		}
+		
         //倒计时
         mygetTime()
         function mygetTime(){
