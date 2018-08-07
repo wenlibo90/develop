@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>运通嘉年华-7×24小时</title>
-    <meta name="viewport" content="width=750px,user-scalable=no">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/index.css">
+<meta charset="UTF-8">
+<title>运通嘉年华-7×24小时</title>
+<meta name="viewport" content="width=750px,user-scalable=no">
+<link rel="stylesheet" href="css/animate.css">
+<link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 <div class="topBg">
@@ -148,7 +148,7 @@
             <p class="tit">奖品说明：</p>
             <p><span>机滤一个</span><br/>仅限到店使用，有效期一年，自发放之日起计算；</p>
             <p><span>享受一次免工时更换防冻液</span><br/>有效期一年，自发放之日起计算；</p>
-            <p><span>续保代金券500元</span><br/>有效期一年，自发放之日起计算，不与其他优惠同享；</p>
+            <p><span>续保代金券500元</span><br/>有效期一年，自发放之日起计算，不与其他优惠同享，仅限商业险使用。</p>
             <p><span>低温等离子空气净化清风系统</span><br/>一个月免费试用权；仅适用于运通汽车集团旗下经销店所覆盖的城市，如不覆盖，恕无法提供服务；店内工作人员会电话联系您到店签署协议
                 及告知您相关安装事宜。</p>
             <p><span>威固赞助瑞典拓乐高端运动背包</span><br/>工作人员会电话联系您邮寄事宜。</p>
@@ -176,7 +176,7 @@
             <p class="tit">奖品说明：</p>
             <p><span>机滤一个</span><br/>仅限到店使用，有效期一年，自发放之日起计算；</p>
             <p><span>享受一次免工时更换防冻液</span><br/>有效期一年，自发放之日起计算；</p>
-            <p><span>续保代金券500元</span><br/>有效期一年，自发放之日起计算，不与其他优惠同享；</p>
+            <p><span>续保代金券500元</span><br/>有效期一年，自发放之日起计算，不与其他优惠同享，仅限商业险使用。</p>
             <p><span>低温等离子空气净化清风系统</span><br/>一个月免费试用权；仅适用于运通汽车集团旗下经销店所覆盖的城市，如不覆盖，恕无法提供服务；店内工作人员会电话联系您到店签署协议
                 及告知您相关安装事宜。</p>
             <p><span>威固赞助瑞典拓乐高端运动背包</span><br/>工作人员会电话联系您邮寄事宜。</p>
@@ -422,7 +422,12 @@ console.log(code)
     }
     function init() {
         //获取分享id
-        sessionStorage.setItem("shareId", getUrlParam().id);
+		var shopId = getUrlParam().id;
+		if(shopId != /^[0-9]\d{0,2}$/){
+			shopId = "01"
+		}
+		alert(shopId);
+        sessionStorage.setItem("shareId", shopId);
 		
 		//隐藏温州欣奥买一赠一
 		if(sessionStorage.getItem("shareId")==47){
@@ -451,9 +456,9 @@ console.log(code)
 
 
         //获取当前4s店appid
-        sessionStorage.setItem("appId", base.appIdArr[10 <= getUrlParam().id ? getUrlParam().id : getUrlParam().id.slice(1)])
+        sessionStorage.setItem("appId", base.appIdArr[10 <= sessionStorage.getItem("shareId") ? sessionStorage.getItem("shareId") : sessionStorage.getItem("shareId").slice(1)])
         console.log(sessionStorage.getItem("appId"))
-        if(getUrlParam().id != '01'){
+        if(sessionStorage.getItem("shareId") != '01'){
             $('.shopListDiv').hide();
         }else{
             $.ajax({
