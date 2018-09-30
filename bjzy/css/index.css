@@ -1,21 +1,776 @@
-@charset "UTF-8";*{margin:0;padding:0;list-style:none;border:none}a{color:#fff}body{min-width:1082px}@font-face{font-family:SourceHanSerifCN-SemiBold;src:url(SourceHanSerifCN-SemiBold.otf)}@font-face{font-family:TrajanPro3-Regular;src:url(TrajanPro3-Regular.otf)}.l{float:left}.r{float:right}.c{clear:both;display:block}.l-h-30{line-height:30px}.font10{display:block;font-size:15px}.header{position:fixed;top:0;left:0;z-index:1000;width:100%;min-width:1082px}.nav li{width:18%;height:55px;line-height:55px;float:left;font-family:SourceHanSerifCN-SemiBold;cursor:pointer}.nav li a{color:grey}.nav li.on a{color:#333}.nav li.hy{width:10%}.nav li.hy img{width:70px;margin:-4px 20px}.nav li span{float:left;font-size:15px}.nav li i{font-size:9px;display:block;transform:scale(.75);-webkit-transform:scale(.75);-moz-transform:scale(.75);-o-transform:scale(.75);line-height:60px;float:left;margin-left:-6px;margin-left:0\9;margin-left:0\9;font-style:normal}.nav{background-color:#dedede}.connect{width:910px;margin:55px auto;border:1px solid #dedede;border-left:none;border-right:none;font-family:SourceHanSerifCN-SemiBold;letter-spacing:5px;overflow:hidden;padding:15px;line-height:20px;font-size:15px;text-align:center;color:#6e6e6e}.footer{padding-bottom:70px}.banner{height:100%;width:100%;overflow:hidden;position:relative;top:55px}.Scroll1{position:absolute;left:0;top:0;width:100%;min-width:1000px;background:#000}.Scroll1 .full li{width:100%!important;background-size:cover;-webkit-background-size:cover;-moz-background-size:cover;background:url(../img/1.jpg) center no-repeat;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-         src='http://static.yuntongauto.com/bjzy/img/1.jpg',
-         sizingMethod='scale')}.Scroll1 .full .n2{background-image:url(../img/2.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-    src='http://static.yuntongauto.com/bjzy/img/2.jpg',
-    sizingMethod='scale')}.Scroll1 .full .n3{background-image:url(../img/3.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-    src='http://static.yuntongauto.com/bjzy/img/3.jpg',
-    sizingMethod='scale')}.Scroll1 .full .n4{background-image:url(../img/4.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-    src='http://static.yuntongauto.com/bjzy/img/4.jpg',
-    sizingMethod='scale')}.Scroll1 .full .n5{background-image:url(../img/5.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-            src='http://static.yuntongauto.com/bjzy/img/5.jpg',
-            sizingMethod='scale')}.btns{position:absolute;bottom:60px;left:50%;margin-left:-47px}.Scroll1 .btns li{width:10px;height:10px;float:left;background:0 0;background-color:#fff;border-radius:50%;margin-right:10px;opacity:.9;cursor:pointer}.btns li.on{background-color:#acacac}.bjzy{width:158px;position:relative;z-index:1}.next-arrow{width:30px;margin-left:-15px;height:18px;background:url(../img/next-arrow.png) no-repeat center;position:absolute;bottom:25px;left:50%;cursor:pointer}.cont0{text-align:center;padding:110px 0 0}.cont{color:#6e6e6e}.t1{font-size:20px;font-family:TrajanPro3-Regular}.t2{font-size:30px;margin:10px 0 28px;font-family:SourceHanSerifCN-SemiBold}.dor{display:inline-block;background:url(../img/img.png) 0 -71px no-repeat;height:12px;width:12px}.t4{letter-spacing:8px;font-family:SourceHanSerifCN-SemiBold;margin:28px 0}.t5{width:1000px;margin:0 auto 85px;line-height:30px;font-family:SimHei}.video{width:910px;height:515px;margin:0 auto;background:url(../img/video.jpg) #000 no-repeat;background-size:cover;-webkit-background-size:cover;-moz-background-size:cover;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-            src='http://static.yuntongauto.com/bjzy/img/video.jpg',
-            sizingMethod='scale');position:relative;margin-bottom:125px}.video a{display:block;height:515px}.paly{width:70px;height:50px;border-radius:15px;background-color:rgba(0,0,0,.6);background-color:#000\9;position:absolute;left:50%;top:50%;margin:-35px 0 0 -35px;z-index:2}.paly:after{content:'';display:block;border:10px solid transparent;position:absolute;border-left-color:#fff;left:50%;top:50%;margin:-10px 0 0 -5px}.cont1{text-align:center;background-color:#f3f3f3;padding:115px 0 70px}.tempWrap{margin:0 auto}.tempWrap ul li{width:200px;height:200px;padding:5px;border:2px solid #4c4c4c;margin-left:15px;background:#fff}.tempWrap ul li img{width:200px;height:200px}.picScroll{position:relative;width:976px;margin:0 auto;margin-bottom:70px}.prev{display:block;position:absolute;left:15px;top:50%;margin-top:-15px;height:30px;width:12px;background:url(../img/img.png) 0 -83px no-repeat}.next{display:block;position:absolute;right:0;top:50%;margin-top:-15px;height:30px;width:12px;background:url(../img/img.png) 0 0 no-repeat}.seeall{display:block;margin:0 auto;line-height:49px;height:45px;width:170px;text-align:center;border:2px solid #4c4c4c;font-size:14px;font-family:TrajanPro3-Regular;background-color:#f9f9f9;color:#6e6e6e;text-decoration:none}.picScroll1{margin:0 auto;margin-bottom:70px}.picScroll1 .tempWrap ul li{margin-left:20px;height:260px;width:270px;position:relative}.picScroll1 ul li img{height:260px;width:270px;opacity:.9}.picScroll1 ul li img:hover{opacity:1}.ts{position:absolute;bottom:5px;text-align:center;width:270px;display:block;left:5px;line-height:24px;height:24px;background-color:rgba(0,0,0,.5);color:rgba(255,2555,255,.9);letter-spacing:2px}.picScroll2 li a{background-color:#a99480;display:block;height:200px;text-decoration:none}.life .t6{margin-bottom:0;line-height:25px}.life .banner{width:100%!important;height:220px;background:url(../img/lifebaner.jpg) center no-repeat;background-size:cover;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-            src='http://static.yuntongauto.com/bjzy/img/lifebaner.jpg',
-            sizingMethod='scale')}.life .footer{padding-top:0;overflow:hidden}.life-box .t6{line-height:35px}.life .pic img{padding:5px;border:2px solid #757575;background:#fff}.art .banner{background-image:url(../img/artbanner.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-            src='http://static.yuntongauto.com/bjzy/img/artbanner.jpg',
-            sizingMethod='scale')}.art .picScroll1 ul li img{width:220px;height:220px}.art .picScroll1 .tempWrap ul li{width:220px;height:220px;margin-left:20px}.art .ts{width:220px}.art .t7{line-height:30px}.art .footer{overflow:hidden}.art .pic{margin-bottom:105px}.faith .banner{background-image:url(../img/faithbanner.jpg) top center no-repeat;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-            src='http://static.yuntongauto.com/bjzy/img/faithbanner.jpg',
-            sizingMethod='scale')}.faith .picScroll1 .tempWrap ul li{width:290px;height:290px}.faith .picScroll1 li img{width:290px;height:290px}.faith .ts{width:290px;left:5px;line-height:27px;background:0 0;height:24px;color:#6e6e6e;font-family:TrajanPro3-Regular}.msg-list{width:970px;margin:70px auto 105px;overflow:hidden}.msg-list li{width:300px;height:400px;overflow:hidden;float:left;margin:10px;text-align:left;font-family:TrajanPro3-Regular}.d1-box{width:302px;height:230px;overflow:hidden}.d1-box img{width:302px;height:230px;transition:all .3s;cursor:pointer}.d1-box img:hover{transform:scale(1.1)}.d1 .txt{padding:25px 30px 20px;background:#fff;height:210px;overflow:hidden;margin:-35px 9px 0;position:relative;z-index:1;font-size:12px}.d1-detail{margin-top:15px;line-height:20px;text-align:justify}.msg-list .txt p{font-size:19px;line-height:25px;font-family:SourceHanSerifCN-SemiBold;letter-spacing:1px}.d2{width:243px;height:300px;background:#fff;padding:100px 30px 0;position:relative}.d2 .d1-detail{margin-top:30px}.d2 .arrow{height:30px;width:30px;position:absolute;left:30px;bottom:30px}.d2 .txt{font-size:12px}.d3{width:300px;height:400px;transition:all .3s}.d3:hover{transform:scale(1.1)}.faith .footer{overflow:hidden}.land .banner{background-image:url(../img/landbanner.jpg);filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(
-            src='http://static.yuntongauto.com/bjzy/img/landbanner.jpg',
-            sizingMethod='scale')}.map{margin:0 auto 105px;padding:20px;background:#fff;border:1px solid #6e6e6e;width:950px}.land .map-box{border:2px solid #988e7c;width:946px;padding:3px;background:#f2f2f2;height:662px;overflow:hidden}.land #map{border:1px solid #aba496}.land .d1-box{height:215px}.land .d1-box img{height:215px}.land .msg-list li{height:463px;position:relative}.land .d1 .txt{padding:35px 30px 0;background:#fff;height:210px;overflow:hidden;margin:0;border:1px solid #777}.land .msg-list .txt p{font-size:22px;margin-bottom:28px}.land .d1 .arrow{height:30px;width:30px;position:absolute;left:30px;bottom:35px;z-index:1}.land .d1-detail{color:#6e6e6e;font-size:12px}.land .ts{background-color:rgba(0,0,0,.5);color:rgba(255,2555,255,.9)}.land .picScroll1 .tempWrap ul li,.land .picScroll1 li img{height:250px}@media screen and (max-width:1360px){.nav li span{font-size:13px}}@media screen and (max-width:1920px) and (min-width:1580px){.life .banner{height:300px;background-size:cover}}.content{background-color:#f3f3f3;margin-top:55px;text-align:center}.cont_simg{text-align:center;height:215px;line-height:230px}.image_block{text-align:center}.image_block table{text-align:center;padding:0;margin:0 auto;border:solid 0;border-collapse:separate;border-spacing:11.5px 11.5px}.image_block table tr{padding:0;margin:0}.image_block table tr td{padding:0;margin:15px;overflow:hidden}.image_block table tr td img{width:198px;height:198px;transition:all .8s;display:table-cell}.image_block table tr td img:hover{transform:scale(1.1)}.content{background-color:#f3f3f3;margin-top:55px;text-align:center;width:100%}.cont_simg1{text-align:center;height:215px;line-height:230px}.cont_simg2{text-align:center;height:260px;line-height:260px}.tb1{text-align:center;margin:0 auto;width:60%}.tb1 tr td{width:20%;text-align:center;font-family:SourceHanSerifCN-SemiBold}.tb1 tr td img{margin-bottom:20px}.tb2{text-align:center;margin:0 auto;width:80%}.tb2 tr td{text-align:center}.tb2 tr td img{padding:0 35px}.block1,.block2,.block3,.block4{width:177px;float:left;padding:20px}.block1,.block2,.block3{border-right:solid 2px rgba(17,17,17,.5)}.tds{border-right:solid 2px rgba(17,17,17,.5)}.cont_block2{align-content:center;width:80%;height:655px;margin:0 auto;text-align:center}.pfont{opacity:.6;font-size:14px}.moji{letter-spacing:5px;font-size:23px;color:#b7b7b7;font-family:SourceHanSerifCN-SemiBold;font-weight:400}.large_moji{font-size:28px;font-weight:400}.life .cont1{padding-bottom:0}.msg-list li.no-m-b{margin-bottom:0}.backindex{margin:80px auto 0;font-size:16px;overflow:hidden}.backindex span{float:left}.art .backindex{margin-top:75px}.more-box .backindex{margin-top:70px}.icon{width:31px;height:31px;float:left;margin:6px 15px 0 27px}
+@charset "UTF-8";
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border: none
+}
+a {
+	color: #fff
+}
+body {
+	min-width: 1082px
+}
+@font-face {
+	font-family: SourceHanSerifCN-SemiBold;
+	src: url(SourceHanSerifCN-SemiBold.otf)
+}
+@font-face {
+	font-family: TrajanPro3-Regular;
+	src: url(TrajanPro3-Regular.otf)
+}
+.l {
+	float: left
+}
+.r {
+	float: right
+}
+.c {
+	clear: both;
+	display: block
+}
+.l-h-30 {
+	line-height: 30px
+}
+.font10 {
+	display: block;
+	font-size: 15px
+}
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	width: 100%;
+	min-width: 1082px
+}
+.nav li {
+	width: 16%;
+	height: 76px;
+	line-height: 76px;
+	float: left;
+	font-family: SourceHanSerifCN-SemiBold;
+	cursor: pointer
+}
+.nav li a {
+	color: grey
+}
+.nav li.on a {
+	color: #333
+}
+.nav li.hy {
+	width: 10%
+}
+.nav li.hy img {
+	width: 70px;
+	margin: -4px 20px
+}
+.nav li span {
+	float: left;
+	font-size: 15px
+}
+.nav li i {
+	font-size: 9px;
+	display: block;
+	transform: scale(.75);
+	-webkit-transform: scale(.75);
+	-moz-transform: scale(.75);
+	-o-transform: scale(.75);
+	line-height: 82px;
+	float: left;
+	margin-left: -6px;
+	margin-left: 0\9;
+	margin-left: 0\9;
+	font-style: normal
+}
+.nav {
+	background-color: #dedede
+}
+.connect {
+	width: 910px;
+	margin: 0 auto;
+	border: 1px solid #dedede;
+	border-left: none;
+	border-right: none;
+	font-family: SourceHanSerifCN-SemiBold;
+	letter-spacing: 5px;
+	overflow: hidden;
+	padding: 15px;
+	line-height: 20px;
+	font-size: 15px;
+	text-align: center;
+	color: #6e6e6e
+}
+.footer {
+	/*padding-bottom: 70px*/
+}
+.banner {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	top: 55px
+}
+.Scroll1 {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	min-width: 1000px;
+	background: #000
+}
+.Scroll1 .full li {
+	width: 100%!important;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background: url(../img/1.jpg) center no-repeat;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/1.jpg',  sizingMethod='scale')
+}
+.Scroll1 .full .n2 {
+	background-image: url(../img/2.jpg);
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/2.jpg',  sizingMethod='scale')
+}
+.Scroll1 .full .n3 {
+	background-image: url(../img/3.jpg);
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/3.jpg',  sizingMethod='scale')
+}
+.Scroll1 .full .n4 {
+	background-image: url(../img/4.jpg);
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/4.jpg',  sizingMethod='scale')
+}
+.Scroll1 .full .n5 {
+	background-image: url(../img/5.jpg);
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/5.jpg',  sizingMethod='scale')
+}
+.btns {
+	position: absolute;
+	bottom: 60px;
+	width:100%;
+	text-align:center
+}
+.Scroll1 .btns li {
+	width: 7px;
+	height: 7px;
+	background: 0 0;
+	background-color: #acacac;
+	border-radius: 50%;
+	margin-right: 10px;
+	opacity: .9;
+	cursor: pointer;
+	display:inline-block
+}
+.btns li.on {
+	background-color: #fff
+}
+.bjzy {
+	width: 158px;
+	position: relative;
+	z-index: 1
+}
+.next-arrow {
+	width: 30px;
+	margin-left: -18px;
+	height: 18px;
+	background: url(../img/next-arrow.png) no-repeat center;
+	position: absolute;
+	bottom: 25px;
+	left: 50%;
+	cursor: pointer
+}
+.cont0 {
+	text-align: center;
+	padding: 110px 0 0
+}
+.cont {
+	color: #6e6e6e
+}
+.t1 {
+	font-size: 20px;
+	font-family: TrajanPro3-Regular
+}
+.t2 {
+	font-size: 30px;
+	margin: 10px 0 28px;
+	font-family: SourceHanSerifCN-SemiBold
+}
+.dor {
+	display: inline-block;
+	background: url(../img/img.png) 0 -71px no-repeat;
+	height: 12px;
+	width: 12px
+}
+.t4 {
+	letter-spacing: 8px;
+	font-family: SourceHanSerifCN-SemiBold;
+	margin: 28px 0
+}
+.t5 {
+	width: 1000px;
+	margin: 0 auto 85px;
+	line-height: 30px;
+	font-family: SimHei
+}
+.video {
+	width: 910px;
+	height: 515px;
+	margin: 0 auto;
+	background: url(../img/video.jpg) #000 no-repeat;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/video.jpg',  sizingMethod='scale');
+	position: relative;
+	margin-bottom: 125px
+}
+.video a {
+	display: block;
+	height: 515px
+}
+.paly {
+	width: 70px;
+	height: 50px;
+	border-radius: 15px;
+	background-color: rgba(0,0,0,.6);
+	background-color: #000\9;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -35px 0 0 -35px;
+	z-index: 2
+}
+.paly:after {
+	content: '';
+	display: block;
+	border: 10px solid transparent;
+	position: absolute;
+	border-left-color: #fff;
+	left: 50%;
+	top: 50%;
+	margin: -10px 0 0 -5px
+}
+.cont1 {
+	text-align: center;
+	background-color: #f3f3f3;
+	padding: 115px 0 70px
+}
+.tempWrap {
+	margin: 0 auto
+}
+.tempWrap ul li {
+	width: 200px;
+	height: 200px;
+	padding: 5px;
+	border: 2px solid #4c4c4c;
+	margin-left: 15px;
+	background: #fff
+}
+.tempWrap ul li img {
+	width: 200px;
+	height: 200px
+}
+.picScroll {
+	position: relative;
+	width: 976px;
+	margin: 0 auto;
+	margin-bottom: 70px
+}
+.prev {
+	display: block;
+	position: absolute;
+	left: 15px;
+	top: 50%;
+	margin-top: -15px;
+	height: 30px;
+	width: 12px;
+	background: url(../img/img.png) 0 -83px no-repeat
+}
+.next {
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	margin-top: -15px;
+	height: 30px;
+	width: 12px;
+	background: url(../img/img.png) 0 0 no-repeat
+}
+.seeall {
+	display: block;
+	margin: 0 auto;
+	line-height: 49px;
+	height: 45px;
+	width: 170px;
+	text-align: center;
+	border: 2px solid #4c4c4c;
+	font-size: 14px;
+	font-family: TrajanPro3-Regular;
+	background-color: #f9f9f9;
+	color: #6e6e6e;
+	text-decoration: none
+}
+.picScroll1 {
+	margin: 0 auto
+}
+.picScroll1 .tempWrap ul li {
+	margin-left: 20px;
+	height: 260px;
+	width: 270px;
+	position: relative
+}
+.picScroll1 ul li img {
+	height: 260px;
+	width: 270px;
+	opacity: .9
+}
+.picScroll1 ul li img:hover {
+	opacity: 1
+}
+.ts {
+	position: absolute;
+	bottom: 5px;
+	text-align: center;
+	width: 270px;
+	display: block;
+	left: 5px;
+	line-height: 24px;
+	height: 24px;
+	background-color: rgba(0,0,0,.5);
+	color: rgba(255,2555,255,.9);
+	letter-spacing: 2px
+}
+.picScroll2 li a {
+	background-color: #a99480;
+	display: block;
+	height: 200px;
+	text-decoration: none
+}
+.life .t6 {
+	margin-bottom: 0;
+	line-height: 25px
+}
+.life .banner {
+	width: 100%!important;
+	height: 220px;
+	background: url(../img/lifebaner.jpg) center no-repeat;
+	background-size: cover;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/lifebaner.jpg',  sizingMethod='scale')
+}
+.life .footer {
+	padding-top: 0;
+	overflow: hidden
+}
+.life-box .t6 {
+	line-height: 35px
+}
+.life .pic img {
+	padding: 5px;
+	border: 2px solid #757575;
+	background: #fff
+}
+.art .banner {
+	background-image: url(../img/artbanner.jpg);
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/artbanner.jpg',  sizingMethod='scale')
+}
+.art .picScroll1 ul li img {
+	width: 220px;
+	height: 220px
+}
+.art .picScroll1 .tempWrap ul li {
+	width: 220px;
+	height: 220px;
+	margin-left: 20px
+}
+.art .ts {
+	width: 220px
+}
+.art .t7 {
+	line-height: 30px
+}
+.art .footer {
+	overflow: hidden
+}
+.art .pic {
+	margin-bottom: 105px
+}
+.faith .banner {
+	background-image: url(../img/faithbanner.jpg) top center no-repeat;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/faithbanner.jpg',  sizingMethod='scale')
+}
+.faith .picScroll1 .tempWrap ul li {
+	width: 290px;
+	height: 290px
+}
+.faith .picScroll1 li img {
+	width: 290px;
+	height: 290px
+}
+.faith .ts {
+	width: 290px;
+	left: 5px;
+	line-height: 27px;
+	background: 0 0;
+	height: 24px;
+	color: #6e6e6e;
+	font-family: TrajanPro3-Regular
+}
+.msg-list {
+	width: 970px;
+	margin: 70px auto 105px;
+	overflow: hidden
+}
+.msg-list li {
+	width: 300px;
+	height: 400px;
+	overflow: hidden;
+	float: left;
+	margin: 10px;
+	text-align: left;
+	font-family: TrajanPro3-Regular
+}
+.d1-box {
+	width: 302px;
+	height: 230px;
+	overflow: hidden
+}
+.d1-box img {
+	width: 302px;
+	height: 230px;
+	transition: all .3s;
+	cursor: pointer
+}
+.d1-box img:hover {
+	transform: scale(1.1)
+}
+.d1 .txt {
+	padding: 25px 30px 20px;
+	background: #fff;
+	height: 210px;
+	overflow: hidden;
+	margin: -35px 9px 0;
+	position: relative;
+	z-index: 1;
+	font-size: 12px
+}
+.d1-detail {
+	margin-top: 15px;
+	line-height: 20px;
+	text-align: justify
+}
+.msg-list .txt p {
+	font-size: 19px;
+	line-height: 25px;
+	font-family: SourceHanSerifCN-SemiBold;
+	letter-spacing: 1px
+}
+.d2 {
+	width: 243px;
+	height: 300px;
+	background: #fff;
+	padding: 100px 30px 0;
+	position: relative
+}
+.d2 .d1-detail {
+	margin-top: 30px
+}
+.d2 .arrow {
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	left: 30px;
+	bottom: 30px
+}
+.d2 .txt {
+	font-size: 12px
+}
+.d3 {
+	width: 300px;
+	height: 400px;
+	transition: all .3s
+}
+.d3:hover {
+	transform: scale(1.1)
+}
+.faith .footer {
+	overflow: hidden
+}
+.land .banner {
+	background-image: url(../img/landbanner.jpg);
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='http://static.yuntongauto.com/bjzy/img/landbanner.jpg',  sizingMethod='scale')
+}
+.map {
+	margin: 0 auto 105px;
+	padding: 20px;
+	background: #fff;
+	border: 1px solid #6e6e6e;
+	width: 950px
+}
+.land .map-box {
+	border: 2px solid #988e7c;
+	width: 946px;
+	padding: 3px;
+	background: #f2f2f2;
+	height: 662px;
+	overflow: hidden
+}
+.land #map {
+	border: 1px solid #aba496
+}
+.land .d1-box {
+	height: 215px
+}
+.land .d1-box img {
+	height: 215px
+}
+.land .msg-list li {
+	height: 463px;
+	position: relative
+}
+.land .d1 .txt {
+	padding: 35px 30px 0;
+	background: #fff;
+	height: 210px;
+	overflow: hidden;
+	margin: 0;
+	border: 1px solid #777
+}
+.land .msg-list .txt p {
+	font-size: 22px;
+	margin-bottom: 28px
+}
+.land .d1 .arrow {
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	left: 30px;
+	bottom: 35px;
+	z-index: 1
+}
+.land .d1-detail {
+	color: #6e6e6e;
+	font-size: 12px
+}
+.land .ts {
+	background-color: rgba(0,0,0,.5);
+	color: rgba(255,2555,255,.9)
+}
+.land .picScroll1 .tempWrap ul li, .land .picScroll1 li img {
+	height: 250px
+}
+
+@media screen and (max-width:1360px) {
+.nav li span {
+	font-size: 13px
+}
+}
+
+@media screen and (max-width:1920px) and (min-width:1580px) {
+.life .banner {
+	height: 300px;
+	background-size: cover
+}
+}
+.content {
+	background-color: #f3f3f3;
+	margin-top: 55px;
+	text-align: center
+}
+.cont_simg {
+	text-align: center;
+	height: 215px;
+	line-height: 230px
+}
+.image_block {
+	text-align: center
+}
+.image_block table {
+	text-align: center;
+	padding: 0;
+	margin: 0 auto;
+	border: solid 0;
+	border-collapse: separate;
+	border-spacing: 11.5px 11.5px
+}
+.image_block table tr {
+	padding: 0;
+	margin: 0
+}
+.image_block table tr td {
+	padding: 0;
+	margin: 15px;
+	overflow: hidden
+}
+.image_block table tr td img {
+	width: 198px;
+	height: 198px;
+	transition: all .8s;
+	display: table-cell
+}
+.image_block table tr td img:hover {
+	transform: scale(1.1)
+}
+.content {
+	background-color: #f3f3f3;
+	margin-top: 55px;
+	text-align: center;
+	width: 100%
+}
+.cont_simg1 {
+	text-align: center;
+	height: 215px;
+	line-height: 230px
+}
+.cont_simg2 {
+	text-align: center;
+	height: 260px;
+	line-height: 260px
+}
+.tb1 {
+	text-align: center;
+	margin: 0 auto;
+	width: 60%
+}
+.tb1 tr td {
+	width: 20%;
+	text-align: center;
+	font-family: SourceHanSerifCN-SemiBold
+}
+.tb1 tr td img {
+	margin-bottom: 20px
+}
+.tb2 {
+	text-align: center;
+	margin: 0 auto;
+	width: 80%
+}
+.tb2 tr td {
+	text-align: center
+}
+.tb2 tr td img {
+	padding: 0 28px
+}
+.block1, .block2, .block3, .block4 {
+	width: 177px;
+	float: left;
+	padding: 20px
+}
+.block1, .block2, .block3 {
+	border-right: solid 2px rgba(17,17,17,.5)
+}
+.tds {
+	border-right: solid 2px rgba(17,17,17,.5)
+}
+.cont_block2 {
+	align-content: center;
+	width: 80%;
+	height: 680px;
+	margin: 0 auto;
+	text-align: center
+}
+.pfont {
+	opacity: .6;
+	font-size: 14px
+}
+.moji {
+	letter-spacing: 5px;
+	font-size: 23px;
+	color: #b7b7b7;
+	font-family: SourceHanSerifCN-SemiBold;
+	font-weight: 400
+}
+.large_moji {
+	font-size: 28px;
+	font-weight: 400
+}
+.life .cont1 {
+	padding-bottom: 0
+}
+.msg-list li.no-m-b {
+	margin-bottom: 0
+}
+.backindex {
+	margin: 80px auto 0;
+	font-size: 16px;
+	overflow: hidden
+}
+.backindex span {
+	float: left
+}
+.art .backindex {
+	margin-top: 75px
+}
+.more-box .backindex {
+	margin-top: 70px
+}
+.icon {
+	width: 31px;
+	height: 31px;
+	float: left;
+	margin: 6px 15px 0 27px
+}
+
+.t-wz{
+	background:#fff;
+	text-align:left
+}
+.t-wz ul{
+	width:960px;
+	margin:0 auto;
+	padding:80px 0;
+	overflow:hidden
+}
+.t-wz li{
+	width:350px;
+	float:left;
+	padding:0 80px 40px;
+	line-height:30px;
+	position:relative
+}
+.t-wz li span{
+	position:absolute;
+	left:0
+}
+.t-des{
+	width:990px;
+	margin:60px auto 90px;
+	overflow:hidden;
+	border-left:1px solid #8c8c8c
+}
+.t-des li{
+	float:left;
+	padding-left:40px;
+	width:287px;
+	text-align:left;
+	line-height:50px;
+	border-right:1px solid #8c8c8c
+}
+.t-wuye{
+	background:#fff;
+	overflow:hidden;
+	padding:50px 0 100px
+}
+.t-wuye li{
+	width:990px;
+	text-align:left;
+	margin:0 auto;
+	line-height:44px;
+	padding-left:18px;
+	font-size:17px
+}
+.t-hy{
+	width:990px;
+	margin:0 auto;
+	overflow:hidden;
+}
+.t-hy-l{
+	width:450px;
+	padding:180px 0 200px;
+	float:left
+}
+.t-hy-r{
+	width:426px;
+	float:left;
+	padding-top:49px;
+	text-align:left;
+	line-height:38px
+}
