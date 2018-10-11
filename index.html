@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>北京庄园</title>
+    <!--<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>-->
+   <link href="css/index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="warp">
+    <div class="header">
+        <ul class="nav">
+            <li style="text-align:center"><a href="index.html"><img src="img/logo.jpg" height="76" /></a></li>
+            <li class="td"><a href="land.html"><span>庄园土地</span><i>/ Land Of The Demesne</i></a></li>
+            <li class="xy"><a href="faith.html"><span>庄园信仰</span><i>/ Faith Of The Demesne</i></a></li>
+            <li class="ys"><a href="art.html"><span>庄园艺术</span><i>/ Demesne Art&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></a></li>
+            <li class="sh"><a href="life.html"><span>庄园生活</span><i>/ Life In The Demesne </i></a></li>
+            <li class="xy"><a href="tour.html"><span>庄园巡礼</span><i>/ Overview Of The Demesne</i></a></li>
+            <span class="c"></span>
+        </ul>
+    </div>
+    <!--内容 轮播图-->
+    <div class="banner">
+      <div class="Scroll1">
+            <div class="full">
+                <ul>
+                    <li><img src="img/1.jpg" class="myimg1"/></li>
+                    <li class="n2"><img src="img/2.jpg" class="myimg1"/></li>
+                    <li class="n3"><img src="img/3.jpg" class="myimg1"/></li>
+                    <li class="n4"><img src="img/4.jpg" class="myimg1"/></li>
+                    <!--<li class="n5"><img src="img/5.jpg" class="myimg1"/></li>-->
+                </ul>
+            </div>
+            <div class="btns">
+                <ul><li></li> <li></li><li></li><li></li></ul>
+            </div>
+        </div>
+      <div class="next-arrow"></div>
+    </div>
+    <!--内容-->
+    <div class="cont cont0">
+        <p class="t1">Faithfully-built Villa</p>
+        <p class="t2">造&nbsp;墅&nbsp;信&nbsp;仰</p>
+        <p class="t3"><span class="dor"></span></p>
+        <p class="t4 t1">5载潜心耕耘，呈献北京庄园</p>
+        <p class="t5 font10">北京庄园，董事长亲率团队，历时5年，从全球顶级庄园、奢华酒店中汲取灵感。拒绝复制和标配，亲自探求每个细节的极致完美 <br/>
+            这是北京庄园的造墅信仰，亦是中国别墅发展的生命力法则</p>
+        <div class="video">
+            <a href="javascript:void(0)">
+                <div class="paly"></div>
+                <div class="box">
+                  <iframe id="video" src='' frameBorder='0' allowfullscreen style="height: 515px;width: 910px;"></iframe>
+                </div>
+            </a>
+        </div>
+    <!--内容-->
+    <div class="cont cont1">
+        <p class="t1">A Rare Villa To Be Found</p>
+        <p class="t2">珍&nbsp;稀&nbsp;墅&nbsp;种</p>
+        <p class="t3"><span class="dor"></span></p>
+        <p class="t4 t1">可能是北京最后的独墅</p>
+        <p class="t5 font10" style="margin-bottom: 0">北京庄园，以200余栋纯独栋别墅，对珍贵土地致以无限敬意。以同等价格门槛，保证业主层次的纯粹性、社区环境的安全性</p>
+        <p class="t5 font10"> 打造顶豪别墅专属社交圈层，加速提升社区口碑与升值速度</p>
+        <div class="picScroll">
+            <div class="tempWrap">
+                <ul>
+                  <li><a href="more-pic.html"><img  src="img/slide1.jpg"></a></li>
+                  <li><a href="more-pic.html"><img  src="img/slide12.jpg"></a></li>
+                  <li><a href="more-pic.html"><img  src="img/slide13.jpg"></a></li>
+                  <li><a href="more-pic.html"><img  src="img/slide14.jpg"></a></li>
+                </ul>
+            </div>
+            <a class="prev" href="javascript:void(0)"></a>
+            <a class="next" href="javascript:void(0)"></a>
+        </div>
+        <a href="more-pic.html" class="seeall">see all photos</a>
+    </div>
+
+</div>
+    <div class="footer" style="background:#f3f3f3">
+    	<div style="text-align:center;padding:130px 0 60px"><img src="img/hy-logo.jpg" height="70" /></div>
+        <div class="connect">TEL.86-10-61987777 | ADD.京承高速第11出口向东1000米</div>
+        <img src="img/foot.png" alt="" style="margin: 45px auto 0;width: 500px;display: block"/>
+    </div>
+ </div>
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+	var obj1={
+       h:/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ? 680: $(window).height()
+    }
+    $('.full li,.banner').css('height',obj1.h-55);
+    /*全屏轮播效果*/
+	$('.myimg1').css({"height":obj1.h-55,"width":"100%"})
+    /*轮播图*/
+    if($('.full li').css('height',obj1.h)){
+        jQuery(".Scroll1").slide({ titCell:".btns li" ,mainCell:".full ul", effect:"fold",  autoPlay:true, mouseOverStop:false});
+    }
+	/*点击下滑*/ 
+	$('.next-arrow').click(function(){
+        var obj=$('.cont').eq(0);
+        var h=obj.offset().top;
+        $('body,html').animate({
+            scrollTop:h
+        },600)
+    })
+    /*左右点击效果的*/
+    jQuery(".picScroll").slide({
+        mainCell:"ul",
+        effect:"leftLoop",
+        vis:4, scroll:2,
+        autoPage:true,
+        switchLoad:"_src" });
+    /* 自动轮播*/
+    jQuery(".picScroll1").slide({
+        mainCell:"ul",
+        effect:"leftMarquee",
+        vis:3,
+//        autoPlay:true,
+        interTime:50,
+        switchLoad:"_src"
+    });
+    /*视频*/
+    $('.paly').click(function(){
+        $('.video .box').css({
+            'background':"#000",
+            'height':"515px","width":"910px"
+        });
+        $(this).hide();
+        $('#video').attr('src','http://open.iqiyi.com/developer/player_js/coopPlayerIndex.html?vid=dd8f5e6d6c06dd293f96afc853262d03&tvId=24195910009&accessToken=2.f22860a2479ad60d8da7697274de9346&appKey=3955c3425820435e86d0f4cdfe56f5e7&appId=1368&height=100%&width=100%').css({
+            'height':"515px","width":"910px"
+        })
+    })
+    /*一个样式问题的调整*/
+    $('.picScroll1 .clone').css('margin-left','19px')
+</script>
+</html>
