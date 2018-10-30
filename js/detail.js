@@ -264,7 +264,7 @@ var detail = {
                 //卖点
                 $('.t2 span').html('商品卖点：' + data.mallGoodsInfo.sellingPoints);
             } else {
-                base.tip.tipsFn('对不起,该商品已下架，再看看别的吧');
+                base.tip.tipsFn('没有商品信息');
                 btn.addClass('out').html('已下架');
             }
             $('.back').attr('href','index.html?id='+base.GTcookie.getCookie('id'))
@@ -328,7 +328,7 @@ var detail = {
             if (base.GTUrlParam().id) {
                 detail.m.query(base.GTUrlParam().id);
             } else {
-                base.tip.tipsFn('商品id没有获取，请确保链接完整性');
+                base.tip.tipsFn('获取不到商品ID');
             }
         }
     }

@@ -6,7 +6,7 @@ var login = {
             var uName = $('#uName').val();
             var uCall = $('#uCall').val();
             var uCode = $('#uCode').val();
-            if (login.m.isNull(uName) || login.m.isNull(uCall) || login.m.isNull(uCode)) {
+            if (login.m.isNull(uCall) || login.m.isNull(uCode)) {
                 base.GTsetAjax('post', 'customer/login_validate', {
                     mobile: uCall,
                     code: uCode,
