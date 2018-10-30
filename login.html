@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=750px, user-scalable=no"/>
+<title>晟邦物业</title>
+<link href="http://static.yuntongauto.com/wuye/css/style.css?v=2.0" rel="stylesheet" type="text/css" />
+<script src="http://static.yuntongauto.com/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="http://static.yuntongauto.com/js/cookie.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="person-top"><a class="icon-back" href="javascript:history.go(-1);"></a><span>登录</span></div>
+
+<div class="login">
+	<form id="phoneForm" method="post" enctype="multipart/form-data">
+	<div class="card">
+    	<ul class="login auth">
+            <li style="border-top:none"><i></i><input type="tel" maxlength="11" id="userPhone" placeholder="请输手机号" /></li>
+            <li style="padding-top:6px"><input type="tel" maxlength="6" id="userNumber" placeholder="输入验证码" /><input type="button" value="获取验证码" class="send-code" onclick="obj.sendCode(this)" /></li>
+        </ul>
+    </div>
+	<div class="clause" style="width: 646px;"><i class="cur" onclick="obj.agreeRegist(this);"></i>同意<span><a href="http://yth.yuntongauto.com/externalpay/reg-agreement.html">《晟邦物业会员注册协议》</a></span></div>
+    <div class="login-btn" onclick="obj.loginCheck()"><a href="javascript:void(0)" style="color:#fff">登录</a></div>
+	</form>
+</div>
+<div class="fedback">请输入有效的手机号</div>
+</body>
+<script>
+    var obj={
+        loginUrl:'http://yth.yuntongauto.com/externalpay/customer/login/code',
+        loginCallback:function(data){
+             if(data.code==0){
+                 cookie.setCookie('token',data.data);
+                 if(cookie.getCookie('token')){
+                     switch (window.location.search.substr(1).split('=')[1]){
+                         case '1':
+                             window.location.href='submit-order.html';
+                             break;
+                         case '0':
+                             window.location.href='order.html';
+                             break;
+                         default :
+                             window.location.href='index.html';
+                             break;
+                     }
+                 }
+             }else{
+				$(".fedback").html(data.msg).slideDown().delay(2000).slideUp()
+             }
+        },
+        //验证码
+        code:'',
+        //短信发送的接口
+        sendMsgUrl:'http://yth.yuntongauto.com/externalpay/customer/smscode/get',
+        sendMsgCallback:function(data){
+            cookie.setCookie('JSESSIONID',data.result)
+        },
+        isLogin:function(){
+            if(cookie.getCookie('token')){
+                switch (window.location.search.substr(1).split('=')[1]){
+                    case 1:
+                        window.location.href='submit-order.html';
+                        break;
+                    case 0:
+                        window.location.href='order.html';
+                        break;
+                    default :
+                        window.location.href='index.html';
+                        break;
+                }
+            }
+        },
+        //注册协议状态
+        agree:1,
+        //注册协议
+        agreeRegist:function (obj) {
+            $(obj).toggleClass("cur");
+            if($(obj). hasClass('cur')){
+                this.agree = 1;
+            }else{
+                this.agree = 0;
+            }
+        },
+        //验证码
+        sendCode:function(obj){
+            if(this.checkPhone()){
+               if($(obj).val()=='获取验证码'){
+               var num=60;
+               var time60=setInterval(function(){
+                   this.code=$(obj).parents('body').find('#userNumber').val();
+                   $(obj).val((--num)+'s后重发');
+                    if(num<=0){
+                        clearInterval(time60);
+                        $(obj).val('获取验证码');
+                        $(obj).removeClass('sms-grey');
+                      }
+                    },1000)
+                }
+                if(!$(obj).hasClass('sms-grey')){
+                    this.sendMsg(this.sendMsgUrl,this.sendMsgCallback,$(obj).parents('body').find('#userPhone').val())
+                }
+                $(obj).addClass('sms-grey');
+            }
+        },
+        //将手机利用ajax提交到后台的发短信接口
+        sendMsg:function (url,backFunc,MsgParam) {
+            $.ajax({
+                url:url,
+                type:'post',
+                dataType:'json',
+                /*xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,*/
+                data:{
+                    customerPhone:MsgParam
+                },
+                error : function() {// 请求失败处理函数
+                    $(".fedback").html('服务器走丢了').slideDown().delay(2000).slideUp();
+                },
+                success : backFunc
+            });
+        },
+//        手机号验证
+        checkPhone:function(){
+                var userPhone = $("#userPhone").val();
+                var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+                if(userPhone==null||userPhone==""){
+                    $(".fedback").html('请输入手机号!').slideDown().delay(2000).slideUp();
+                    return false;
+                }
+                if(!myreg.test(userPhone)){
+                    $(".fedback").html('请输入有效的手机号!').slideDown().delay(2000).slideUp();
+                    return false;
+                }
+                return true;
+        },
+
+        /*登陆*/
+        loginCheck:function(){
+            if(this.checkPhone()){
+                if(this.agree){
+                    if($('#userNumber').val()){
+                        obj.loginFn(this.loginUrl,this.loginCallback,{
+                            'phone':$('#userPhone').val(),
+                            'customerNumber':$('#userNumber').val()
+                        })
+                    }else{
+                        $(".fedback").html('请输入验证码!').slideDown().delay(2000).slideUp();
+                    }
+                }else{
+                    $(".fedback").html('请同意注册协议!').slideDown().delay(2000).slideUp();
+                }
+            }
+        },
+       loginFn:function(url,backFunc,MsgParam){
+           $.ajax({
+               url:url,
+               /*xhrFields: {
+                   withCredentials: true
+               },
+               crossDomain: true,*/
+               type:'get',
+               dataType:'json',
+               data:MsgParam,
+               error : function(XMLHttpRequest, textStatus, errorThrown) {// 请求失败处理函数
+			   		console.log(XMLHttpRequest+' XMLHttpRequest  '+textStatus+'textStatus   '+errorThrown+'  ');
+                   $(".fedback").html('服务器走丢了').slideDown().delay(2000).slideUp();
+               },
+               success : backFunc
+           });
+       }
+    }
+</script>
+</html>

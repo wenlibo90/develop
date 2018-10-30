@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>运通商城</title>
+    <meta name="viewport" content="width=750px,user-scalable=no">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/detail.css">
+</head>
+<body bgcolor="#f5f5f5">
+<div class="myTop myTop1">
+    <a href="javascript:void(0)" class="back lBox">
+        <img src="img/back.png" class="l ">
+    </a>
+    商品详情
+</div>
+        <div class="swiper-container swiper-container-horizontal silde">
+            <div class="swiper-wrapper">
+                <!--<div class="swiper-slide "><video src=""></video></div>-->
+                <div class="swiper-slide "><img src="http://static.yuntongauto.com/web/badminton/img/branch-10.png">png</div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination swiper-pagination-bullets"></div>
+            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+        <div class="titBox">
+        <div class="t1">
+            <div class="tit l">会员套餐</div>
+            <div class="price r">
+               ¥<span>28888</span>
+            </div>
+        </div>
+            <p class="t2">
+                <i class="icon"></i><span>这是一个很长的字符串</span>
+            </p>
+        </div>
+        <div class="txtCont">
+            <div class="t3">
+                <i class="myicon"></i><span>套餐详情</span>
+            </div>
+            <div class="cont">
+              <!--      <ul class="goodList">
+                        <li>
+                            <span class="l">商品编号</span>
+                            <span class="r">2121223244</span>
+                        </li>
+                        <li>
+                            <span class="l">服务类别</span>
+                            <span class="r">保养</span>
+                        </li>
+                        <li>
+                            <span class="l">服务类别</span>
+                            <span class="r">到店保养</span>
+                        </li>
+                        <li>
+                            <span class="l">服务类别</span>
+                            <span class="r">会员套餐</span>
+                        </li>
+                        <li>
+                            <span class="l">服务类别</span>
+                            <span class="r">保养</span>
+                        </li>
+                    </ul>-->
+            </div>
+        </div>
+        <div class="btn">
+            <a href="javascript:void(0)" class="toBuy" onclick="detail.m.specQuery(this)">立即购买</a>
+        </div>
+        <div class="specBox">
+            <div class="specCont">
+                <div class="p1">
+                    <img src="http://static.yuntongauto.com/web/badminton/img/branch-10.png" alt="" class="l">
+                    <div class="l txt">
+                        <p class="price">
+                            ¥<span>18888</span>
+                        </p>
+                        <p>啦啦啦啦</p>
+                    </div>
+                    <span class="close r" onclick="detail.v.closeFn()">&times;</span>
+                    <span class="clear"></span>
+                </div>
+                <div class="skuBox" >
+              <!--      <div class="p2">
+                        <p>版本</p>
+                        <p class="p2List">
+                            <span class="pItem">豪华版</span>
+                            <span class="pItem">青春版</span>
+                            <span class="pItem">快乐伴</span>
+                        </p>
+                    </div>
+                    <div class="p2">
+                        <p>版本</p>
+                        <p class="p2List">
+                            <span class="pItem">豪华版</span>
+                            <span class="pItem">青春版</span>
+                            <span class="pItem">快乐伴</span>
+                        </p>
+                    </div>-->
+                </div>
+                <div class="p2 numBox">
+                    <span class="l" style="line-height: 50px">购买数量</span>
+                    <div class="num r">
+                        <span class="reduce" onclick="detail.m.reduceFn()"></span>
+                        <input type="number" class="getNum" value="1">
+                        <span class="plus" onclick="detail.m.plusFn()"></span>
+                    </div>
+                </div>
+                <div class="p2 matter">
+                    <p>注意事项</p>
+                    <p class="p2List">
+                        注意事项
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="tips">
+           <div class="tipsBox">
+                   <img src="img/tips.png" alt="">
+                   <p></p>
+              </div>
+           <img src="img/closeBtn.png" alt="" class="closeBtn" onclick="base.tip.closeTips()">
+       </div>
+</body>
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/swiper.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/detail.js"></script>
+<script>
+    detail.c.init()
+</script>
+</html>

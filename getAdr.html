@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>填写地址</title>
+    <meta name="viewport" content="width=750px,user-scalable=no">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/payend.css">
+</head>
+<body bgcolor="#fff">
+<div class="myTop myTop1">
+    <a href="javascript:void(0)" class="back lBox">
+        <img src="img/back.png" class="l ">
+    </a>
+    填写收货地址
+</div>
+<div class="cont">
+    <p class="t1" style="margin-top:60px">
+        请填写您的地址，我们将尽快为您邮递
+    </p>
+    <!--邮寄-->
+    <div class="getAdr">
+        <div class="line"></div>
+        <div class="getLocationBox">
+            <p>
+                <span>收货人:</span><input type="text" placeholder="请输入收货人姓名" id="uName">
+            </p>
+            <p>
+                <span>联系电话:</span><input type="text" placeholder="请输入收货人电话号码" id="uNum">
+            </p>
+            <p>
+                <span>收货地址:</span>
+                <textarea  class="txtcont" placeholder="请输入收货人详细的地址"></textarea>
+            </p>
+    </div>
+        <div class="btn" style="margin-top: 140px" onclick="getAddr.m.addressFn(true,$('#uName').val(),$('#uNum').val(),$('.txtcont').val())">确定</div>
+    </div>
+</div>
+<div class="tips">
+    <div class="tipsBox">
+        <img src="img/tips.png" alt="">
+        <p></p>
+    </div>
+    <img src="img/closeBtn.png" alt="" class="closeBtn" onclick="base.tip.closeTips()">
+</div>
+<!--五条线 从中间变换-->
+<div class="loader">
+    <div class="loader-inner line-scale-pulse-out-rapid">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+</body>
+
+<script src="http://static.yuntongauto.com/js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/getAddr.js"></script>
+<script>
+    getAddr.c.init();
+</script>
+</html>
